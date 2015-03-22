@@ -15,12 +15,13 @@ public class DeltaOrientationMapper implements NormalMapper {
         setToneMap(toneMap);
     }
 
+    @Override
     public ReadonlyTColor getRGBForNormal(Vec3D normal) {
         float dot = (float) (dir.dot(normal) * toneScale + toneScale);
         return toneMap.getToneFor(dot);
     }
 
-    public void setToneMap(ToneMap toneMap) {
+    public final void setToneMap(ToneMap toneMap) {
         this.toneMap = toneMap;
         this.toneScale = toneMap.map.getInputMedian();
     }

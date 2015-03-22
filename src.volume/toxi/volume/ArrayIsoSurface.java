@@ -217,6 +217,7 @@ public class ArrayIsoSurface implements IsoSurface {
      * be called inbetween successive calls to
      * {@link #computeSurfaceMesh(Mesh3D, float)}
      */
+    @Override
     public void reset() {
         for (int i = 0; i < edgeVertices.length; i++) {
             edgeVertices[i] = null;

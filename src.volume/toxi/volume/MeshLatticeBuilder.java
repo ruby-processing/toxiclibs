@@ -122,7 +122,7 @@ public class MeshLatticeBuilder {
             final VolumetricBrush brush) {
         logger.info("creating lattice...");
         setMesh(mesh);
-        List<Float> edgeLengths = new ArrayList<Float>(mesh.edges.size());
+        List<Float> edgeLengths = new ArrayList<>(mesh.edges.size());
         for (WingedEdge e : mesh.edges.values()) {
             edgeLengths.add(e.getLength());
         }

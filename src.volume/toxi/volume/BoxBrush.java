@@ -56,7 +56,7 @@ public class BoxBrush extends VolumetricBrush {
     }
 
     @Override
-    public void setSize(float size) {
+    public final void setSize(float size) {
         setSize(size, size, size);
     }
 
@@ -67,8 +67,7 @@ public class BoxBrush extends VolumetricBrush {
         stretchY = (float) cellRadiusX / cellRadiusY;
         stretchZ = (float) cellRadiusX / cellRadiusZ;
         if (logger.isLoggable(Level.FINE)) {
-            logger.fine("new brush size: " + cellRadiusX + "x" + cellRadiusY
-                    + "x" + cellRadiusZ);
+            logger.log(Level.FINE, "new brush size: {0}x{1}x{2}", new Object[]{cellRadiusX, cellRadiusY, cellRadiusZ});
         }
     }
 

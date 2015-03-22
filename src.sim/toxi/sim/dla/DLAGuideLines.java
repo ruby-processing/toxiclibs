@@ -60,7 +60,7 @@ public class DLAGuideLines {
     }
 
     public DLAGuideLines(Comparator<Line3D> comparator) {
-        segments = new TreeSet<DLASegment>(comparator);
+        segments = new TreeSet<>(comparator);
     }
 
     /**
@@ -81,7 +81,7 @@ public class DLAGuideLines {
     public DLAGuideLines addLine(Vec3D a, Vec3D b) {
         DLASegment s = new DLASegment(a, b, null);
         if (logger.isLoggable(Level.INFO)) {
-            logger.info("adding line segment: " + s);
+            logger.log(Level.INFO, "adding line segment: {0}", s);
         }
         segments.add(s);
         return this;
@@ -97,7 +97,7 @@ public class DLAGuideLines {
             Vec3D p = i < numP - 1 ? points.get(i + 1) : null;
             DLASegment s = new DLASegment(points.get(i - 1), points.get(i), p);
             if (logger.isLoggable(Level.INFO)) {
-                logger.info("adding line segment: " + s);
+                logger.log(Level.INFO, "adding line segment: {0}", s);
             }
             segments.add(s);
         }
@@ -144,7 +144,7 @@ public class DLAGuideLines {
                 currSegment = iterator.next();
                 currPoint = currSegment.a.copy();
                 if (logger.isLoggable(Level.FINE)) {
-                    logger.fine("next segment: " + currSegment);
+                    logger.log(Level.FINE, "next segment: {0}", currSegment);
                 }
             }
         }

@@ -221,14 +221,10 @@ public class FluidSolver2D {
     }
 
     /**
-     * Calculate the curl at position (i, j) in the fluid grid. Physically this
-     * represents the vortex strength at the cell. Computed as follows: width =
-     * (del x U) where U is the velocity vector at (i, j).
+     * Calculate the curl 
      * 
-     * @param i
-     *            The x index of the cell.
-     * @param j
-     *            The y index of the cell.
+     * @param idx
+     * @return 
      **/
 
     protected final float curl(int idx) {
@@ -374,6 +370,11 @@ public class FluidSolver2D {
      * Iterative linear system solver using the Gauss-Seidel relaxation
      * technique. Room for much improvement here...
      * 
+     * @param b
+     * @param x
+     * @param x0
+     * @param a
+     * @param c
      **/
 
     protected void linearSolver(int b, float[] x, float[] x0, float a, float c) {
@@ -462,7 +463,7 @@ public class FluidSolver2D {
     /**
      * Reset the datastructures. We use 1d arrays for speed.
      **/
-    public void reset() {
+    public final void reset() {
         for (int i = 0; i < size; i++) {
             u[i] = uOld[i] = v[i] = vOld[i] = 0.0f;
             d[i] = dOld[i] = curl[i] = 0.0f;
@@ -625,7 +626,7 @@ public class FluidSolver2D {
     public void vorticityConfinement(float[] Fvc_x, float[] Fvc_y) {
         float dw_dx, dw_dy;
         float length;
-        float v;
+        float vort;
 
         // Calculate magnitude of curl(u,v) for each cell. (|width|)
         for (int i = 1, j = 1, idx = i + totalWidth; j <= height;) {
@@ -654,11 +655,11 @@ public class FluidSolver2D {
             dw_dx *= length;
             dw_dy *= length;
 
-            v = curl[idx];
+            vort = curl[idx];
 
             // N x width
-            Fvc_x[idx] = dw_dy * -v;
-            Fvc_y[idx] = dw_dx * v;
+            Fvc_x[idx] = dw_dy * -vort;
+            Fvc_y[idx] = dw_dx * vort;
 
             if (i < width - 1) {
                 i++;

@@ -48,9 +48,6 @@ public abstract class ErosionFunction {
     /**
      * Destructively erodes the given array.
      * 
-     * @param elevation
-     * @param width
-     * @param height
      */
     public void erodeAll() {
         for (int y = 1, w1 = width - 1, h1 = height - 1; y < h1; y++) {

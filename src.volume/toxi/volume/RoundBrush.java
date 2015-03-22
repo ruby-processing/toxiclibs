@@ -75,7 +75,7 @@ public class RoundBrush extends VolumetricBrush {
     }
 
     @Override
-    public void setSize(float radius) {
+    public final void setSize(float radius) {
         this.radius = radius;
         this.cellRadiusX = (int) (radius / volume.scale.x * volume.resX + 1);
         this.cellRadiusY = (int) (radius / volume.scale.y * volume.resY + 1);
@@ -83,7 +83,7 @@ public class RoundBrush extends VolumetricBrush {
         stretchY = (float) cellRadiusX / cellRadiusY;
         stretchZ = (float) cellRadiusX / cellRadiusZ;
         if (logger.isLoggable(Level.FINE)) {
-            logger.fine("new brush size: " + radius);
+            logger.log(Level.FINE, "new brush size: {0}", radius);
         }
     }
 }

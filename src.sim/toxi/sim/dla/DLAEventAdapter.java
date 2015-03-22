@@ -31,12 +31,24 @@ import toxi.geom.Vec3D;
 
 public class DLAEventAdapter implements DLAEventListener {
 
+    /**
+     *
+     * @param dla
+     */
+    @Override
     public void dlaAllSegmentsProcessed(DLA dla) {
     }
 
+    @Override
     public void dlaNewParticleAdded(DLA dla, Vec3D p) {
     }
 
+    /**
+     *
+     * @param dla
+     * @param s
+     */
+    @Override
     public void dlaSegmentSwitched(DLA dla, DLASegment s) {
     }
 

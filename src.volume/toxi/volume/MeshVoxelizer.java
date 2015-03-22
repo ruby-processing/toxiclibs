@@ -87,6 +87,7 @@ public class MeshVoxelizer {
     /**
      * @param wallThickness
      *            the wallThickness to set
+     * @return 
      */
     public MeshVoxelizer setWallThickness(int wallThickness) {
         this.wallThickness = wallThickness;

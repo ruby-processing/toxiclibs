@@ -28,8 +28,11 @@
 package toxi.volume;
 
 import java.io.DataOutputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import toxi.geom.Vec3D;
 
@@ -55,6 +58,7 @@ public class VolumetricSpaceArray extends VolumetricSpace {
         }
     }
 
+    @Override
     public void closeSides() {
         setVolumeSidesTo(0);
     }
@@ -80,20 +84,20 @@ public class VolumetricSpaceArray extends VolumetricSpace {
      */
     public void saveData(String fn) {
         logger.info("saving volume data...");
-        try {
-            DataOutputStream ds = new DataOutputStream(new FileOutputStream(fn));
+        try (DataOutputStream ds = new DataOutputStream(new FileOutputStream(fn))) {
             // ds.writeInt(volumeData.length);
             for (float element : data) {
                 ds.writeFloat(element);
             }
             ds.flush();
-            ds.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(VolumetricSpaceArray.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(VolumetricSpaceArray.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public void setData(float[] data) {
+    public final void setData(float[] data) {
         if (data != null) {
             if (this.data == null || this.data.length == data.length) {
                 this.data = data;
@@ -136,6 +140,7 @@ public class VolumetricSpaceArray extends VolumetricSpace {
         }
     }
 
+    @Override
     public final void setVoxelAt(int x, int y, int z, float value) {
         int idx = x + y * resX + z * sliceRes;
         if (idx >= 0 && idx < data.length) {

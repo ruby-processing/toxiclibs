@@ -52,6 +52,7 @@ public class RadialDistanceOrder implements Comparator<Line3D> {
         this.isFlipped = isFlipped;
     }
 
+    @Override
     public int compare(Line3D a, Line3D b) {
         float da = origin.sub(a.getMidPoint()).magSquared();
         float db = origin.sub(b.getMidPoint()).magSquared();

@@ -15,7 +15,7 @@ public class FluidSolver3D {
 
     private final float[] velX, velY, velZ;
     private final float[] velX0, velY0, velZ0;
-    private int numIterations = 10;
+    private final int numIterations = 10;
 
     public FluidSolver3D(int size, float diffusion, float viscosity, float dt) {
         this.size = size;
@@ -141,7 +141,7 @@ public class FluidSolver3D {
         return density;
     }
 
-    private final int IX(int x, int y, int z) {
+    private int IX(int x, int y, int z) {
         return x + y * size + z * size2;
     }
 

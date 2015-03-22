@@ -29,6 +29,7 @@ package toxi.processing;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import processing.core.PApplet;
@@ -161,7 +162,7 @@ public class ToxiclibsSupport {
                 gfx.ellipse(e.x - r.x, e.y - r.y, r.x * 2, r.y * 2);
                 break;
             default:
-                logger.warning("invalid ellipse mode: " + gfx.ellipseMode);
+                logger.log(Level.WARNING, "invalid ellipse mode: {0}", gfx.ellipseMode);
         }
     }
 
@@ -646,7 +647,7 @@ public class ToxiclibsSupport {
                 gfx.rect(r.x + rw, r.y + rh, rw, rh);
                 break;
             default:
-                logger.warning("invalid rect mode: " + gfx.rectMode);
+                logger.log(Level.WARNING, "invalid rect mode: {0}", gfx.rectMode);
         }
     }
 

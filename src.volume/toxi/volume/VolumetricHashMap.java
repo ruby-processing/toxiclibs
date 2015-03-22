@@ -40,15 +40,16 @@ public class VolumetricHashMap extends VolumetricSpace {
             float density) {
         super(scale, resX, resY, resZ);
         this.density = density;
-        data = new HashMap<Integer, Float>((int) (resX * resY * resZ * density));
+        data = new HashMap<>((int) (resX * resY * resZ * density));
     }
 
     @Override
     public void clear() {
         data.clear();
-        data = new HashMap<Integer, Float>((int) (resX * resY * resZ * density));
+        data = new HashMap<>((int) (resX * resY * resZ * density));
     }
 
+    @Override
     public void closeSides() {
         setVolumeSidesTo(0);
     }
@@ -100,12 +101,14 @@ public class VolumetricHashMap extends VolumetricSpace {
         }
     }
 
+    @Override
     public final void setVoxelAt(int index, float value) {
         if (index >= 0 && index < numCells) {
             data.put(index, value);
         }
     }
 
+    @Override
     public final void setVoxelAt(int x, int y, int z, float value) {
         int idx = x + y * resX + z * sliceRes;
         if (idx >= 0 && idx < numCells) {

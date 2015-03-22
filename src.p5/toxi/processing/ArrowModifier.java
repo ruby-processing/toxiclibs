@@ -60,6 +60,7 @@ public class ArrowModifier implements Line2DRenderModifier {
         this.doDrawLine = drawLine;
     }
 
+    @Override
     public void apply(ToxiclibsSupport gfx, ReadonlyVec2D a, ReadonlyVec2D b) {
         if (doDrawLine) {
             gfx.line(a, b);

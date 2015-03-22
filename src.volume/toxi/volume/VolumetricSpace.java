@@ -27,6 +27,7 @@
 
 package toxi.volume;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import toxi.geom.Vec3D;
@@ -58,8 +59,7 @@ public abstract class VolumetricSpace {
         sliceRes = resX * resY;
         numCells = sliceRes * resZ;
         setScale(scale);
-        logger.info("new space of " + resX + "x" + resY + "x" + resZ
-                + " cells: " + numCells);
+        logger.log(Level.INFO, "new space of {0}x{1}x{2} cells: {3}", new Object[]{resX, resY, resZ, numCells});
     }
 
     public abstract void clear();

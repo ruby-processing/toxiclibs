@@ -48,6 +48,7 @@ public class DLASegment extends Line3D {
         return nextDir;
     }
 
+    @Override
     public String toString() {
         return a.toString() + " -> " + b.toString() + " dir: " + dir + " nd: "
                 + nextDir;

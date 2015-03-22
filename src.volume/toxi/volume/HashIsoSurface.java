@@ -78,6 +78,7 @@ public class HashIsoSurface implements IsoSurface {
     /**
      * Creates a new instance using the given expected vertex density.
      * 
+     * @param density
      * @see #setExpectedDensity(float)
      * 
      * @param volume
@@ -105,6 +106,7 @@ public class HashIsoSurface implements IsoSurface {
         reset();
     }
 
+    @Override
     public Mesh3D computeSurfaceMesh(Mesh3D mesh, final float iso) {
         if (mesh == null) {
             mesh = new TriangleMesh("isosurface-" + iso);
@@ -176,7 +178,7 @@ public class HashIsoSurface implements IsoSurface {
 
     private void createFacesForSlice(Mesh3D mesh, int z) {
         if (logger.isLoggable(Level.FINE)) {
-            logger.fine("creating polygons for slice: " + z);
+            logger.log(Level.FINE, "creating polygons for slice: {0}", z);
         }
         int[] face = new int[16];
         int sliceOffset = sliceRes * z;
@@ -257,8 +259,9 @@ public class HashIsoSurface implements IsoSurface {
      * be called inbetween successive calls to
      * {@link #computeSurfaceMesh(Mesh3D, float)}.
      */
-    public void reset() {
-        edgeVertices = new HashMap<Integer, Vec3D>(
+    @Override
+    public final void reset() {
+        edgeVertices = new HashMap<>(
                 (int) (density * volume.numCells));
     }
 

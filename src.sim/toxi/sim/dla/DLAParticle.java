@@ -47,7 +47,7 @@ public class DLAParticle extends Vec3D {
         reorientate();
     }
 
-    public void reorientate() {
+    public final void reorientate() {
         dir = Vec3D.randomVector();
     }
 

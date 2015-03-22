@@ -28,14 +28,15 @@
 package toxi.sim.dla;
 
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import toxi.geom.PointOctree;
@@ -56,9 +57,9 @@ public class DLA {
     protected Vec3D minBounds, maxBounds;
 
     protected DLAGuideLines guidelines;
-    protected ArrayList<DLASegment> activeSegments = new ArrayList<DLASegment>();
+    protected ArrayList<DLASegment> activeSegments = new ArrayList<>();
 
-    protected List<DLAEventListener> listeners = new ArrayList<DLAEventListener>();
+    protected List<DLAEventListener> listeners = new ArrayList<>();
 
     protected int numActiveSegments = 0;
 
@@ -84,7 +85,7 @@ public class DLA {
 
     public DLA addListener(DLAEventListener l) {
         listeners.add(l);
-        logger.info("adding listener: " + l);
+        logger.log(Level.INFO, "adding listener: {0}", l);
         return this;
     }
 
@@ -160,7 +161,7 @@ public class DLA {
         reset();
     }
 
-    protected PointOctree createOctree(Vec3D origin, float size) {
+    protected final PointOctree createOctree(Vec3D origin, float size) {
         return new PointOctree(origin, size);
     }
 
@@ -224,7 +225,7 @@ public class DLA {
         return octree.getPoints();
     }
 
-    protected void parseGuidelines() {
+    protected final void parseGuidelines() {
         guidelines.reset();
         octreeGuides.empty();
         while (!guidelines.isComplete()) {
@@ -238,7 +239,7 @@ public class DLA {
 
     public DLA removeListener(DLAEventListener l) {
         listeners.remove(l);
-        logger.info("removing listener: " + l);
+        logger.log(Level.INFO, "removing listener: {0}", l);
         return this;
     }
 
@@ -251,36 +252,32 @@ public class DLA {
         List<Vec3D> parts = octree.getPoints();
         if (parts != null) {
             Vec3D origin = minBounds.add(maxBounds).scaleSelf(0.5f);
-            logger.info("bounds: " + minBounds + " -> " + maxBounds
-                    + " offset origin: " + origin);
-            try {
-                RandomAccessFile file = new RandomAccessFile(fname, "rw");
-                FileChannel channel = file.getChannel();
-                int size = parts.size() * 4 * 3;
-                MappedByteBuffer buffer = channel.map(
-                        FileChannel.MapMode.READ_WRITE, 0, size);
-                if (isCentered) {
-                    for (Vec3D p : parts) {
-                        p = p.sub(origin);
-                        buffer.putFloat(p.x);
-                        buffer.putFloat(p.y);
-                        buffer.putFloat(p.z);
+            logger.log(Level.INFO, "bounds: {0} -> {1} offset origin: {2}", new Object[]{minBounds, maxBounds, origin});
+                try (RandomAccessFile file = new RandomAccessFile(fname, "rw"); FileChannel channel = file.getChannel()) {
+                    int size = parts.size() * 4 * 3;
+                    MappedByteBuffer buffer = channel.map(
+                            FileChannel.MapMode.READ_WRITE, 0, size);
+                    if (isCentered) {
+                        for (Vec3D p : parts) {
+                            p = p.sub(origin);
+                            buffer.putFloat(p.x);
+                            buffer.putFloat(p.y);
+                            buffer.putFloat(p.z);
+                        }
+                    } else {
+                        for (Vec3D p : parts) {
+                            buffer.putFloat(p.x);
+                            buffer.putFloat(p.y);
+                            buffer.putFloat(p.z);
+                        }
                     }
-                } else {
-                    for (Vec3D p : parts) {
-                        buffer.putFloat(p.x);
-                        buffer.putFloat(p.y);
-                        buffer.putFloat(p.z);
-                    }
-                }
-                buffer.force();
-                channel.close();
-                file.close();
-                logger.info("written " + parts.size() + " particles to "
-                        + fname);
-            } catch (Exception e) {
-                e.printStackTrace();
+                    buffer.force();
+                } catch (FileNotFoundException ex) {
+                Logger.getLogger(DLA.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(DLA.class.getName()).log(Level.SEVERE, null, ex);
             }
+                logger.log(Level.INFO, "written {0} particles to {1}", new Object[]{parts.size(), fname});
         }
     }
 
@@ -288,24 +285,18 @@ public class DLA {
         List<Vec3D> particles = octree.getPoints();
         if (particles != null) {
             Vec3D origin = minBounds.add(maxBounds).scaleSelf(0.5f);
-            logger.info("bounds: " + minBounds + " -> " + maxBounds
-                    + " offset origin: " + origin);
-            try {
-                BufferedWriter out = new BufferedWriter(new FileWriter(fname));
-                for (Iterator<Vec3D> i = octree.getPoints().iterator(); i
-                        .hasNext();) {
-                    Vec3D p = i.next();
+            logger.log(Level.INFO, "bounds: {0} -> {1} offset origin: {2}", new Object[]{minBounds, maxBounds, origin});
+                try (BufferedWriter out = new BufferedWriter(new FileWriter(fname))) {
+                for (Vec3D p : octree.getPoints()) {
                     StringBuilder sb = new StringBuilder(36);
                     sb.append(p.x).append(',').append(p.y).append(',')
                             .append(p.z).append("\n");
                     out.write(sb.toString());
                 }
-                out.close();
-                logger.info("written " + particles.size() + " particles to "
-                        + fname);
-            } catch (IOException e) {
-                e.printStackTrace();
+                } catch (IOException ex) {
+                Logger.getLogger(DLA.class.getName()).log(Level.SEVERE, null, ex);
             }
+                logger.log(Level.INFO, "written {0} particles to {1}", new Object[]{particles.size(), fname});
         }
     }
 
@@ -348,7 +339,7 @@ public class DLA {
         }
     }
 
-    protected void updateCurvePoint() {
+    protected final void updateCurvePoint() {
         if (Math.random() < config.getContinuousGrowthRatio()
                 && numActiveSegments > 0) {
             DLASegment segment = activeSegments.get((int) (config

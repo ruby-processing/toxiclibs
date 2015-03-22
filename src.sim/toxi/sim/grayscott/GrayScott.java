@@ -160,7 +160,7 @@ public class GrayScott {
     /**
      * Resets the simulation matrix to an initial, clean state.
      */
-    public void reset() {
+    public final void reset() {
         for (int i = 0; i < uu.length; i++) {
             uu[i] = 1.0f;
             vv[i] = 0.0f;
@@ -184,7 +184,7 @@ public class GrayScott {
         }
     }
 
-    public void setCoefficients(float f, float k, float dU, float dV) {
+    public final void setCoefficients(float f, float k, float dU, float dV) {
         this.f = f;
         this.k = k;
         this.dU = dU;

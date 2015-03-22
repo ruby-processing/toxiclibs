@@ -129,6 +129,7 @@ public class TalusAngleErosion extends ErosionFunction {
         this.theta = theta;
     }
 
+    @Override
     public String toString() {
         return getClass().getName() + ": theta=" + theta + " amount=" + amount;
     }

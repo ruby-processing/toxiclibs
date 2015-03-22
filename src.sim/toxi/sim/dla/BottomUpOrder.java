@@ -44,6 +44,7 @@ public class BottomUpOrder implements Comparator<Line3D> {
         this.isFlipped = isFlipped;
     }
 
+    @Override
     public int compare(Line3D a, Line3D b) {
         float ya = a.getMidPoint().y;
         float yb = b.getMidPoint().y;
