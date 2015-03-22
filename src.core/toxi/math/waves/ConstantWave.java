@@ -37,6 +37,7 @@ public class ConstantWave extends AbstractWave {
         this.value = value;
     }
 
+    @Override
     public final float update() {
         return value;
     }

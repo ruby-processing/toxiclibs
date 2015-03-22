@@ -45,7 +45,9 @@ public class HistEntry implements Comparable<HistEntry> {
     /**
      * Comparator implementation used to sort entries by frequency (descending
      * order).
+     * @param e
      */
+    @Override
     public int compareTo(HistEntry e) {
         return (int) (e.freq - freq);
     }

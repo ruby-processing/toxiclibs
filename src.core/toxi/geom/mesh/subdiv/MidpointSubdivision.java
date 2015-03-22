@@ -38,8 +38,9 @@ import toxi.geom.mesh.WingedEdge;
  */
 public class MidpointSubdivision extends SubdivisionStrategy {
 
+    @Override
     public List<Vec3D> computeSplitPoints(WingedEdge edge) {
-        List<Vec3D> mid = new ArrayList<Vec3D>(1);
+        List<Vec3D> mid = new ArrayList<>(1);
         mid.add(edge.getMidPoint());
         return mid;
     }

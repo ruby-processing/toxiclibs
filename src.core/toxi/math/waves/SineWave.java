@@ -69,6 +69,7 @@ public class SineWave extends AbstractWave {
      * 
      * @see toxi.math.waves.AbstractWave#update()
      */
+    @Override
     public float update() {
         value = (float) (Math.sin(phase) * amp) + offset;
         cyclePhase(frequency);

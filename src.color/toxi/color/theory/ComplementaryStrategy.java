@@ -50,6 +50,7 @@ public class ComplementaryStrategy implements ColorTheoryStrategy {
      * @see
      * toxi.color.ColorTheoryStrategy#createListFromcolor(toxi.color.TColor)
      */
+    @Override
     public ColorList createListFromColor(ReadonlyTColor src) {
         ColorList colors = new ColorList(src);
         // # A contrasting color: much darker or lighter than the original.
@@ -91,6 +92,7 @@ public class ComplementaryStrategy implements ColorTheoryStrategy {
      * 
      * @see toxi.color.ColorTheoryStrategy#getName()
      */
+    @Override
     public String getName() {
         return NAME;
     }

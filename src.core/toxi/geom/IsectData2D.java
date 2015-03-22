@@ -55,6 +55,7 @@ public class IsectData2D {
         normal = new Vec2D();
     }
 
+    @Override
     public String toString() {
         String s = "isec: " + isIntersection;
         if (isIntersection) {

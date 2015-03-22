@@ -32,6 +32,7 @@ import java.util.Iterator;
  * @author Paul Chew
  * 
  *         Created December 2007. For use with Voronoi/Delaunay applet.
+ * @param <E>
  * 
  */
 public class ArraySet<E> extends AbstractSet<E> {

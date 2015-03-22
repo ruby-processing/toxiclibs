@@ -61,6 +61,11 @@ public class BiasedDoubleRange extends DoubleRange {
         setStandardDeviation(sd);
     }
 
+    /**
+     *
+     * @return
+     */
+    @Override
     public BiasedDoubleRange copy() {
         BiasedDoubleRange r = new BiasedDoubleRange(min, max, bias,
                 standardDeviation * 2);
@@ -95,7 +100,7 @@ public class BiasedDoubleRange extends DoubleRange {
      * @param bias
      *            the bias to set
      */
-    public void setBias(double bias) {
+    public final void setBias(double bias) {
         this.bias = MathUtils.clip(bias, min, max);
     }
 
@@ -103,7 +108,7 @@ public class BiasedDoubleRange extends DoubleRange {
      * @param sd
      *            the standardDeviation to set
      */
-    public void setStandardDeviation(double sd) {
+    public final void setStandardDeviation(double sd) {
         this.standardDeviation = MathUtils.clip(sd, 0, 1.0) * 0.5;
     }
 

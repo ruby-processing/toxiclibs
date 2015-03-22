@@ -42,6 +42,7 @@ public class ProximityComparator implements Comparator<ReadonlyTColor> {
         this.proxy = proxy;
     }
 
+    @Override
     public int compare(ReadonlyTColor a, ReadonlyTColor b) {
         float da = proxy.distanceBetween(col, a);
         float db = proxy.distanceBetween(col, b);

@@ -55,6 +55,7 @@ public class AttractionBehavior2D implements ParticleBehavior2D {
         setRadius(radius);
     }
 
+    @Override
     public void apply(VerletParticle2D p) {
         Vec2D delta = attractor.sub(p);
         float dist = delta.magSquared();
@@ -65,6 +66,7 @@ public class AttractionBehavior2D implements ParticleBehavior2D {
         }
     }
 
+    @Override
     public void applyWithIndex(SpatialIndex<Vec2D> spaceHash) {
         List<Vec2D> selection = spaceHash.itemsWithinRadius(attractor, radius,
                 null);
@@ -127,7 +129,7 @@ public class AttractionBehavior2D implements ParticleBehavior2D {
         this.jitter = jitter;
     }
 
-    public void setRadius(float r) {
+    public final void setRadius(float r) {
         this.radius = r;
         this.radiusSquared = r * r;
     }
@@ -141,6 +143,7 @@ public class AttractionBehavior2D implements ParticleBehavior2D {
         this.attrStrength = strength * timeStep;
     }
 
+    @Override
     public boolean supportsSpatialIndex() {
         return true;
     }

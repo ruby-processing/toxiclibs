@@ -459,8 +459,10 @@ public class AABB extends Vec3D implements Shape3D {
      * Updates the position of the box in space and calls
      * {@link #updateBounds()} immediately
      * 
+     * @return 
      * @see toxi.geom.Vec3D#set(float, float, float)
      */
+    @Override
     public Vec3D set(float x, float y, float z) {
         this.x = x;
         this.y = y;
@@ -473,8 +475,11 @@ public class AABB extends Vec3D implements Shape3D {
      * Updates the position of the box in space and calls
      * {@link #updateBounds()} immediately
      * 
+     * @param v
+     * @return 
      * @see toxi.geom.Vec3D#set(toxi.geom.Vec3D)
      */
+    @Override
     public AABB set(ReadonlyVec3D v) {
         x = v.x();
         y = v.y();
@@ -499,16 +504,16 @@ public class AABB extends Vec3D implements Shape3D {
             float vb, float wa, float wb, float ea, float eb) {
         float p0 = a * va + b * vb;
         float p2 = a * wa + b * wb;
-        float min, max;
+        float amin, amax;
         if (p0 < p2) {
-            min = p0;
-            max = p2;
+            amin = p0;
+            amax = p2;
         } else {
-            min = p2;
-            max = p0;
+            amin = p2;
+            amax = p0;
         }
         float rad = fa * ea + fb * eb;
-        return (min > rad || max < -rad);
+        return (amin > rad || amax < -rad);
     }
 
     public Mesh3D toMesh() {
@@ -557,8 +562,9 @@ public class AABB extends Vec3D implements Shape3D {
      * 
      * @see toxi.geom.Vec3D#toString()
      */
+    @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append("<aabb> pos: ").append(super.toString()).append(" ext: ")
                 .append(extent);
         return sb.toString();

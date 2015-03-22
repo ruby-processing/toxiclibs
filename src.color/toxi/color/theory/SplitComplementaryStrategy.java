@@ -45,6 +45,7 @@ public class SplitComplementaryStrategy implements ColorTheoryStrategy {
      * @see
      * toxi.color.ColorTheoryStrategy#createListFromcolor(toxi.color.TColor)
      */
+    @Override
     public ColorList createListFromColor(ReadonlyTColor src) {
         ColorList colors = new ColorList(src);
         colors.add(src.getRotatedRYB(150).lighten(0.1f));
@@ -57,6 +58,7 @@ public class SplitComplementaryStrategy implements ColorTheoryStrategy {
      * 
      * @see toxi.color.ColorTheoryStrategy#getName()
      */
+    @Override
     public String getName() {
         return NAME;
     }

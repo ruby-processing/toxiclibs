@@ -43,10 +43,12 @@ public class WeightedRandomEntry<T> implements
         this.weight = weight;
     }
 
+    @Override
     public int compareTo(WeightedRandomEntry<T> e) {
         return (e.weight - weight);
     }
 
+    @Override
     public String toString() {
         return item.toString() + ": " + weight;
     }

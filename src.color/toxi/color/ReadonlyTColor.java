@@ -237,7 +237,6 @@ public interface ReadonlyTColor {
      *         constucts a new one with these values).
      * @param hsva
      *            result array (or null)
-     * @return array in this order: h,s,v,a
      */
     public float[] toHSVAArray(float[] hsva);
 

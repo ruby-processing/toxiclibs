@@ -35,6 +35,7 @@ public interface Shape3D {
     /**
      * Checks if the point is within the given shape/volume.
      * 
+     * @param p
      * @return true, if inside
      */
     boolean containsPoint(ReadonlyVec3D p);

@@ -129,7 +129,7 @@ public class VerletParticle2D extends Vec2D {
     public VerletParticle2D addBehavior(ParticleBehavior2D behavior,
             float timeStep) {
         if (behaviors == null) {
-            behaviors = new ArrayList<ParticleBehavior2D>(1);
+            behaviors = new ArrayList<>(1);
         }
         behavior.configure(timeStep);
         behaviors.add(behavior);
@@ -159,7 +159,7 @@ public class VerletParticle2D extends Vec2D {
      */
     public VerletParticle2D addConstraint(ParticleConstraint2D c) {
         if (constraints == null) {
-            constraints = new ArrayList<ParticleConstraint2D>(1);
+            constraints = new ArrayList<>(1);
         }
         constraints.add(c);
         return this;
@@ -314,7 +314,7 @@ public class VerletParticle2D extends Vec2D {
         return this;
     }
 
-    public void setWeight(float w) {
+    public final void setWeight(float w) {
         weight = w;
         invWeight = 1f / w;
     }

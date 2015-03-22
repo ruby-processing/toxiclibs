@@ -172,6 +172,7 @@ public interface ReadonlyVec3D {
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
+    @Override
     public boolean equals(Object obj);
 
     /**

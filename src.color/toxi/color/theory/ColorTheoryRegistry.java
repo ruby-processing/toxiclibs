@@ -29,6 +29,8 @@ package toxi.color.theory;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Registry & object factory for default {@link ColorTheoryStrategy}
@@ -36,7 +38,7 @@ import java.util.HashMap;
  */
 public class ColorTheoryRegistry {
 
-    private static final HashMap<String, ColorTheoryStrategy> implementations = new HashMap<String, ColorTheoryStrategy>();
+    private static final HashMap<String, ColorTheoryStrategy> implementations = new HashMap<>();
 
     public static final ColorTheoryStrategy SINGLE_COMPLEMENT = new SingleComplementStrategy();
     public static final ColorTheoryStrategy COMPLEMENTARY = new ComplementaryStrategy();
@@ -51,26 +53,24 @@ public class ColorTheoryRegistry {
 
     static {
         Field[] fields = ColorTheoryRegistry.class.getDeclaredFields();
-        try {
             for (Field f : fields) {
                 if (f.getType() == ColorTheoryStrategy.class) {
                     String id = f.getName();
-                    implementations.put(id, (ColorTheoryStrategy) f.get(null));
+                    try {
+                        implementations.put(id, (ColorTheoryStrategy) f.get(null));
+                    } catch (IllegalArgumentException | IllegalAccessException ex) {
+                        Logger.getLogger(ColorTheoryRegistry.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
     }
 
     public static ArrayList<String> getRegisteredNames() {
-        return new ArrayList<String>(implementations.keySet());
+        return new ArrayList<>(implementations.keySet());
     }
 
     public static ArrayList<ColorTheoryStrategy> getRegisteredStrategies() {
-        return new ArrayList<ColorTheoryStrategy>(implementations.values());
+        return new ArrayList<>(implementations.values());
     }
 
     public static ColorTheoryStrategy getStrategyForName(String id) {

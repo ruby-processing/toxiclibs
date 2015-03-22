@@ -80,6 +80,7 @@ public class AnalogousStrategy implements ColorTheoryStrategy {
      * @see
      * toxi.color.ColorTheoryStrategy#createListFromcolor(toxi.color.TColor)
      */
+    @Override
     public ColorList createListFromColor(ReadonlyTColor src) {
         contrast = MathUtils.clipNormalized(contrast);
         ColorList colors = new ColorList(src);
@@ -102,6 +103,7 @@ public class AnalogousStrategy implements ColorTheoryStrategy {
      * 
      * @see toxi.color.ColorTheoryStrategy#getName()
      */
+    @Override
     public String getName() {
         return NAME;
     }

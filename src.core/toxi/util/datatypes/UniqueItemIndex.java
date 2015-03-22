@@ -12,11 +12,12 @@ import java.util.List;
  * {@link #unindex(Object)}. The item's {@link #hashCode()} is used as unique
  * identifier, so you MUST ensure the item class satisfies the contract of
  * {@link #hashCode()} and {@link #equals(Object)}.
+ * @param <T>
  */
 public class UniqueItemIndex<T> implements ItemIndex<T> {
 
-    protected final HashMap<T, Integer> uniqueItems = new HashMap<T, Integer>();
-    protected final ArrayList<T> index = new ArrayList<T>();
+    protected final HashMap<T, Integer> uniqueItems = new HashMap<>();
+    protected final ArrayList<T> index = new ArrayList<>();
 
     public UniqueItemIndex() {
     }
@@ -32,6 +33,9 @@ public class UniqueItemIndex<T> implements ItemIndex<T> {
      * 
      * @see toxi.util.ItemIndex#clear()
      */
+
+  
+    @Override
     public void clear() {
         uniqueItems.clear();
         index.clear();
@@ -42,6 +46,7 @@ public class UniqueItemIndex<T> implements ItemIndex<T> {
      * 
      * @see toxi.util.ItemIndex#forID(int)
      */
+    @Override
     public T forID(int id) {
         return index.get(id);
     }
@@ -51,6 +56,7 @@ public class UniqueItemIndex<T> implements ItemIndex<T> {
      * 
      * @see toxi.util.ItemIndex#getID(T)
      */
+    @Override
     public int getID(T item) {
         Integer id = uniqueItems.get(item);
         return (id != null) ? id : -1;
@@ -61,6 +67,7 @@ public class UniqueItemIndex<T> implements ItemIndex<T> {
      * 
      * @see toxi.util.ItemIndex#getItems()
      */
+    @Override
     public List<T> getItems() {
         return index;
     }
@@ -70,6 +77,7 @@ public class UniqueItemIndex<T> implements ItemIndex<T> {
      * 
      * @see toxi.util.ItemIndex#index(T)
      */
+    @Override
     public int index(T item) {
         Integer id = uniqueItems.get(item);
         if (id == null) {
@@ -85,6 +93,7 @@ public class UniqueItemIndex<T> implements ItemIndex<T> {
      * 
      * @see toxi.util.ItemIndex#isIndexed(T)
      */
+    @Override
     public boolean isIndexed(T item) {
         return uniqueItems.get(item) != null;
     }
@@ -94,6 +103,7 @@ public class UniqueItemIndex<T> implements ItemIndex<T> {
      * 
      * @see toxi.util.ItemIndex#reindex(T, T)
      */
+    @Override
     public int reindex(T item, T newItem) {
         int id = getID(item);
         if (id != -1) {
@@ -115,6 +125,7 @@ public class UniqueItemIndex<T> implements ItemIndex<T> {
      * 
      * @see toxi.util.ItemIndex#size()
      */
+    @Override
     public int size() {
         return index.size();
     }
@@ -124,6 +135,7 @@ public class UniqueItemIndex<T> implements ItemIndex<T> {
      * 
      * @see toxi.util.ItemIndex#unindex(T)
      */
+    @Override
     public int unindex(T item) {
         Integer id = uniqueItems.get(item);
         if (id != null) {

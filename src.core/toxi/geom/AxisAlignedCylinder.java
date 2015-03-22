@@ -82,7 +82,7 @@ public abstract class AxisAlignedCylinder implements Shape3D {
      * @param length
      *            the length to set
      */
-    public void setLength(float length) {
+    public final void setLength(float length) {
         this.length = length;
     }
 
@@ -97,7 +97,7 @@ public abstract class AxisAlignedCylinder implements Shape3D {
     /**
      * @param radius
      */
-    public void setRadius(float radius) {
+    public final void setRadius(float radius) {
         this.radius = radius;
         this.radiusSquared = radius * radius;
     }

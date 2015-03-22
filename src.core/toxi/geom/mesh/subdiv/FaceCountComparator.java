@@ -38,6 +38,7 @@ import toxi.geom.mesh.WingedEdge;
  */
 public class FaceCountComparator implements Comparator<WingedEdge> {
 
+    @Override
     public int compare(WingedEdge e1, WingedEdge e2) {
         return (e2.faces.size() - e1.faces.size());
     }

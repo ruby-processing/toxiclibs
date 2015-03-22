@@ -35,6 +35,7 @@ public class XAxisCylinder extends AxisAlignedCylinder {
         super(pos, radius, length);
     }
 
+    @Override
     public boolean containsPoint(ReadonlyVec3D p) {
         if (MathUtils.abs(p.x() - pos.x) < length * 0.5) {
             float dy = p.y() - pos.y;
@@ -46,6 +47,7 @@ public class XAxisCylinder extends AxisAlignedCylinder {
         return false;
     }
 
+    @Override
     public Vec3D.Axis getMajorAxis() {
         return Vec3D.Axis.X;
     }

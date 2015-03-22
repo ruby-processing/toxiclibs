@@ -43,6 +43,7 @@ public class TriangleIntersector implements Intersector3D {
         this.isectData = new IsectData3D();
     }
 
+    @Override
     public IsectData3D getIntersectionData() {
         return isectData;
     }
@@ -54,6 +55,7 @@ public class TriangleIntersector implements Intersector3D {
         return triangle;
     }
 
+    @Override
     public boolean intersectsRay(Ray3D ray) {
         isectData.isIntersection = false;
         Vec3D n = triangle.computeNormal();
@@ -80,6 +82,7 @@ public class TriangleIntersector implements Intersector3D {
     /**
      * @param tri
      *            the triangle to set
+     * @return 
      */
     public TriangleIntersector setTriangle(Triangle3D tri) {
         this.triangle = tri;

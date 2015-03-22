@@ -42,7 +42,7 @@ public class Matrix3d implements java.io.Serializable, Cloneable {
     // Compatible with 1.1
     static final long serialVersionUID = 6837536777072402710L;
 
-    private static final boolean almostEqual(double a, double b) {
+    private static boolean almostEqual(double a, double b) {
         if (a == b) {
             return true;
         }
@@ -1381,18 +1381,18 @@ public class Matrix3d implements java.io.Serializable, Cloneable {
      * @see java.lang.Cloneable
      * @since vecmath 1.3
      */
-    public Object clone() {
-        Matrix3d m1 = null;
-        try {
-            m1 = (Matrix3d) super.clone();
-        } catch (CloneNotSupportedException e) {
-            // this shouldn't happen, since we are Cloneable
-            throw new InternalError();
-        }
+//    public Object clone() {
+//        Matrix3d m1 = null;
+//        try {
+//            m1 = (Matrix3d) super.clone();
+//        } catch (CloneNotSupportedException e) {
+//            // this shouldn't happen, since we are Cloneable
+//            throw new InternalError();
+//        }
 
         // Also need to create new tmp arrays (no need to actually clone them)
-        return m1;
-    }
+//       return m1;
+//   }
 
     /**
      * Computes the determinant of this matrix.
@@ -1418,6 +1418,7 @@ public class Matrix3d implements java.io.Serializable, Cloneable {
      *            the matrix to be compared to this matrix
      * @param epsilon
      *            the threshold value
+     * @return 
      */
     public boolean epsilonEquals(Matrix3d m1, double epsilon) {
         double diff;
@@ -1499,19 +1500,16 @@ public class Matrix3d implements java.io.Serializable, Cloneable {
      *            the matrix with which the comparison is made
      * @return true or false
      */
+    @Override
     public boolean equals(Object t1) {
-        try {
+        if (t1 instanceof Matrix3d) {
             Matrix3d m2 = (Matrix3d) t1;
             return (this.m00 == m2.m00 && this.m01 == m2.m01
                     && this.m02 == m2.m02 && this.m10 == m2.m10
                     && this.m11 == m2.m11 && this.m12 == m2.m12
                     && this.m20 == m2.m20 && this.m21 == m2.m21 && this.m22 == m2.m22);
-        } catch (ClassCastException e1) {
-            return false;
-        } catch (NullPointerException e2) {
-            return false;
         }
-
+        return false;
     }
 
     /**
@@ -1722,6 +1720,7 @@ public class Matrix3d implements java.io.Serializable, Cloneable {
      * 
      * @return the integer hash code value
      */
+    @Override
     public int hashCode() {
         long bits = 1L;
         bits = 31L * bits + VecMathUtil.doubleToLongBits(m00);
@@ -2978,6 +2977,7 @@ public class Matrix3d implements java.io.Serializable, Cloneable {
      * 
      * @return the String representation
      */
+    @Override
     public String toString() {
         return this.m00 + ", " + this.m01 + ", " + this.m02 + "\n" + this.m10
                 + ", " + this.m11 + ", " + this.m12 + "\n" + this.m20 + ", "

@@ -12,6 +12,7 @@ public class PlaneIntersector implements Intersector3D {
         this.isec = new IsectData3D();
     }
 
+    @Override
     public IsectData3D getIntersectionData() {
         return isec;
     }
@@ -23,6 +24,7 @@ public class PlaneIntersector implements Intersector3D {
         return plane;
     }
 
+    @Override
     public boolean intersectsRay(Ray3D ray) {
         float d = -plane.normal.dot(plane);
         float numer = plane.normal.dot(ray) + d;

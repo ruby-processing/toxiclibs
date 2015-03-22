@@ -61,6 +61,7 @@ public class MaterialiseSTLColorModel implements STLColorModel {
      * 
      * @see toxi.geom.mesh.STLColorModel#formatHeader(byte[])
      */
+    @Override
     public void formatHeader(byte[] header) {
         char[] col = new char[] { 'C', 'O', 'L', 'O', 'R', '=' };
         for (int i = 0; i < col.length; i++) {
@@ -77,6 +78,7 @@ public class MaterialiseSTLColorModel implements STLColorModel {
      * 
      * @see toxi.geom.mesh.STLColorModel#formatRGB(int)
      */
+    @Override
     public int formatRGB(int rgb) {
         int col15bits = (rgb >> 19 & 0x1f);
         col15bits |= (rgb >> 11 & 0x1f) << 5;
@@ -95,6 +97,7 @@ public class MaterialiseSTLColorModel implements STLColorModel {
         return baseColor;
     }
 
+    @Override
     public int getDefaultRGB() {
         // set bit 15 to indicate use of base color
         return 0x8000;

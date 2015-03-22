@@ -101,7 +101,7 @@ public class ConvexPolygonClipper implements PolygonClipper2D {
         return false;
     }
 
-    public void setBounds(Polygon2D bounds) {
+    public final void setBounds(Polygon2D bounds) {
         this.bounds = bounds;
         this.boundsCentroid = bounds.getCentroid();
     }

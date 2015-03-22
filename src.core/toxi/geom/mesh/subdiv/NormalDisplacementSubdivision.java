@@ -62,7 +62,7 @@ public class NormalDisplacementSubdivision extends DisplacementSubdivision {
             n.addSelf(edge.faces.get(1).normal);
         }
         n.normalizeTo(amp * edge.getLength());
-        List<Vec3D> points = new ArrayList<Vec3D>(3);
+        List<Vec3D> points = new ArrayList<>(3);
         points.add(mid.addSelf(n));
         return points;
     }

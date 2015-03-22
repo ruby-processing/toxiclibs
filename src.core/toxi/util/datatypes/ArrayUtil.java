@@ -28,6 +28,7 @@
 package toxi.util.datatypes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Random;
 
@@ -49,24 +50,21 @@ public class ArrayUtil {
     public static <T> void addArrayToCollection(T[] array,
             Collection<T> collection) {
         if (collection == null) {
-            collection = new ArrayList<T>();
+            collection = new ArrayList<>();
         }
-        for (T o : array) {
-            collection.add(o);
-        }
+        collection.addAll(Arrays.asList(array));
     }
 
     /**
      * Converts the generic array into an {@link ArrayList} of the same type.
      * 
+     * @param <T>
      * @param array
      * @return array list version
      */
     public static <T> ArrayList<T> arrayToList(T[] array) {
-        ArrayList<T> list = new ArrayList<T>(array.length);
-        for (T element : array) {
-            list.add(element);
-        }
+        ArrayList<T> list = new ArrayList<>(array.length);
+        list.addAll(Arrays.asList(array));
         return list;
     }
 
@@ -271,6 +269,7 @@ public class ArrayUtil {
     /**
      * Reverses the item order of the supplied array (generic types).
      * 
+     * @param <T>
      * @param array
      */
     public static <T> void reverse(T[] array) {
@@ -287,6 +286,7 @@ public class ArrayUtil {
      * Rearranges the array items in random order using the default
      * java.util.Random generator. Operation is in-place, no copy is created.
      * 
+     * @param <T>
      * @param array
      */
     public static <T> void shuffle(T[] array) {
@@ -297,6 +297,7 @@ public class ArrayUtil {
      * Rearranges the array items in random order using the given RNG. Operation
      * is in-place, no copy is created.
      * 
+     * @param <T>
      * @param array
      * @param rnd
      */

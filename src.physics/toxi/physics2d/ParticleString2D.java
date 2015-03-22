@@ -59,8 +59,8 @@ public class ParticleString2D {
     public ParticleString2D(VerletPhysics2D physics,
             List<VerletParticle2D> plist, float strength) {
         this.physics = physics;
-        particles = new ArrayList<VerletParticle2D>(plist);
-        links = new ArrayList<VerletSpring2D>(particles.size() - 1);
+        particles = new ArrayList<>(plist);
+        links = new ArrayList<>(particles.size() - 1);
         VerletParticle2D prev = null;
         for (VerletParticle2D p : particles) {
             physics.addParticle(p);
@@ -94,8 +94,8 @@ public class ParticleString2D {
     public ParticleString2D(VerletPhysics2D physics, Vec2D pos, Vec2D step,
             int num, float mass, float strength) {
         this.physics = physics;
-        particles = new ArrayList<VerletParticle2D>(num);
-        links = new ArrayList<VerletSpring2D>(num - 1);
+        particles = new ArrayList<>(num);
+        links = new ArrayList<>(num - 1);
         float len = step.magnitude();
         VerletParticle2D prev = null;
         pos = pos.copy();
@@ -139,7 +139,7 @@ public class ParticleString2D {
      * @param strength
      * @return spring
      */
-    protected VerletSpring2D createSpring(VerletParticle2D a,
+    protected final VerletSpring2D createSpring(VerletParticle2D a,
             VerletParticle2D b, float len, float strength) {
         return new VerletSpring2D(a, b, len, strength);
     }

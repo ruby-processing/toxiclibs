@@ -99,8 +99,10 @@ public class Triangle2D implements Shape2D {
      * Checks if the given point is inside the triangle created by the points a,
      * b and c. The triangle vertices are inclusive themselves.
      * 
+     * @param p
      * @return true, if point is in triangle.
      */
+    @Override
     public boolean containsPoint(ReadonlyVec2D p) {
         Vec2D v1 = p.sub(a);
         Vec2D v2 = p.sub(b);
@@ -133,14 +135,17 @@ public class Triangle2D implements Shape2D {
                 + b.y * p.y() + c.y * p.z());
     }
 
+    @Override
     public float getArea() {
         return b.sub(a).cross(c.sub(a)) * 0.5f;
     }
 
+    @Override
     public Circle getBoundingCircle() {
         return Circle.from3Points(a, b, c);
     }
 
+    @Override
     public Rect getBounds() {
         return new Rect(Vec2D.min(Vec2D.min(a, b), c), Vec2D.max(
                 Vec2D.max(a, b), c));
@@ -160,6 +165,7 @@ public class Triangle2D implements Shape2D {
         return new Circle(circ, radius);
     }
 
+    @Override
     public float getCircumference() {
         return a.distanceTo(b) + b.distanceTo(c) + c.distanceTo(a);
     }
@@ -196,6 +202,7 @@ public class Triangle2D implements Shape2D {
         return result;
     }
 
+    @Override
     public List<Line2D> getEdges() {
         return toPolygon2D().getEdges();
     }
@@ -205,8 +212,9 @@ public class Triangle2D implements Shape2D {
      * 
      * @return Vec2D
      */
+    @Override
     public Vec2D getRandomPoint() {
-        List<Float> barycentric = new ArrayList<Float>(3);
+        List<Float> barycentric = new ArrayList<>(3);
         barycentric.add(MathUtils.random(1f));
         barycentric.add(MathUtils.random(1f - barycentric.get(0)));
         barycentric.add(1 - (barycentric.get(0) + barycentric.get(1)));
@@ -294,6 +302,7 @@ public class Triangle2D implements Shape2D {
      * 
      * @return triangle as polygon
      */
+    @Override
     public Polygon2D toPolygon2D() {
         Polygon2D poly = new Polygon2D();
         poly.add(a.copy());
@@ -302,6 +311,7 @@ public class Triangle2D implements Shape2D {
         return poly;
     }
 
+    @Override
     public String toString() {
         return "Triangle2D: " + a + "," + b + "," + c;
     }

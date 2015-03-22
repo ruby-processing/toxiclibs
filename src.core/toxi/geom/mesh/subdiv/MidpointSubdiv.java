@@ -6,6 +6,15 @@ import toxi.geom.Vec3D;
 
 public class MidpointSubdiv implements NewSubdivStrategy {
 
+    /**
+     *
+     * @param a
+     * @param b
+     * @param c
+     * @param resultVertices
+     * @return
+     */
+    @Override
     public List<Vec3D[]> subdivideTriangle(Vec3D a, Vec3D b, Vec3D c,
             List<Vec3D[]> resultVertices) {
         Vec3D mab = a.interpolateTo(b, 0.5f);

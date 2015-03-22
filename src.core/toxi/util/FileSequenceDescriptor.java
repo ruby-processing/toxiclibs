@@ -38,23 +38,26 @@ public class FileSequenceDescriptor implements Iterable<String> {
     private class SequenceIterator implements Iterator<String> {
 
         private int curr;
-        private int end;
+        private final int end;
 
         public SequenceIterator(int start, int end) {
             this.curr = start;
             this.end = end;
         }
 
+        @Override
         public boolean hasNext() {
             return curr < end;
         }
 
+        @Override
         public String next() {
             String path = getPathForIndex(curr);
             curr++;
             return path;
         }
 
+        @Override
         public void remove() {
             throw new UnsupportedOperationException("remove() not supported");
         }
@@ -151,6 +154,7 @@ public class FileSequenceDescriptor implements Iterable<String> {
      * iterator does not support the remove() method and attempts to use it
      * results in an {@link UnsupportedOperationException} being thrown.
      */
+    @Override
     public Iterator<String> iterator() {
         return new SequenceIterator(start, getFinalIndex());
     }

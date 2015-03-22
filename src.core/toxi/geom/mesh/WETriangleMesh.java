@@ -241,6 +241,7 @@ public class WETriangleMesh extends TriangleMesh {
         return copy().scale(scale);
     }
 
+    @Override
     public WETriangleMesh getTranslated(Vec3D trans) {
         return copy().translate(trans);
     }
@@ -253,6 +254,7 @@ public class WETriangleMesh extends TriangleMesh {
         return (WEVertex) super.getVertexForID(id);
     }
 
+    @Override
     public WETriangleMesh init(String name, int numV, int numF) {
         super.init(name, numV, numF);
         edges = new LinkedHashMap<Line3D, WingedEdge>(numV, 1.5f, false);

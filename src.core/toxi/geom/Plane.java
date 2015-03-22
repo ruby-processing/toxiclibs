@@ -76,6 +76,8 @@ public class Plane extends Vec3D implements Shape3D {
      * Classifies the relative position of the given point to the plane using
      * the given tolerance.
      * 
+     * @param p
+     * @param tolerance
      * @return One of the 3 classification types: FRONT, BACK, ON_PLANE
      */
     public Classifier classifyPoint(ReadonlyVec3D p, float tolerance) {
@@ -88,6 +90,7 @@ public class Plane extends Vec3D implements Shape3D {
         return Classifier.ON_PLANE;
     }
 
+    @Override
     public boolean containsPoint(ReadonlyVec3D p) {
         return classifyPoint(p, MathUtils.EPS) == Classifier.ON_PLANE;
     }
@@ -223,8 +226,9 @@ public class Plane extends Vec3D implements Shape3D {
         return mesh;
     }
 
+    @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append("origin: ").append(super.toString()).append(" norm: ")
                 .append(normal.toString());
         return sb.toString();

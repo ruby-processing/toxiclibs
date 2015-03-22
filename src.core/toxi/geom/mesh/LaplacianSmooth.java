@@ -39,6 +39,7 @@ import toxi.geom.Vec3D;
  */
 public class LaplacianSmooth implements WEMeshFilterStrategy {
 
+    @Override
     public void filter(VertexSelector selector, int numIterations) {
         final Collection<Vertex> selection = selector.getSelection();
         if (!(selector.getMesh() instanceof WETriangleMesh)) {
@@ -46,7 +47,7 @@ public class LaplacianSmooth implements WEMeshFilterStrategy {
                     "This filter requires a WETriangleMesh");
         }
         final WETriangleMesh mesh = (WETriangleMesh) selector.getMesh();
-        final HashMap<Vertex, Vec3D> filtered = new HashMap<Vertex, Vec3D>(
+        final HashMap<Vertex, Vec3D> filtered = new HashMap<>(
                 selection.size());
         for (int i = 0; i < numIterations; i++) {
             filtered.clear();
@@ -68,6 +69,7 @@ public class LaplacianSmooth implements WEMeshFilterStrategy {
         mesh.computeVertexNormals();
     }
 
+    @Override
     public void filter(WETriangleMesh mesh, int numIterations) {
         filter(new DefaultSelector(mesh).selectVertices(), numIterations);
     }

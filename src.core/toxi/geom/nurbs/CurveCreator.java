@@ -33,10 +33,10 @@ import toxi.geom.Vec4D;
  */
 public class CurveCreator {
 
-    private List<Vec4D> cps = new LinkedList<Vec4D>();
+    private final List<Vec4D> cps = new LinkedList<>();
     private NurbsCurve curve = null;
 
-    private int degree;
+    private final int degree;
     private int incp = 0;
 
     /**

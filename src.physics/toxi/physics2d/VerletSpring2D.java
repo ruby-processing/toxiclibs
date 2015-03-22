@@ -136,6 +136,7 @@ public class VerletSpring2D {
     /**
      * Updates both particle positions (if not locked) based on their current
      * distance, weight and spring configuration *
+     * @param applyConstraints
      */
     protected void update(boolean applyConstraints) {
         Vec2D delta = b.sub(a);

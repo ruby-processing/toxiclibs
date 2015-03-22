@@ -98,7 +98,7 @@ public class ColorList implements Iterable<TColor> {
         if (!uniqueOnly && num == pixels.length) {
             return new ColorList(pixels);
         }
-        List<TColor> colors = new ArrayList<TColor>();
+        List<TColor> colors = new ArrayList<>();
         TColor temp = TColor.BLACK.copy();
         for (int i = 0; i < num; i++) {
             int idx;
@@ -157,15 +157,18 @@ public class ColorList implements Iterable<TColor> {
         return list;
     }
 
+    /**
+     *
+     */
     @XmlElement(name = "col")
     @XmlJavaTypeAdapter(TColorAdapter.class)
-    protected List<TColor> colors = new ArrayList<TColor>();
+    protected List<TColor> colors;
 
     /**
      * Creates an empty list.
      */
     public ColorList() {
-
+        this.colors = new ArrayList<>();
     }
 
     /**
@@ -175,6 +178,7 @@ public class ColorList implements Iterable<TColor> {
      * @param colors
      */
     public ColorList(Collection<TColor> colors) {
+        this.colors = new ArrayList<>();
         this.colors.addAll(colors);
     }
 
@@ -186,6 +190,7 @@ public class ColorList implements Iterable<TColor> {
      *            source list to copy
      */
     public ColorList(ColorList list) {
+        this.colors = new ArrayList<>();
         for (TColor c : list) {
             this.colors.add(c.copy());
         }
@@ -198,6 +203,7 @@ public class ColorList implements Iterable<TColor> {
      * @param argbArray
      */
     public ColorList(int[] argbArray) {
+        this.colors = new ArrayList<>();
         for (int c : argbArray) {
             colors.add(TColor.newARGB(c));
         }
@@ -222,6 +228,7 @@ public class ColorList implements Iterable<TColor> {
      * @param colorArray
      */
     public ColorList(ReadonlyTColor... colorArray) {
+        this.colors = new ArrayList<>();
         for (ReadonlyTColor c : colorArray) {
             colors.add(c.copy());
         }
@@ -295,10 +302,10 @@ public class ColorList implements Iterable<TColor> {
     public ColorList clusterSort(AccessCriteria clusterCriteria,
             AccessCriteria subClusterCriteria, int numClusters,
             boolean isReversed) {
-        ArrayList<TColor> sorted = new ArrayList<TColor>(colors);
+        ArrayList<TColor> sorted = new ArrayList<>(colors);
         Collections.sort(sorted, clusterCriteria);
         Collections.reverse(sorted);
-        ArrayList<TColor> clusters = new ArrayList<TColor>();
+        ArrayList<TColor> clusters = new ArrayList<>();
 
         float d = 1;
         int i = 0;
@@ -306,7 +313,7 @@ public class ColorList implements Iterable<TColor> {
         for (int j = 0; j < num; j++) {
             ReadonlyTColor c = sorted.get(j);
             if (c.getComponentValue(clusterCriteria) < d) {
-                ArrayList<TColor> slice = new ArrayList<TColor>();
+                ArrayList<TColor> slice = new ArrayList<>();
                 slice.addAll(sorted.subList(i, j));
                 Collections.sort(slice, subClusterCriteria);
                 clusters.addAll(slice);
@@ -314,7 +321,7 @@ public class ColorList implements Iterable<TColor> {
                 i = j;
             }
         }
-        ArrayList<TColor> slice = new ArrayList<TColor>();
+        ArrayList<TColor> slice = new ArrayList<>();
         slice.addAll(sorted.subList(i, sorted.size()));
         Collections.sort(slice, subClusterCriteria);
         clusters.addAll(slice);
@@ -478,6 +485,7 @@ public class ColorList implements Iterable<TColor> {
      * 
      * @return list iterator
      */
+    @Override
     public Iterator<TColor> iterator() {
         return colors.iterator();
     }
@@ -500,7 +508,8 @@ public class ColorList implements Iterable<TColor> {
      * @return itself
      */
     public ColorList rotateRYB(float theta) {
-        return rotateRYB(MathUtils.degrees(theta));
+        rotateImplementation(MathUtils.degrees(theta));
+        return this;
     }
 
     /**
@@ -511,10 +520,20 @@ public class ColorList implements Iterable<TColor> {
      * @return itself
      */
     public ColorList rotateRYB(int angle) {
+        rotateImplementation(angle);
+        return this;
+    }
+    
+     /**
+     * Rotates the hues of all colors in the list by the given amount.
+     * 
+     * @param angle
+     *            rotation angle in degrees
+     */
+    private void rotateImplementation(float angle) {
         for (TColor c : colors) {
             c.rotateRYB(angle);
         }
-        return this;
     }
 
     /**
@@ -580,12 +599,13 @@ public class ColorList implements Iterable<TColor> {
      * Sorts the list by relative distance to each predecessor, starting with
      * the darkest color in the list.
      * 
+     * @param proxy
      * @param isReversed
      *            true, if list is to be sorted in reverse.
      * @return itself
      */
     public ColorList sortByDistance(DistanceProxy proxy, boolean isReversed) {
-        if (colors.size() == 0) {
+        if (colors.isEmpty()) {
             return this;
         }
 
@@ -593,9 +613,9 @@ public class ColorList implements Iterable<TColor> {
 
         // Remove the darkest color from the stack,
         // put it in the sorted list as starting element.
-        ArrayList<TColor> stack = new ArrayList<TColor>(colors);
+        ArrayList<TColor> stack = new ArrayList<>(colors);
         stack.remove(root);
-        ArrayList<TColor> sorted = new ArrayList<TColor>(colors.size());
+        ArrayList<TColor> sorted = new ArrayList<>(colors.size());
         sorted.add(root);
 
         // Now find the color in the stack closest to that color.

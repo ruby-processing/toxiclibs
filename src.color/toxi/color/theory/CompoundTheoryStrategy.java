@@ -35,7 +35,7 @@ public class CompoundTheoryStrategy implements ColorTheoryStrategy {
 
     public static final String NAME = "compound";
 
-    private static final float wrap(float x, float min, float threshold,
+    private static float wrap(float x, float min, float threshold,
             float plus) {
         if (x - min < threshold) {
             return x + plus;
@@ -60,6 +60,7 @@ public class CompoundTheoryStrategy implements ColorTheoryStrategy {
      * @see
      * toxi.color.ColorTheoryStrategy#createListFromcolor(toxi.color.TColor)
      */
+    @Override
     public ColorList createListFromColor(ReadonlyTColor src) {
         ColorList colors = new ColorList(src);
         int direction = isFlipped ? -1 : 1;
@@ -96,6 +97,7 @@ public class CompoundTheoryStrategy implements ColorTheoryStrategy {
      * 
      * @see toxi.color.ColorTheoryStrategy#getName()
      */
+    @Override
     public String getName() {
         return NAME;
     }

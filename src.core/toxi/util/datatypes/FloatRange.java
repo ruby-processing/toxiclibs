@@ -144,7 +144,7 @@ public class FloatRange {
     }
 
     public Float[] toArray(float step) {
-        List<Float> range = new LinkedList<Float>();
+        List<Float> range = new LinkedList<>();
         double v = min;
         while (v < max) {
             range.add((float) v);

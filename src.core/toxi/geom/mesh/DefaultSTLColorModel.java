@@ -29,9 +29,11 @@ package toxi.geom.mesh;
 
 public class DefaultSTLColorModel implements STLColorModel {
 
+    @Override
     public void formatHeader(byte[] header) {
     }
 
+    @Override
     public int formatRGB(int rgb) {
         int col15bits = (rgb >> 3 & 0x1f);
         col15bits |= (rgb >> 11 & 0x1f) << 5;
@@ -40,6 +42,7 @@ public class DefaultSTLColorModel implements STLColorModel {
         return col15bits;
     }
 
+    @Override
     public int getDefaultRGB() {
         return 0;
     }

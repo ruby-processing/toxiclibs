@@ -37,7 +37,7 @@ import javax.xml.bind.annotation.XmlElement;
 public class LineStrip3D implements Iterable<Vec3D> {
 
     @XmlElement(name = "v")
-    protected List<Vec3D> vertices = new ArrayList<Vec3D>();
+    protected List<Vec3D> vertices = new ArrayList<>();
 
     protected float[] arcLenIndex;
 
@@ -45,7 +45,7 @@ public class LineStrip3D implements Iterable<Vec3D> {
     }
 
     public LineStrip3D(Collection<? extends Vec3D> vertices) {
-        this.vertices = new ArrayList<Vec3D>(vertices);
+        this.vertices = new ArrayList<>(vertices);
     }
 
     public LineStrip3D add(float x, float y, float z) {
@@ -105,7 +105,7 @@ public class LineStrip3D implements Iterable<Vec3D> {
      * @return point list
      */
     public List<Vec3D> getDecimatedVertices(float step, boolean doAddFinalVertex) {
-        ArrayList<Vec3D> uniform = new ArrayList<Vec3D>();
+        ArrayList<Vec3D> uniform = new ArrayList<>();
         if (vertices.size() < 3) {
             if (vertices.size() == 2) {
                 new Line3D(vertices.get(0), vertices.get(1)).splitIntoSegments(
@@ -155,7 +155,7 @@ public class LineStrip3D implements Iterable<Vec3D> {
 
     public List<Line3D> getSegments() {
         final int num = vertices.size();
-        List<Line3D> segments = new ArrayList<Line3D>(num - 1);
+        List<Line3D> segments = new ArrayList<>(num - 1);
         for (int i = 1; i < num; i++) {
             segments.add(new Line3D(vertices.get(i - 1), vertices.get(i)));
         }
@@ -169,6 +169,7 @@ public class LineStrip3D implements Iterable<Vec3D> {
         return vertices;
     }
 
+    @Override
     public Iterator<Vec3D> iterator() {
         return vertices.iterator();
     }

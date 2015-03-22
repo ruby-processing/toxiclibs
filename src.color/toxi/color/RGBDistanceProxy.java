@@ -33,6 +33,7 @@ package toxi.color;
  */
 public class RGBDistanceProxy implements DistanceProxy {
 
+    @Override
     public float distanceBetween(ReadonlyTColor a, ReadonlyTColor b) {
         return a.distanceToRGB(b);
     }

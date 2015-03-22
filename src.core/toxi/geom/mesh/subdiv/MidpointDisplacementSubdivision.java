@@ -64,7 +64,7 @@ public class MidpointDisplacementSubdivision extends DisplacementSubdivision {
         Vec3D mid = edge.getMidPoint();
         // Vec3D mid = edge.a.interpolateTo(edge.b, 0.25f);
         Vec3D n = mid.sub(centroid).normalizeTo(amp * edge.getLength());
-        List<Vec3D> points = new ArrayList<Vec3D>(1);
+        List<Vec3D> points = new ArrayList<>(1);
         points.add(mid.addSelf(n));
         return points;
     }

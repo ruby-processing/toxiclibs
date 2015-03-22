@@ -84,6 +84,7 @@ public class Line2D {
             return type;
         }
 
+        @Override
         public String toString() {
             return "type: " + type + " pos: " + pos;
         }
@@ -112,7 +113,7 @@ public class Line2D {
     public static final List<Vec2D> splitIntoSegments(Vec2D a, Vec2D b,
             float stepLength, List<Vec2D> segments, boolean addFirst) {
         if (segments == null) {
-            segments = new ArrayList<Vec2D>();
+            segments = new ArrayList<>();
         }
         if (addFirst) {
             segments.add(a.copy());
@@ -259,6 +260,7 @@ public class Line2D {
      * @see java.lang.Object#hashCode()
      * @see #hashCodeWithDirection()
      */
+    @Override
     public int hashCode() {
         return a.hashCode() + b.hashCode();
     }
@@ -367,6 +369,7 @@ public class Line2D {
         return new Ray2D(a.copy(), getDirection());
     }
 
+    @Override
     public String toString() {
         return a.toString() + " -> " + b.toString();
     }

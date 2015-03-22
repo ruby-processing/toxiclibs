@@ -162,7 +162,7 @@ public class Ellipse extends Vec2D implements Shape2D {
      * @param ry
      * @return itself
      */
-    public Ellipse setRadii(float rx, float ry) {
+    public final Ellipse setRadii(float rx, float ry) {
         radius.set(rx, ry);
         focus = radius.magnitude();
         return this;

@@ -34,6 +34,7 @@ package toxi.math;
  */
 public class CosineInterpolation implements InterpolateStrategy {
 
+    @Override
     public double interpolate(double a, double b, double f) {
         return b + (a - b) * (0.5 + 0.5 * Math.cos(f * Math.PI));
     }
@@ -43,8 +44,8 @@ public class CosineInterpolation implements InterpolateStrategy {
      * 
      * @see toxi.math.InterpolateStrategy#interpolate(float, float, float)
      */
+    @Override
     public final float interpolate(float a, float b, float f) {
         return b + (a - b) * (float) (0.5 + 0.5 * Math.cos(f * MathUtils.PI));
     }
-
 }

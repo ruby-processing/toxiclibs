@@ -37,6 +37,7 @@ public abstract class GridTesselator implements PolygonTesselator {
      * 
      * @param res
      *            snap distance for grid points
+     * @param rootSize
      */
     public GridTesselator(float res, float rootSize) {
         this.res = res;
@@ -62,8 +63,9 @@ public abstract class GridTesselator implements PolygonTesselator {
      *            polygon to be tesselated
      * @return list of triangles
      */
+    @Override
     public List<Triangle2D> tesselatePolygon(Polygon2D poly) {
-        List<Triangle2D> triangles = new ArrayList<Triangle2D>();
+        List<Triangle2D> triangles = new ArrayList<>();
         Rect bounds = poly.getBounds();
         // a Voronoi diagram relies on a Delaunay triangulation behind the
         // scenes

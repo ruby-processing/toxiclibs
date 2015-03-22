@@ -47,7 +47,7 @@ public class PointCloud3D implements Iterable<Vec3D> {
     }
 
     public PointCloud3D(int numPoints) {
-        points = new ArrayList<Vec3D>(numPoints);
+        points = new ArrayList<>(numPoints);
         clear();
     }
 
@@ -119,7 +119,7 @@ public class PointCloud3D implements Iterable<Vec3D> {
      * 
      * @return itself
      */
-    public PointCloud3D clear() {
+    public final PointCloud3D clear() {
         points.clear();
         min = Vec3D.MAX_VALUE.copy();
         max = Vec3D.NEG_MAX_VALUE.copy();

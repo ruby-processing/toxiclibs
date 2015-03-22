@@ -41,14 +41,25 @@ public class ConstantForceBehavior2D implements ParticleBehavior2D {
         this.force = force;
     }
 
+    @Override
     public void apply(VerletParticle2D p) {
         p.addForce(scaledForce);
     }
 
+    /**
+     *
+     * @param spaceHash
+     */
+    @Override
     public void applyWithIndex(SpatialIndex<Vec2D> spaceHash) {
         throw new UnsupportedOperationException("not implemented");
     }
 
+    /**
+     *
+     * @param timeStep
+     */
+    @Override
     public void configure(float timeStep) {
         this.timeStep = timeStep;
         setForce(force);

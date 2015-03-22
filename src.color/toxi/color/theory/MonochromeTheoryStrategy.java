@@ -39,7 +39,7 @@ public class MonochromeTheoryStrategy implements ColorTheoryStrategy {
 
     public static final String NAME = "monochrome";
 
-    private static final float wrap(float x, float min, float threshold,
+    private static float wrap(float x, float min, float threshold,
             float plus) {
         if (x - min < threshold) {
             return x + plus;
@@ -54,6 +54,7 @@ public class MonochromeTheoryStrategy implements ColorTheoryStrategy {
      * @see
      * toxi.color.ColorTheoryStrategy#createListFromcolor(toxi.color.TColor)
      */
+    @Override
     public ColorList createListFromColor(ReadonlyTColor src) {
         ColorList colors = new ColorList(src);
         TColor c = src.copy();
@@ -83,6 +84,7 @@ public class MonochromeTheoryStrategy implements ColorTheoryStrategy {
      * 
      * @see toxi.color.ColorTheoryStrategy#getName()
      */
+    @Override
     public String getName() {
         return NAME;
     }

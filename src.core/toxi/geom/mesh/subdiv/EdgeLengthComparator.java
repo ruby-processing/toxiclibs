@@ -37,6 +37,7 @@ import toxi.geom.mesh.WingedEdge;
  */
 public class EdgeLengthComparator implements Comparator<WingedEdge> {
 
+    @Override
     public int compare(WingedEdge e1, WingedEdge e2) {
         return (int) (e2.getLengthSquared() - e1.getLengthSquared());
     }

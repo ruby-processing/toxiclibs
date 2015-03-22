@@ -27,10 +27,13 @@
 
 package toxi.geom.mesh;
 
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import toxi.geom.Vec3D;
 
@@ -54,20 +57,16 @@ public class OBJWriter {
     protected int numNormalsWritten = 0;
 
     public void beginSave(OutputStream stream) {
-        try {
             objStream = stream;
             handleBeginSave();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public void beginSave(String fn) {
         try {
             objStream = new FileOutputStream(fn);
             handleBeginSave();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(OBJWriter.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -77,8 +76,8 @@ public class OBJWriter {
             objWriter.close();
             objStream.flush();
             objStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException ex) {
+            Logger.getLogger(OBJWriter.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -31,6 +31,7 @@ import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -73,6 +74,7 @@ public class TypedProperties extends Properties {
      * 
      * @param id
      *            prop name
+     * @param defaultArray
      * @return prop values as array
      */
     public byte[] getByteArray(String id, byte[] defaultArray) {
@@ -124,6 +126,7 @@ public class TypedProperties extends Properties {
      * 
      * @param id
      *            prop name
+     * @param defaultArray
      * @return prop items as array
      */
     public float[] getFloatArray(String id, float[] defaultArray) {
@@ -190,6 +193,7 @@ public class TypedProperties extends Properties {
      * 
      * @param id
      *            prop name
+     * @param defaultArray
      * @return prop items as array
      */
     public int[] getIntArray(String id, int[] defaultArray) {
@@ -254,13 +258,13 @@ public class TypedProperties extends Properties {
             load(new FileInputStream(path));
             return true;
         } catch (Exception e) {
-            logger.warning("error opening config file: " + path);
+            logger.log(Level.WARNING, "error opening config file: {0}", path);
             return false;
         }
     }
 
     public HashMap<String, String> toHashMap() {
-        HashMap<String, String> map = new HashMap<String, String>();
+        HashMap<String, String> map = new HashMap<>();
         for (String id : stringPropertyNames()) {
             map.put(id, getProperty(id));
         }

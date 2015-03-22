@@ -45,6 +45,7 @@ public class SingleComplementStrategy implements ColorTheoryStrategy {
      * @see
      * toxi.color.ColorTheoryStrategy#createListFromcolor(toxi.color.TColor)
      */
+    @Override
     public ColorList createListFromColor(ReadonlyTColor src) {
         ColorList list = new ColorList(src);
         list.add(src.getComplement());
@@ -56,6 +57,7 @@ public class SingleComplementStrategy implements ColorTheoryStrategy {
      * 
      * @see toxi.color.ColorTheoryStrategy#getName()
      */
+    @Override
     public String getName() {
         return NAME;
     }

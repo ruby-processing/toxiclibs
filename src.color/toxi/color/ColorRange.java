@@ -28,6 +28,8 @@ package toxi.color;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import toxi.math.MathUtils;
 import toxi.util.datatypes.FloatRange;
@@ -131,7 +133,7 @@ public class ColorRange {
     /**
      * List of ColorRange presets.
      */
-    public static final HashMap<String, ColorRange> PRESETS = new HashMap<String, ColorRange>();
+    public static final HashMap<String, ColorRange> PRESETS = new HashMap<>();
 
     private static int UNTITLED_ID = 1;
 
@@ -147,18 +149,16 @@ public class ColorRange {
 
     static {
         Field[] fields = ColorRange.class.getDeclaredFields();
-        try {
             for (Field f : fields) {
                 if (f.getType() == ColorRange.class) {
                     String id = f.getName();
-                    PRESETS.put(id, (ColorRange) f.get(null));
+                    try {
+                        PRESETS.put(id, (ColorRange) f.get(null));
+                    } catch (IllegalArgumentException | IllegalAccessException ex) {
+                        Logger.getLogger(ColorRange.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
             }
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -211,13 +211,13 @@ public class ColorRange {
     public ColorRange(FloatRange hue, FloatRange sat, FloatRange bri,
             FloatRange alpha, FloatRange black, FloatRange white, String name) {
         super();
-        hueConstraint = new GenericSet<FloatRange>(hue != null ? hue
+        hueConstraint = new GenericSet<>(hue != null ? hue
                 : new FloatRange(0, 1));
-        saturationConstraint = new GenericSet<FloatRange>(sat != null ? sat
+        saturationConstraint = new GenericSet<>(sat != null ? sat
                 : new FloatRange(0, 1));
-        brightnessConstraint = new GenericSet<FloatRange>(bri != null ? bri
+        brightnessConstraint = new GenericSet<>(bri != null ? bri
                 : new FloatRange(0, 1));
-        alphaConstraint = new GenericSet<FloatRange>(alpha != null ? alpha
+        alphaConstraint = new GenericSet<>(alpha != null ? alpha
                 : new FloatRange(1, 1));
         if (black == null) {
             this.black = new FloatRange(0, 0);
@@ -323,7 +323,7 @@ public class ColorRange {
      *            color to use as constraint
      * @return itself
      */
-    public ColorRange add(ReadonlyTColor c) {
+    public final ColorRange add(ReadonlyTColor c) {
         hueConstraint.add(new FloatRange(c.hue(), c.hue()));
         saturationConstraint
                 .add(new FloatRange(c.saturation(), c.saturation()));
@@ -487,9 +487,9 @@ public class ColorRange {
 
         if (c != null) {
             float hue = c.hue() + variance * MathUtils.normalizedRandom();
-            range.hueConstraint = new GenericSet<FloatRange>(new FloatRange(
+            range.hueConstraint = new GenericSet<>(new FloatRange(
                     hue, hue));
-            range.alphaConstraint = new GenericSet<FloatRange>(new FloatRange(
+            range.alphaConstraint = new GenericSet<>(new FloatRange(
                     c.alpha(), c.alpha()));
         } else {
             range.hueConstraint = hueConstraint.copy();

@@ -32,18 +32,25 @@ package toxi.color;
  */
 public class AlphaAccessor extends AccessCriteria {
 
+    @Override
     public int compare(ReadonlyTColor a, ReadonlyTColor b) {
         float aa = a.alpha();
         float ba = b.alpha();
         return aa < ba ? -1 : aa > ba ? 1 : 0;
     }
 
+    /**
+     *
+     * @param col
+     * @return
+     */
+    @Override
     public float getComponentValueFor(ReadonlyTColor col) {
         return col.alpha();
     }
 
+    @Override
     public void setComponentValueFor(TColor col, float value) {
         col.setAlpha(value);
     }
-
 }

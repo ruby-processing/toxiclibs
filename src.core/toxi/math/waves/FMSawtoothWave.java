@@ -93,6 +93,7 @@ public class FMSawtoothWave extends AbstractWave {
      * 
      * @see toxi.math.waves.AbstractWave#reset()
      */
+    @Override
     public void reset() {
         super.reset();
         fmod.reset();
@@ -103,8 +104,10 @@ public class FMSawtoothWave extends AbstractWave {
      * update() method on the modulating wave since this is handled
      * automatically by this method.
      * 
+     * @return 
      * @see toxi.math.waves.AbstractWave#update()
      */
+    @Override
     public float update() {
         value = ((phase / TWO_PI) * 2 - 1) * amp + offset;
         cyclePhase(frequency + fmod.update());

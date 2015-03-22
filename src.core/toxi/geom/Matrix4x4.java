@@ -366,7 +366,7 @@ public class Matrix4x4 {
         return this;
     }
 
-    private final void init() {
+    private void init() {
         matrix = new double[][] {
                 new double[4], new double[4], new double[4], new double[4]
         };
@@ -493,9 +493,15 @@ public class Matrix4x4 {
         return set(s.x, s.y, s.z, -s.dot(eye), t.x, t.y, t.z, -t.dot(eye), f.x,
                 f.y, f.z, -f.dot(eye), 0, 0, 0, 1);
     }
+    
+    /**
+     * 
+     * @param factor
+     * @return 
+     */
 
     public Matrix4x4 multiply(double factor) {
-        return new Matrix4x4(this).multiply(factor);
+        return new Matrix4x4(this).multiplySelf(factor);
     }
 
     /**
@@ -759,6 +765,7 @@ public class Matrix4x4 {
      * 
      * @see java.lang.Object#toString()
      */
+    @Override
     public String toString() {
         return "| " + matrix[0][0] + " " + matrix[0][1] + " " + matrix[0][2]
                 + " " + matrix[0][3] + " |\n" + "| " + matrix[1][0] + " "

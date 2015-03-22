@@ -34,7 +34,7 @@ import toxi.geom.Vec2D;
 
 public final class WEFace extends Face {
 
-    public List<WingedEdge> edges = new ArrayList<WingedEdge>(3);
+    public List<WingedEdge> edges = new ArrayList<>(3);
 
     public WEFace(WEVertex a, WEVertex b, WEVertex c) {
         super(a, b, c);

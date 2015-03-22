@@ -136,7 +136,7 @@ public class ScaleMap {
      * @param min
      * @param max
      */
-    public void setInputRange(double min, double max) {
+    public final void setInputRange(double min, double max) {
         in = new DoubleRange(min, max);
         interval = max - min;
     }
@@ -160,7 +160,7 @@ public class ScaleMap {
      * @param max
      *            new max output value
      */
-    public void setOutputRange(double min, double max) {
+    public final void setOutputRange(double min, double max) {
         out = new DoubleRange(min, max);
         mapRange = max - min;
     }

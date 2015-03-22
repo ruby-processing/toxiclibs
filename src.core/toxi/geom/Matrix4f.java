@@ -544,17 +544,17 @@ public class Matrix4f implements java.io.Serializable, Cloneable {
      * @see java.lang.Cloneable
      * @since vecmath 1.3
      */
-    public Object clone() {
-        Matrix4f m1 = null;
-        try {
-            m1 = (Matrix4f) super.clone();
-        } catch (CloneNotSupportedException e) {
-            // this shouldn't happen, since we are Cloneable
-            throw new InternalError();
-        }
-
-        return m1;
-    }
+//    public Object clone() {
+//        Matrix4f m1 = null;
+//        try {
+//            m1 = (Matrix4f) super.clone();
+//        } catch (CloneNotSupportedException e) {
+//            // this shouldn't happen, since we are Cloneable
+//            throw new InternalError();
+//        }
+//
+//        return m1;
+//    }
 
     /**
      * Computes the determinate of this matrix.
@@ -592,6 +592,7 @@ public class Matrix4f implements java.io.Serializable, Cloneable {
      *            the matrix to be compared to this matrix
      * @param epsilon
      *            the threshold value
+     * @return 
      */
     public boolean epsilonEquals(Matrix4f m1, float epsilon) {
 
@@ -686,6 +687,7 @@ public class Matrix4f implements java.io.Serializable, Cloneable {
      *            the matrix with which the comparison is made.
      * @return true or false
      */
+    @Override
     public boolean equals(Object t1) {
         try {
             Matrix4f m2 = (Matrix4f) t1;
@@ -1256,7 +1258,7 @@ public class Matrix4f implements java.io.Serializable, Cloneable {
         return ((float) MathUtils.max(tmp_scale));
     }
 
-    private final void getScaleRotate(double scales[], double rots[]) {
+    private void getScaleRotate(double scales[], double rots[]) {
 
         double[] tmp = new double[9]; // scratch matrix
         tmp[0] = m00;
@@ -1283,6 +1285,7 @@ public class Matrix4f implements java.io.Serializable, Cloneable {
      * 
      * @return the integer hash code value
      */
+    @Override
     public int hashCode() {
         long bits = 1L;
         bits = 31L * bits + VecMathUtil.floatToIntBits(m00);
@@ -3236,6 +3239,7 @@ public class Matrix4f implements java.io.Serializable, Cloneable {
      * 
      * @return the String representation
      */
+    @Override
     public String toString() {
         return this.m00 + ", " + this.m01 + ", " + this.m02 + ", " + this.m03
                 + "\n" + this.m10 + ", " + this.m11 + ", " + this.m12 + ", "

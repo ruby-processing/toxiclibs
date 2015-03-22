@@ -35,6 +35,7 @@ public class YAxisCylinder extends AxisAlignedCylinder {
         super(pos, radius, length);
     }
 
+    @Override
     public boolean containsPoint(ReadonlyVec3D p) {
         if (MathUtils.abs(p.y() - pos.y) < length * 0.5) {
             float dx = p.x() - pos.x;
@@ -46,6 +47,7 @@ public class YAxisCylinder extends AxisAlignedCylinder {
         return false;
     }
 
+    @Override
     public Vec3D.Axis getMajorAxis() {
         return Vec3D.Axis.Y;
     }

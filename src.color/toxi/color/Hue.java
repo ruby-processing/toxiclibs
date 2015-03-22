@@ -38,8 +38,8 @@ import toxi.math.MathUtils;
  */
 public class Hue {
 
-    protected static final HashMap<String, Hue> namedHues = new HashMap<String, Hue>();
-    protected static final ArrayList<Hue> primaryHues = new ArrayList<Hue>();
+    protected static final HashMap<String, Hue> namedHues = new HashMap<>();
+    protected static final ArrayList<Hue> primaryHues = new ArrayList<>();
 
     public static final Hue RED = new Hue("red", 0, true);
     public static final Hue ORANGE = new Hue("orange", 30 / 360.0f, true);

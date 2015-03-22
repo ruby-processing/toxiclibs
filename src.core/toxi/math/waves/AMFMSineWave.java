@@ -101,6 +101,7 @@ public class AMFMSineWave extends AbstractWave {
      * 
      * @see toxi.math.waves.AbstractWave#reset()
      */
+    @Override
     public void reset() {
         super.reset();
         fmod.reset();
@@ -112,8 +113,10 @@ public class AMFMSineWave extends AbstractWave {
      * update() method on the 2 modulating wave since this is handled
      * automatically by this method.
      * 
+     * @return 
      * @see toxi.math.waves.AbstractWave#update()
      */
+    @Override
     public float update() {
         amp = amod.update();
         value = amp * (float) Math.sin(phase) + offset;

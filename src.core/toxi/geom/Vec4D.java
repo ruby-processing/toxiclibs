@@ -80,10 +80,12 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
         return this;
     }
 
+    @Override
     public final Vec4D add(ReadonlyVec4D v) {
         return new Vec4D(x + v.x(), y + v.y(), z + v.z(), w + v.w());
     }
 
+    @Override
     public final Vec4D addScaled(ReadonlyVec4D t, float s) {
         return new Vec4D(s * t.x(), s * t.y(), s * t.z(), s * t.w());
     }
@@ -104,6 +106,7 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
         return this;
     }
 
+    @Override
     public final Vec4D addXYZ(float xx, float yy, float zz) {
         return new Vec4D(x + xx, y + yy, z + zz, w);
     }
@@ -134,6 +137,7 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
      *            the other vector
      * @return the angle in radians in the range [0,PI]
      */
+    @Override
     public final float angleBetween(ReadonlyVec4D v) {
         double vDot = dot(v) / (magnitude() * v.magnitude());
         if (vDot < -1.0) {
@@ -145,14 +149,15 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
         return (float) (Math.acos(vDot));
     }
 
-    public Object clone() {
-        try {
-            return super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new InternalError();
-        }
-    }
+//    public Object clone() {
+//        try {
+//            return super.clone();
+//        } catch (CloneNotSupportedException e) {
+//            throw new InternalError();
+//        }
+//    }
 
+    @Override
     public int compareTo(ReadonlyVec4D v) {
         if (x == v.x() && y == v.y() && z == v.z() && w == v.w()) {
             return 0;
@@ -165,10 +170,12 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
         return +1;
     }
 
+    @Override
     public final Vec4D copy() {
         return new Vec4D(this);
     }
 
+    @Override
     public final float distanceTo(ReadonlyVec4D v) {
         if (v != null) {
             final float dx = x - v.x();
@@ -181,6 +188,7 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
         }
     }
 
+    @Override
     public final float distanceToSquared(ReadonlyVec4D v) {
         if (v != null) {
             final float dx = x - v.x();
@@ -193,6 +201,7 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
         }
     }
 
+    @Override
     public final float dot(ReadonlyVec4D v) {
         return (x * v.x() + y * v.y() + z * v.z() + w * v.w());
     }
@@ -205,15 +214,13 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
      *            the Object with which the comparison is made
      * @return true or false
      */
+    @Override
     public boolean equals(Object v) {
-        try {
+        if (v instanceof ReadonlyVec4D) {
             ReadonlyVec4D vv = (ReadonlyVec4D) v;
             return (x == vv.x() && y == vv.y() && z == vv.z() && w == vv.w());
-        } catch (NullPointerException e) {
-            return false;
-        } catch (ClassCastException e) {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -232,6 +239,7 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
         }
     }
 
+    @Override
     public boolean equalsWithTolerance(ReadonlyVec4D v, float tolerance) {
         try {
             float diff = x - v.x();
@@ -259,23 +267,23 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
             if (Float.isNaN(diff)) {
                 return false;
             }
-            if ((diff < 0 ? -diff : diff) > tolerance) {
-                return false;
-            }
-            return true;
+            return ((diff < 0 ? -diff : diff) > tolerance);
         } catch (NullPointerException e) {
             return false;
         }
     }
 
+    @Override
     public Vec4D getAbs() {
         return copy().abs();
     }
 
+    @Override
     public final Vec4D getInvertedXYZ() {
         return copy().invertXYZ();
     }
 
+    @Override
     public Vec4D getMapped(ScaleMap map) {
         return new Vec4D((float) map.getClippedValueFor(x),
                 (float) map.getClippedValueFor(y),
@@ -283,44 +291,58 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
                 (float) map.getClippedValueFor(w));
     }
 
+    @Override
     public Vec4D getMappedXYZ(ScaleMap map) {
         return new Vec4D((float) map.getClippedValueFor(x),
                 (float) map.getClippedValueFor(y),
                 (float) map.getClippedValueFor(z), w);
     }
 
+    @Override
     public Vec4D getNormalized() {
         return copy().normalize();
     }
 
+    @Override
     public Vec4D getNormalizedTo(float len) {
         return copy().normalizeTo(len);
     }
 
+    @Override
     public Vec4D getRotatedAroundAxis(ReadonlyVec3D axis, float theta) {
         return copy().rotateAroundAxis(axis, theta);
     }
 
+    @Override
     public Vec4D getRotatedX(float theta) {
         return copy().rotateX(theta);
     }
 
+    @Override
     public Vec4D getRotatedY(float theta) {
         return copy().rotateY(theta);
     }
 
+    @Override
     public Vec4D getRotatedZ(float theta) {
         return copy().rotateZ(theta);
     }
 
+    @Override
     public Vec4D getRoundedXYZTo(float prec) {
         return copy().roundXYZTo(prec);
     }
 
+    @Override
     public Vec4D getUnweighted() {
         return copy().unweight();
     }
 
+    /**
+     *
+     * @return
+     */
+    @Override
     public Vec4D getWeighted() {
         return copy().weight();
     }
@@ -334,6 +356,7 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
      * 
      * @return the integer hash code value
      */
+    @Override
     public int hashCode() {
         long bits = 1L;
         bits = 31L * bits + VecMathUtil.floatToIntBits(x);
@@ -343,10 +366,12 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
         return (int) (bits ^ (bits >> 32));
     }
 
+    @Override
     public final Vec4D interpolateTo(ReadonlyVec4D v, float t) {
         return copy().interpolateToSelf(v, t);
     }
 
+    @Override
     public final Vec4D interpolateTo(ReadonlyVec4D v, float f,
             InterpolateStrategy s) {
         return new Vec4D(s.interpolate(x, v.x(), f),
@@ -378,6 +403,7 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
         return this;
     }
 
+    @Override
     public final boolean isZeroVector() {
         return MathUtils.abs(x) < MathUtils.EPS
                 && MathUtils.abs(y) < MathUtils.EPS
@@ -385,10 +411,12 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
                 && MathUtils.abs(w) < MathUtils.EPS;
     }
 
+    @Override
     public final float magnitude() {
         return (float) Math.sqrt(x * x + y * y + z * z + w * w);
     }
 
+    @Override
     public final float magSquared() {
         return x * x + y * y + z * z + w * w;
     }
@@ -527,14 +555,17 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
         return this;
     }
 
+    @Override
     public final Vec4D scale(float s) {
         return new Vec4D(x * s, y * s, z * s, w * s);
     }
 
+    @Override
     public final Vec4D scale(float xx, float yy, float zz, float ww) {
         return new Vec4D(x * xx, y * yy, z * zz, w * ww);
     }
 
+    @Override
     public Vec4D scale(ReadonlyVec4D s) {
         return copy().scaleSelf(s);
     }
@@ -626,6 +657,7 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
         return this;
     }
 
+    @Override
     public final Vec4D sub(ReadonlyVec4D v) {
         return new Vec4D(x - v.x(), y - v.y(), z - v.z(), w - v.w());
     }
@@ -638,6 +670,7 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
         return this;
     }
 
+    @Override
     public final Vec4D subXYZ(float xx, float yy, float zz) {
         return new Vec4D(x - xx, y - yy, z - zz, w);
     }
@@ -664,12 +697,14 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
         return new Vec3D(x, y, z);
     }
 
+    @Override
     public float[] toArray() {
         return new float[] {
                 x, y, z, w
         };
     }
 
+    @Override
     public String toString() {
         return "[x=" + x + ", y=" + y + ", z=" + z + ", w=" + w + "]";
     }
@@ -684,6 +719,7 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
     /**
      * Divides each coordinate bythe weight with and sets the coordinate to the
      * newly calculatd ones.
+     * @return 
      */
     public final Vec4D unweight() {
         float iw = MathUtils.abs(w) > MathUtils.EPS ? 1f / w : 0;
@@ -693,6 +729,7 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
         return this;
     }
 
+    @Override
     public final Vec3D unweightInto(Vec3D out) {
         float iw = MathUtils.abs(w) > MathUtils.EPS ? 1f / w : 0;
         out.x = x * iw;
@@ -704,6 +741,7 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
     /**
      * @return the w
      */
+    @Override
     public final float w() {
         return w;
     }
@@ -721,6 +759,7 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
         return this;
     }
 
+    @Override
     public final Vec3D weightInto(Vec3D out) {
         out.x = x * w;
         out.y = y * w;
@@ -731,6 +770,7 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
     /**
      * @return the x
      */
+    @Override
     public final float x() {
         return x;
     }
@@ -738,6 +778,7 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
     /**
      * @return the y
      */
+    @Override
     public final float y() {
         return y;
     }
@@ -745,6 +786,7 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
     /**
      * @return the z
      */
+    @Override
     public final float z() {
         return z;
     }

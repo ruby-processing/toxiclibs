@@ -47,6 +47,7 @@ public interface Mesh3D {
      * @param a
      * @param b
      * @param c
+     * @return 
      */
     public Mesh3D addFace(Vec3D a, Vec3D b, Vec3D c);
 
@@ -79,11 +80,13 @@ public interface Mesh3D {
      * 
      * @param origin
      *            new centroid or null (defaults to {0,0,0})
+     * @return 
      */
     public AABB center(ReadonlyVec3D origin);
 
     /**
      * Clears all counters, and vertex & face buffers.
+     * @return 
      */
     public Mesh3D clear();
 
@@ -96,6 +99,7 @@ public interface Mesh3D {
 
     /**
      * Re-calculates all face normals.
+     * @return 
      */
     public Mesh3D computeFaceNormals();
 

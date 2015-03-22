@@ -87,6 +87,7 @@ public class Line3D {
                     && coeff[1] >= 0 && coeff[1] <= 1;
         }
 
+        @Override
         public String toString() {
             return "type: " + type + " line: " + line;
         }
@@ -115,7 +116,7 @@ public class Line3D {
     public static final List<Vec3D> splitIntoSegments(Vec3D a, Vec3D b,
             float stepLength, List<Vec3D> segments, boolean addFirst) {
         if (segments == null) {
-            segments = new ArrayList<Vec3D>();
+            segments = new ArrayList<>();
         }
         if (addFirst) {
             segments.add(a.copy());
@@ -164,6 +165,8 @@ public class Line3D {
      * Code based on original by Paul Bourke:<br/>
      * http://local.wasp.uwa.edu.au/~pbourke/geometry/lineline3d/
      * </p>
+     * @param l
+     * @return 
      */
     public LineIntersection closestLineTo(Line3D l) {
         Vec3D p43 = l.a.sub(l.b);
@@ -278,6 +281,7 @@ public class Line3D {
      * @see java.lang.Object#hashCode()
      * @see #hashCodeWithDirection()
      */
+    @Override
     public int hashCode() {
         return a.hashCode() + b.hashCode();
     }
@@ -344,6 +348,7 @@ public class Line3D {
         return new Ray3D(a.copy(), getDirection());
     }
 
+    @Override
     public String toString() {
         return a.toString() + " -> " + b.toString();
     }

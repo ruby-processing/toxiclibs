@@ -17,10 +17,12 @@ public class BoxIntersector implements Intersector3D {
         return box;
     }
 
+    @Override
     public IsectData3D getIntersectionData() {
         return isec;
     }
 
+    @Override
     public boolean intersectsRay(Ray3D ray) {
         final Vec3D pos = box.intersectsRay(ray, 0, Float.MAX_VALUE);
         isec.pos = pos;

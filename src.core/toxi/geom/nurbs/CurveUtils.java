@@ -31,15 +31,15 @@ public final class CurveUtils {
             throw new IllegalArgumentException("Must be at least 2 curves");
         }
         int degree = curves[0].getDegree();
-        LinkedList<Float> knots = new LinkedList<Float>();
+        LinkedList<Float> knots = new LinkedList<>();
         for (int i = 0; i <= degree; i++) {
             knots.add(0f);
         }
-        LinkedList<Vec4D> cps = new LinkedList<Vec4D>();
+        LinkedList<Vec4D> cps = new LinkedList<>();
         cps.add(curves[0].getControlPoints()[0]);
-        for (int i = 0; i < curves.length; i++) {
-            float[] u = curves[i].getKnots();
-            if (degree != curves[i].getDegree()) {
+        for (NurbsCurve curve : curves) {
+            float[] u = curve.getKnots();
+            if (degree != curve.getDegree()) {
                 throw new IllegalArgumentException(
                         "Curves must have equal degrees");
             }
@@ -51,8 +51,7 @@ public final class CurveUtils {
             for (int j = 0; j < degree; j++) {
                 knots.addLast(lastU);
             }
-
-            Vec4D[] pts = curves[i].getControlPoints();
+            Vec4D[] pts = curve.getControlPoints();
             for (int j = 1; j < pts.length; j++) {
                 cps.addLast(pts[j]);
             }
@@ -218,9 +217,7 @@ public final class CurveUtils {
         }
         int nh = mh - ph - 1;
         float[] uNew = new float[mh + 1];
-        for (int i = 0; i < uNew.length; i++) {
-            uNew[i] = uh[i];
-        }
+        System.arraycopy(uh, 0, uNew, 0, uNew.length);
         Vec4D[] cpNew = new Vec4D[nh + 1];
         for (int i = 0; i < cpNew.length; i++) {
             cpNew[i] = new Vec4D(cph[i]);

@@ -52,6 +52,7 @@ public class ZoomLensInterpolation implements InterpolateStrategy {
         rightImpl.setFlipped(lensStrength < 0);
     }
 
+    @Override
     public double interpolate(double min, double max, double t) {
         double val = min + (max - min) * t;
         if (t < lensPos) {
@@ -65,6 +66,7 @@ public class ZoomLensInterpolation implements InterpolateStrategy {
         return val;
     }
 
+    @Override
     public float interpolate(float min, float max, float t) {
         float val = min + (max - min) * t;
         if (t < lensPos) {

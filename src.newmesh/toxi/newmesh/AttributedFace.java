@@ -15,6 +15,7 @@ public class AttributedFace {
         this.attribs = attribs;
     }
 
+    @Override
     public String toString() {
         return String.format("a=%d,b=%d,c=%d,n=%d", a, b, c, normal);
     }

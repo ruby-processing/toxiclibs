@@ -34,7 +34,7 @@ import toxi.geom.Line3D;
 
 public class WingedEdge extends Line3D {
 
-    public List<WEFace> faces = new ArrayList<WEFace>(2);
+    public List<WEFace> faces = new ArrayList<>(2);
     public final int id;
 
     public WingedEdge(WEVertex a, WEVertex b, WEFace f, int id) {
@@ -43,7 +43,7 @@ public class WingedEdge extends Line3D {
         addFace(f);
     }
 
-    public WingedEdge addFace(WEFace f) {
+    public final WingedEdge addFace(WEFace f) {
         faces.add(f);
         return this;
     }
@@ -73,6 +73,7 @@ public class WingedEdge extends Line3D {
         ((WEVertex) b).edges.remove(this);
     }
 
+    @Override
     public String toString() {
         return "id: " + id + " " + super.toString() + " f: " + faces.size();
     }

@@ -115,8 +115,8 @@ public class VolumetricTest extends PApplet {
     }
 
     public void setup() {
-        size(100, 100);
-        // size(1024, 768, OPENGL);
+        //size(100, 100);
+        size(1024, 768, P3D);
         // hint(ENABLE_OPENGL_4X_SMOOTH);
         strokeWeight(0.5f);
         VolumetricSpace volume = new VolumetricSpaceArray(SCALE, DIMX, DIMY,

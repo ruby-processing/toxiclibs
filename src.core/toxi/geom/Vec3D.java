@@ -255,14 +255,17 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
         return this;
     }
 
+    @Override
     public final Vec3D add(float a, float b, float c) {
         return new Vec3D(x + a, y + b, z + c);
     }
 
+    @Override
     public Vec3D add(ReadonlyVec3D v) {
         return new Vec3D(x + v.x(), y + v.y(), z + v.z());
     }
 
+    @Override
     public final Vec3D add(Vec3D v) {
         return new Vec3D(x + v.x, y + v.y, z + v.z);
     }
@@ -308,10 +311,12 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
         return this;
     }
 
+    @Override
     public final float angleBetween(ReadonlyVec3D v) {
         return (float) Math.acos(dot(v));
     }
 
+    @Override
     public final float angleBetween(ReadonlyVec3D v, boolean forceNormalize) {
         float theta;
         if (forceNormalize) {
@@ -332,6 +337,7 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
         return this;
     }
 
+    @Override
     public int compareTo(ReadonlyVec3D v) {
         if (x == v.x() && y == v.y() && z == v.z()) {
             return 0;
@@ -371,10 +377,12 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
         return this;
     }
 
+    @Override
     public Vec3D copy() {
         return new Vec3D(this);
     }
 
+    @Override
     public final Vec3D cross(ReadonlyVec3D v) {
         return new Vec3D(y * v.z() - v.y() * z, z * v.x() - v.z() * x, x
                 * v.y() - v.x() * y);
@@ -385,6 +393,7 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
                 * y);
     }
 
+    @Override
     public final Vec3D crossInto(ReadonlyVec3D v, Vec3D result) {
         final float vx = v.x();
         final float vy = v.y();
@@ -414,6 +423,7 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
         return this;
     }
 
+    @Override
     public final float distanceTo(ReadonlyVec3D v) {
         if (v != null) {
             final float dx = x - v.x();
@@ -425,6 +435,7 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
         }
     }
 
+    @Override
     public final float distanceToSquared(ReadonlyVec3D v) {
         if (v != null) {
             final float dx = x - v.x();
@@ -436,6 +447,7 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
         }
     }
 
+    @Override
     public final float dot(ReadonlyVec3D v) {
         return x * v.x() + y * v.y() + z * v.z();
     }
@@ -452,15 +464,13 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
      *            the Object with which the comparison is made
      * @return true or false
      */
+    @Override
     public boolean equals(Object v) {
-        try {
+        if (v instanceof ReadonlyVec3D) {
             ReadonlyVec3D vv = (ReadonlyVec3D) v;
             return (x == vv.x() && y == vv.y() && z == vv.z());
-        } catch (NullPointerException e) {
-            return false;
-        } catch (ClassCastException e) {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -479,6 +489,7 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
         }
     }
 
+    @Override
     public boolean equalsWithTolerance(ReadonlyVec3D v, float tolerance) {
         try {
             float diff = x - v.x();
@@ -499,10 +510,7 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
             if (Float.isNaN(diff)) {
                 return false;
             }
-            if ((diff < 0 ? -diff : diff) > tolerance) {
-                return false;
-            }
-            return true;
+            return ((diff < 0 ? -diff : diff) > tolerance);
         } catch (NullPointerException e) {
             return false;
         }
@@ -534,10 +542,12 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
         return this;
     }
 
+    @Override
     public final Vec3D getAbs() {
         return new Vec3D(this).abs();
     }
 
+    @Override
     public Vec3D getCartesian() {
         return copy().toCartesian();
     }
@@ -549,6 +559,7 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
      * 
      * @return Axis enum or null
      */
+    @Override
     public final Axis getClosestAxis() {
         float ax = MathUtils.abs(x);
         float ay = MathUtils.abs(y);
@@ -565,6 +576,12 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
         return null;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @Override
     public final float getComponent(Axis id) {
         switch (id) {
             case X:
@@ -577,6 +594,7 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
         throw new IllegalArgumentException();
     }
 
+    @Override
     public final float getComponent(int id) {
         switch (id) {
             case 0:
@@ -594,6 +612,7 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
      * 
      * @see toxi.geom.ReadonlyVec3D#getConstrained(toxi.geom.AABB)
      */
+    @Override
     public final Vec3D getConstrained(AABB box) {
         return new Vec3D(this).constrain(box);
     }
@@ -603,6 +622,7 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
      * 
      * @see toxi.geom.ReadonlyVec3D#getFloored()
      */
+    @Override
     public final Vec3D getFloored() {
         return new Vec3D(this).floor();
     }
@@ -612,6 +632,7 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
      * 
      * @see toxi.geom.ReadonlyVec3D#getFrac()
      */
+    @Override
     public final Vec3D getFrac() {
         return new Vec3D(this).frac();
     }
@@ -621,6 +642,7 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
      * 
      * @see toxi.geom.ReadonlyVec3D#getInverted()
      */
+    @Override
     public final Vec3D getInverted() {
         return new Vec3D(-x, -y, -z);
     }
@@ -630,6 +652,7 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
      * 
      * @see toxi.geom.ReadonlyVec3D#getLimited(float)
      */
+    @Override
     public final Vec3D getLimited(float lim) {
         if (magSquared() > lim * lim) {
             return getNormalizedTo(lim);
@@ -637,6 +660,7 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
         return new Vec3D(this);
     }
 
+    @Override
     public Vec3D getMapped(ScaleMap map) {
         return new Vec3D((float) map.getClippedValueFor(x),
                 (float) map.getClippedValueFor(y),
@@ -648,6 +672,7 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
      * 
      * @see toxi.geom.ReadonlyVec3D#getNormalized()
      */
+    @Override
     public final Vec3D getNormalized() {
         return new Vec3D(this).normalize();
     }
@@ -657,6 +682,7 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
      * 
      * @see toxi.geom.ReadonlyVec3D#getNormalizedTo(float)
      */
+    @Override
     public final Vec3D getNormalizedTo(float len) {
         return new Vec3D(this).normalizeTo(len);
     }
@@ -666,10 +692,12 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
      * 
      * @see toxi.geom.ReadonlyVec3D#getReciprocal()
      */
+    @Override
     public final Vec3D getReciprocal() {
         return copy().reciprocal();
     }
 
+    @Override
     public final Vec3D getReflected(ReadonlyVec3D normal) {
         return copy().reflect(normal);
     }
@@ -679,6 +707,7 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
      * 
      * @see toxi.geom.ReadonlyVec3D#getRotatedAroundAxis(toxi.geom.Vec3D, float)
      */
+    @Override
     public final Vec3D getRotatedAroundAxis(ReadonlyVec3D axis, float theta) {
         return new Vec3D(this).rotateAroundAxis(axis, theta);
     }
@@ -688,6 +717,7 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
      * 
      * @see toxi.geom.ReadonlyVec3D#getRotatedX(float)
      */
+    @Override
     public final Vec3D getRotatedX(float theta) {
         return new Vec3D(this).rotateX(theta);
     }
@@ -697,6 +727,7 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
      * 
      * @see toxi.geom.ReadonlyVec3D#getRotatedY(float)
      */
+    @Override
     public final Vec3D getRotatedY(float theta) {
         return new Vec3D(this).rotateY(theta);
     }
@@ -706,10 +737,12 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
      * 
      * @see toxi.geom.ReadonlyVec3D#getRotatedZ(float)
      */
+    @Override
     public final Vec3D getRotatedZ(float theta) {
         return new Vec3D(this).rotateZ(theta);
     }
 
+    @Override
     public Vec3D getRoundedTo(float prec) {
         return copy().roundTo(prec);
     }
@@ -719,10 +752,12 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
      * 
      * @see toxi.geom.ReadonlyVec3D#getSignum()
      */
+    @Override
     public final Vec3D getSignum() {
         return new Vec3D(this).signum();
     }
 
+    @Override
     public Vec3D getSpherical() {
         return copy().toSpherical();
     }
@@ -736,6 +771,7 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
      * 
      * @return the integer hash code value
      */
+    @Override
     public int hashCode() {
         long bits = 1L;
         bits = 31L * bits + VecMathUtil.floatToIntBits(x);
@@ -749,6 +785,7 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
      * 
      * @see toxi.geom.ReadonlyVec3D#headingXY()
      */
+    @Override
     public final float headingXY() {
         return (float) Math.atan2(y, x);
     }
@@ -758,6 +795,7 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
      * 
      * @see toxi.geom.ReadonlyVec3D#headingXZ()
      */
+    @Override
     public final float headingXZ() {
         return (float) Math.atan2(z, x);
     }
@@ -767,6 +805,7 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
      * 
      * @see toxi.geom.ReadonlyVec3D#headingYZ()
      */
+    @Override
     public final float headingYZ() {
         return (float) Math.atan2(y, z);
     }
@@ -775,11 +814,13 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
         return this;
     }
 
+    @Override
     public final Vec3D interpolateTo(ReadonlyVec3D v, float f) {
         return new Vec3D(x + (v.x() - x) * f, y + (v.y() - y) * f, z
                 + (v.z() - z) * f);
     }
 
+    @Override
     public final Vec3D interpolateTo(ReadonlyVec3D v, float f,
             InterpolateStrategy s) {
         return new Vec3D(s.interpolate(x, v.x(), f),
@@ -853,6 +894,7 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
      * 
      * @see toxi.geom.ReadonlyVec3D#isInAABB(toxi.geom.AABB)
      */
+    @Override
     public boolean isInAABB(AABB box) {
         final Vec3D min = box.getMin();
         final Vec3D max = box.getMax();
@@ -862,12 +904,10 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
         if (y < min.y || y > max.y) {
             return false;
         }
-        if (z < min.z || z > max.z) {
-            return false;
-        }
-        return true;
+        return (z < min.z || z > max.z);
     }
 
+    @Override
     public boolean isInAABB(Vec3D boxOrigin, Vec3D boxExtent) {
         float w = boxExtent.x;
         if (x < boxOrigin.x - w || x > boxOrigin.x + w) {
@@ -878,12 +918,10 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
             return false;
         }
         w = boxExtent.z;
-        if (z < boxOrigin.z - w || z > boxOrigin.z + w) {
-            return false;
-        }
-        return true;
+        return (z < boxOrigin.z - w || z > boxOrigin.z + w);
     }
 
+    @Override
     public final boolean isMajorAxis(float tol) {
         float ax = MathUtils.abs(x);
         float ay = MathUtils.abs(y);
@@ -905,6 +943,7 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
         return false;
     }
 
+    @Override
     public final boolean isZeroVector() {
         return MathUtils.abs(x) < MathUtils.EPS
                 && MathUtils.abs(y) < MathUtils.EPS
@@ -988,10 +1027,12 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
         return this;
     }
 
+    @Override
     public final float magnitude() {
         return (float) Math.sqrt(x * x + y * y + z * z);
     }
 
+    @Override
     public final float magSquared() {
         return x * x + y * y + z * z;
     }
@@ -1210,14 +1251,17 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
         return this;
     }
 
+    @Override
     public Vec3D scale(float s) {
         return new Vec3D(x * s, y * s, z * s);
     }
 
+    @Override
     public Vec3D scale(float a, float b, float c) {
         return new Vec3D(x * a, y * b, z * c);
     }
 
+    @Override
     public Vec3D scale(ReadonlyVec3D s) {
         return new Vec3D(x * s.x(), y * s.y(), z * s.z());
     }
@@ -1451,10 +1495,12 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
         return this;
     }
 
+    @Override
     public final Vec3D sub(float a, float b, float c) {
         return new Vec3D(x - a, y - b, z - c);
     }
 
+    @Override
     public final Vec3D sub(ReadonlyVec3D v) {
         return new Vec3D(x - v.x(), y - v.y(), z - v.z());
     }
@@ -1504,32 +1550,39 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
         return this;
     }
 
+    @Override
     public final Vec2D to2DXY() {
         return new Vec2D(x, y);
     }
 
+    @Override
     public final Vec2D to2DXZ() {
         return new Vec2D(x, z);
     }
 
+    @Override
     public final Vec2D to2DYZ() {
         return new Vec2D(y, z);
     }
 
+    @Override
     public Vec4D to4D() {
         return new Vec4D(x, y, z, 1);
     }
 
+    @Override
     public Vec4D to4D(float w) {
         return new Vec4D(x, y, z, w);
     }
 
+    @Override
     public float[] toArray() {
         return new float[] {
                 x, y, z
         };
     }
 
+    @Override
     public float[] toArray4(float w) {
         return new float[] {
                 x, y, z, w
@@ -1558,6 +1611,7 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
         return this;
     }
 
+    @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer(48);
         sb.append("{x:").append(x).append(", y:").append(y).append(", z:")
@@ -1565,14 +1619,29 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
         return sb.toString();
     }
 
+    /**
+     *
+     * @return
+     */
+    @Override
     public final float x() {
         return x;
     }
 
+    /**
+     *
+     * @return
+     */
+    @Override
     public final float y() {
         return y;
     }
 
+    /**
+     *
+     * @return
+     */
+    @Override
     public final float z() {
         return z;
     }

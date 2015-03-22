@@ -62,7 +62,7 @@ public class ColorTheme {
     }
 
     protected String name;
-    protected ArrayList<ThemePart> parts = new ArrayList<ThemePart>();
+    protected ArrayList<ThemePart> parts = new ArrayList<>();
 
     protected float weightedSum;
 

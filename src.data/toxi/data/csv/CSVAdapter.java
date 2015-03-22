@@ -29,18 +29,22 @@ package toxi.data.csv;
 
 public class CSVAdapter implements CSVListener {
 
+    @Override
     public void csvNewItemFailure(String[] fields, CSVFieldMapper map) {
 
     }
 
+    @Override
     public void csvNewItemParsed(String[] fields, CSVFieldMapper map) {
 
     }
 
+    @Override
     public void csvParseFailure(CSVParser parser) {
 
     }
 
+    @Override
     public void csvParseSuccess(CSVParser parser) {
 
     }

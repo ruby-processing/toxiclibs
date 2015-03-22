@@ -70,6 +70,8 @@ public class PerlinNoise {
 
     /**
      * Computes the Perlin noise function value at point x.
+     * @param x
+     * @return 
      */
     public float noise(float x) {
         // is this legit? it's a dumb way to do it (but repair it later)
@@ -78,6 +80,9 @@ public class PerlinNoise {
 
     /**
      * Computes the Perlin noise function value at the point x, y.
+     * @param x
+     * @param y
+     * @return 
      */
     public float noise(float x, float y) {
         return noise(x, y, 0f);
@@ -85,6 +90,10 @@ public class PerlinNoise {
 
     /**
      * Computes the Perlin noise function value at x, y, z.
+     * @param x
+     * @param y
+     * @param z
+     * @return 
      */
     public float noise(float x, float y, float z) {
         if (perlin == null) {
@@ -206,7 +215,7 @@ public class PerlinNoise {
         }
     }
 
-    public void noiseSeed(long what) {
+    public final void noiseSeed(long what) {
         if (perlinRandom == null) {
             perlinRandom = new Random();
         }

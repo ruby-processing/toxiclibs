@@ -28,6 +28,7 @@
 package toxi.util.datatypes;
 
 import java.util.HashMap;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -42,9 +43,9 @@ public class SingletonRegistry {
      */
     public static final SingletonRegistry REGISTRY = new SingletonRegistry();
 
-    private static HashMap<String, Object> map = new HashMap<String, Object>();
+    private static final HashMap<String, Object> map = new HashMap<>();
 
-    private static Logger logger = Logger.getLogger(SingletonRegistry.class
+    private static final Logger logger = Logger.getLogger(SingletonRegistry.class
             .getName());
 
     /**
@@ -61,13 +62,13 @@ public class SingletonRegistry {
         try {
             instance = Class.forName(className).newInstance();
             map.put(className, instance);
-            logger.info("Created singleton: " + instance);
+            logger.log(Level.INFO, "Created singleton: {0}", instance);
         } catch (ClassNotFoundException cnf) {
-            logger.severe("Couldn't find class: " + className);
+            logger.log(Level.SEVERE, "Couldn''t find class: {0}", className);
         } catch (InstantiationException ie) {
-            logger.severe("Couldn't instantiate the class: " + className);
+            logger.log(Level.SEVERE, "Couldn''t instantiate the class: {0}", className);
         } catch (IllegalAccessException ia) {
-            logger.severe("Couldn't access class: " + className);
+            logger.log(Level.SEVERE, "Couldn''t access class: {0}", className);
         }
         return instance;
     }

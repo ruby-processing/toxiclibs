@@ -43,7 +43,7 @@ public class Voronoi {
 
     protected DelaunayTriangulation delaunay;
     protected DelaunayTriangle initialTriangle;
-    protected List<Vec2D> sites = new ArrayList<Vec2D>();
+    protected List<Vec2D> sites = new ArrayList<>();
 
     public Voronoi() {
         this(DEFAULT_SIZE);
@@ -68,8 +68,8 @@ public class Voronoi {
     }
 
     public List<Polygon2D> getRegions() {
-        List<Polygon2D> regions = new LinkedList<Polygon2D>();
-        HashSet<DelaunayVertex> done = new HashSet<DelaunayVertex>(
+        List<Polygon2D> regions = new LinkedList<>();
+        HashSet<DelaunayVertex> done = new HashSet<>(
                 initialTriangle);
         for (DelaunayTriangle triangle : delaunay) {
             for (DelaunayVertex site : triangle) {
@@ -96,7 +96,7 @@ public class Voronoi {
     }
 
     public List<Triangle2D> getTriangles() {
-        List<Triangle2D> tris = new ArrayList<Triangle2D>();
+        List<Triangle2D> tris = new ArrayList<>();
         for (DelaunayTriangle t : delaunay) {
             tris.add(new Triangle2D(t.get(0).toVec2D(), t.get(1).toVec2D(), t
                     .get(2).toVec2D()));

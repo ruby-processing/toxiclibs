@@ -69,7 +69,7 @@ public class IntegerSet {
         return current;
     }
 
-    public int pickRandom() {
+    public final int pickRandom() {
         currID = MathUtils.random(random, items.length);
         current = items[currID];
         return current;

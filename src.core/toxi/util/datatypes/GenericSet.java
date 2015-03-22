@@ -28,6 +28,7 @@
 package toxi.util.datatypes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Random;
@@ -43,15 +44,13 @@ public class GenericSet<T> implements Iterable<T> {
     protected Random random = new Random();
 
     public GenericSet(Collection<T> items) {
-        this.items = new ArrayList<T>(items);
+        this.items = new ArrayList<>(items);
         pickRandom();
     }
 
     public GenericSet(T... obj) {
-        items = new ArrayList<T>(obj.length);
-        for (int i = 0; i < obj.length; i++) {
-            items.add(obj[i]);
-        }
+        items = new ArrayList<>(obj.length);
+        items.addAll(Arrays.asList(obj));
         if (items.size() > 0) {
             pickRandom();
         }
@@ -78,7 +77,7 @@ public class GenericSet<T> implements Iterable<T> {
     }
 
     public GenericSet<T> copy() {
-        GenericSet<T> set = new GenericSet<T>(items);
+        GenericSet<T> set = new GenericSet<>(items);
         set.current = current;
         set.currID = currID;
         set.random = random;
@@ -93,11 +92,12 @@ public class GenericSet<T> implements Iterable<T> {
         return items;
     }
 
+    @Override
     public Iterator<T> iterator() {
         return items.iterator();
     }
 
-    public T pickRandom() {
+    public final T pickRandom() {
         currID = MathUtils.random(random, items.size());
         current = items.get(currID);
         return current;

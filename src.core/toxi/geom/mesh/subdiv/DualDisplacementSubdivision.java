@@ -61,8 +61,9 @@ public class DualDisplacementSubdivision extends SubdivisionStrategy {
         this.ampB = ampB;
     }
 
+    @Override
     public List<Vec3D> computeSplitPoints(WingedEdge edge) {
-        List<Vec3D> mid = new ArrayList<Vec3D>(2);
+        List<Vec3D> mid = new ArrayList<>(2);
         float len = edge.getLength();
         Vec3D a = edge.a.interpolateTo(edge.b, 0.3333f);
         a.addSelf(a.sub(centroid).normalizeTo(ampA * len));

@@ -28,6 +28,11 @@ public class SpatialIndex extends UniqueItemIndex<Vec3D> {
         return delta;
     }
 
+    /**
+     *
+     * @param item
+     * @return
+     */
     @Override
     public int index(Vec3D item) {
         int id = getID(item);
@@ -41,7 +46,7 @@ public class SpatialIndex extends UniqueItemIndex<Vec3D> {
         }
     }
 
-    public void setDelta(float delta) {
+    public final void setDelta(float delta) {
         this.delta = delta;
         this.deltaSq = delta * delta;
     }

@@ -85,10 +85,10 @@ public class VerletPhysics2D {
      */
     protected Rect worldBounds;
 
-    public final List<ParticleBehavior2D> behaviors = new ArrayList<ParticleBehavior2D>(
+    public final List<ParticleBehavior2D> behaviors = new ArrayList<>(
             1);
 
-    public final List<ParticleConstraint2D> constraints = new ArrayList<ParticleConstraint2D>(
+    public final List<ParticleConstraint2D> constraints = new ArrayList<>(
             1);
 
     protected float drag;
@@ -116,8 +116,8 @@ public class VerletPhysics2D {
      */
     public VerletPhysics2D(Vec2D gravity, int numIterations, float drag,
             float timeStep) {
-        particles = new ArrayList<VerletParticle2D>();
-        springs = new ArrayList<VerletSpring2D>();
+        particles = new ArrayList<>();
+        springs = new ArrayList<>();
         this.numIterations = numIterations;
         this.timeStep = timeStep;
         setDrag(drag);
@@ -126,7 +126,7 @@ public class VerletPhysics2D {
         }
     }
 
-    public void addBehavior(ParticleBehavior2D behavior) {
+    public final void addBehavior(ParticleBehavior2D behavior) {
         behavior.configure(timeStep);
         behaviors.add(behavior);
     }
@@ -191,8 +191,7 @@ public class VerletPhysics2D {
     public Rect getCurrentBounds() {
         Vec2D min = new Vec2D(Float.MAX_VALUE, Float.MAX_VALUE);
         Vec2D max = new Vec2D(Float.MIN_VALUE, Float.MIN_VALUE);
-        for (Iterator<VerletParticle2D> i = particles.iterator(); i.hasNext();) {
-            VerletParticle2D p = i.next();
+        for (VerletParticle2D p : particles) {
             min.minSelf(p);
             max.maxSelf(p);
         }
@@ -294,7 +293,7 @@ public class VerletPhysics2D {
         return false;
     }
 
-    public void setDrag(float drag) {
+    public final void setDrag(float drag) {
         this.drag = 1f - drag;
     }
 

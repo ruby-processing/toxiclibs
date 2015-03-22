@@ -32,10 +32,11 @@ import java.util.Set;
  *         Delaunay/Voronoi code.
  * @author toxi Updated July 2010, minor API changes to be better suited for
  *         toxiclibs
+ * @param <N>
  */
 public class UndirectedGraph<N> {
 
-    protected Map<N, Set<N>> nodeLinks = new HashMap<N, Set<N>>();
+    protected Map<N, Set<N>> nodeLinks = new HashMap<>();
     protected Set<N> nodeIDs = Collections.unmodifiableSet(nodeLinks.keySet());
 
     /**

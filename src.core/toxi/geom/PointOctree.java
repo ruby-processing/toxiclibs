@@ -134,7 +134,7 @@ public class PointOctree extends AABB implements Shape3D {
             // only add points to leaves for now
             if (halfSize <= minNodeSize) {
                 if (points == null) {
-                    points = new ArrayList<Vec3D>();
+                    points = new ArrayList<>();
                 }
                 points.add(p);
                 return true;
@@ -162,6 +162,7 @@ public class PointOctree extends AABB implements Shape3D {
     /**
      * Applies the given {@link OctreeVisitor} implementation to this node and
      * all of its children.
+     * @param visitor 
      */
     public void applyVisitor(OctreeVisitor visitor) {
         visitor.visitNode(this);
@@ -174,6 +175,7 @@ public class PointOctree extends AABB implements Shape3D {
         }
     }
 
+    @Override
     public boolean containsPoint(ReadonlyVec3D p) {
         return p.isInAABB(this);
     }
@@ -279,14 +281,14 @@ public class PointOctree extends AABB implements Shape3D {
     public List<Vec3D> getPoints() {
         List<Vec3D> results = null;
         if (points != null) {
-            results = new ArrayList<Vec3D>(points);
+            results = new ArrayList<>(points);
         } else if (numChildren > 0) {
             for (int i = 0; i < 8; i++) {
                 if (children[i] != null) {
                     List<Vec3D> childPoints = children[i].getPoints();
                     if (childPoints != null) {
                         if (results == null) {
-                            results = new ArrayList<Vec3D>();
+                            results = new ArrayList<>();
                         }
                         results.addAll(childPoints);
                     }
@@ -310,7 +312,7 @@ public class PointOctree extends AABB implements Shape3D {
                 for (Vec3D q : points) {
                     if (q.isInAABB(b)) {
                         if (results == null) {
-                            results = new ArrayList<Vec3D>();
+                            results = new ArrayList<>();
                         }
                         results.add(q);
                     }
@@ -318,12 +320,12 @@ public class PointOctree extends AABB implements Shape3D {
             } else if (numChildren > 0) {
                 for (int i = 0; i < 8; i++) {
                     if (children[i] != null) {
-                        List<Vec3D> points = children[i].getPointsWithinBox(b);
-                        if (points != null) {
+                        List<Vec3D> pts = children[i].getPointsWithinBox(b);
+                        if (pts != null) {
                             if (results == null) {
-                                results = new ArrayList<Vec3D>();
+                                results = new ArrayList<>();
                             }
-                            results.addAll(points);
+                            results.addAll(pts);
                         }
                     }
                 }
@@ -346,7 +348,7 @@ public class PointOctree extends AABB implements Shape3D {
                 for (Vec3D q : points) {
                     if (s.containsPoint(q)) {
                         if (results == null) {
-                            results = new ArrayList<Vec3D>();
+                            results = new ArrayList<>();
                         }
                         results.add(q);
                     }
@@ -354,13 +356,13 @@ public class PointOctree extends AABB implements Shape3D {
             } else if (numChildren > 0) {
                 for (int i = 0; i < 8; i++) {
                     if (children[i] != null) {
-                        List<Vec3D> points = children[i]
+                        List<Vec3D> pts = children[i]
                                 .getPointsWithinSphere(s);
-                        if (points != null) {
+                        if (pts != null) {
                             if (results == null) {
-                                results = new ArrayList<Vec3D>();
+                                results = new ArrayList<>();
                             }
-                            results.addAll(points);
+                            results.addAll(pts);
                         }
                     }
                 }
@@ -389,7 +391,7 @@ public class PointOctree extends AABB implements Shape3D {
     }
 
     private void reduceBranch() {
-        if (points != null && points.size() == 0) {
+        if (points != null && points.isEmpty()) {
             points = null;
         }
         if (numChildren > 0) {
@@ -412,13 +414,13 @@ public class PointOctree extends AABB implements Shape3D {
      *            point to delete
      * @return true, if the point was found & removed
      */
-    public boolean remove(ReadonlyVec3D p) {
+    public boolean remove(Vec3D p) {
         boolean found = false;
         PointOctree leaf = getLeafForPoint(p);
         if (leaf != null) {
             if (leaf.points.remove(p)) {
                 found = true;
-                if (isAutoReducing && leaf.points.size() == 0) {
+                if (isAutoReducing && leaf.points.isEmpty()) {
                     leaf.reduceBranch();
                 }
             }
@@ -427,7 +429,7 @@ public class PointOctree extends AABB implements Shape3D {
     }
 
     public void removeAll(Collection<Vec3D> points) {
-        for (ReadonlyVec3D p : points) {
+        for (Vec3D p : points) {
             remove(p);
         }
     }
@@ -455,6 +457,7 @@ public class PointOctree extends AABB implements Shape3D {
      * 
      * @see toxi.geom.AABB#toString()
      */
+    @Override
     public String toString() {
         return "<octree> offset: " + super.toString() + " size: " + size;
     }

@@ -37,7 +37,7 @@ import toxi.geom.Vec3D;
 
 public class WEVertex extends Vertex {
 
-    public List<WingedEdge> edges = new ArrayList<WingedEdge>(4);
+    public List<WingedEdge> edges = new ArrayList<>(4);
 
     public WEVertex(Vec3D v, int id) {
         super(v, id);
@@ -65,7 +65,7 @@ public class WEVertex extends Vertex {
     }
 
     public List<WEVertex> getNeighbors() {
-        List<WEVertex> neighbors = new ArrayList<WEVertex>(edges.size());
+        List<WEVertex> neighbors = new ArrayList<>(edges.size());
         for (WingedEdge e : edges) {
             neighbors.add(e.getOtherEndFor(this));
         }
@@ -78,17 +78,18 @@ public class WEVertex extends Vertex {
      * @return face list
      */
     public List<WEFace> getRelatedFaces() {
-        Set<WEFace> faces = new HashSet<WEFace>(edges.size() * 2);
+        Set<WEFace> faces = new HashSet<>(edges.size() * 2);
         for (WingedEdge e : edges) {
             faces.addAll(e.faces);
         }
-        return new ArrayList<WEFace>(faces);
+        return new ArrayList<>(faces);
     }
 
     public void removeEdge(WingedEdge e) {
         edges.remove(e);
     }
 
+    @Override
     public String toString() {
         return id + " {" + x + "," + y + "," + z + "}";
     }

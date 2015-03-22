@@ -85,6 +85,7 @@ public class Triangle3D implements Shape3D {
      * From Real-Time Collision Detection by Christer Ericson, published by
      * Morgan Kaufmann Publishers, Copyright 2005 Elsevier Inc
      * 
+     * @param p
      * @return closest point on triangle (result may also be one of a, b or c)
      */
     public Vec3D closestPointOnSurface(Vec3D p) {
@@ -181,8 +182,10 @@ public class Triangle3D implements Shape3D {
      * to be on this plane in the region between a,b,c (triangle vertices
      * inclusive).
      * 
+     * @param p
      * @return true, if point is in triangle.
      */
+    @Override
     public boolean containsPoint(ReadonlyVec3D p) {
         Vec3D v0 = c.sub(a);
         Vec3D v1 = b.sub(a);
@@ -324,6 +327,7 @@ public class Triangle3D implements Shape3D {
         // + c.y * l3, a.z * l1 + b.z * l2 + c.z * l3);
     }
 
+    @Override
     public String toString() {
         return "Triangle3D: " + a + "," + b + "," + c;
     }

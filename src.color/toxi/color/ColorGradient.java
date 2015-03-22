@@ -52,6 +52,7 @@ public class ColorGradient {
             color = c;
         }
 
+        @Override
         public int compareTo(GradPoint p) {
             if (Float.compare(p.pos, pos) == 0) {
                 return 0;
@@ -79,7 +80,7 @@ public class ColorGradient {
      * Constructs a new empty gradient.
      */
     public ColorGradient() {
-        gradient = new TreeSet<GradPoint>();
+        gradient = new TreeSet<>();
     }
 
     /**
@@ -99,7 +100,7 @@ public class ColorGradient {
     }
 
     /**
-     * Calculates the gradient from specified position.
+     * Calculates the gradient from specified position. 
      * 
      * @param pos
      * @param width
@@ -108,7 +109,7 @@ public class ColorGradient {
     public ColorList calcGradient(float pos, int width) {
         ColorList result = new ColorList();
 
-        if (gradient.size() == 0) {
+        if (gradient.isEmpty()) {
             return result;
         }
 
@@ -181,7 +182,7 @@ public class ColorGradient {
     }
 
     public List<GradPoint> getGradientPoints() {
-        return new ArrayList<GradPoint>(gradient);
+        return new ArrayList<>(gradient);
     }
 
     /**

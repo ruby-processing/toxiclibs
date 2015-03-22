@@ -237,6 +237,8 @@ public final class MathUtils {
     }
 
     /**
+     * @param x
+     * @return 
      * @deprecated
      */
     @Deprecated
@@ -501,6 +503,7 @@ public final class MathUtils {
      * Returns a random number in the interval -1 .. +1 using the {@link Random}
      * instance provided.
      * 
+     * @param rnd
      * @return random float
      */
     public static final float normalizedRandom(Random rnd) {
@@ -686,6 +689,8 @@ public final class MathUtils {
     }
 
     /**
+     * @param x
+     * @return 
      * @deprecated
      */
     @Deprecated

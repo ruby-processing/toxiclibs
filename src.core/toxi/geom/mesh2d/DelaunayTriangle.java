@@ -83,7 +83,10 @@ public class DelaunayTriangle extends ArraySet<DelaunayVertex> {
 
     @Override
     public boolean equals(Object o) {
+        if (o instanceof DelaunayTriangle){
         return (this == o);
+        }
+        return false;
     }
 
     /**
@@ -96,7 +99,7 @@ public class DelaunayTriangle extends ArraySet<DelaunayVertex> {
      *             if the vertex is not in triangle
      */
     public ArraySet<DelaunayVertex> facetOpposite(DelaunayVertex vertex) {
-        ArraySet<DelaunayVertex> facet = new ArraySet<DelaunayVertex>(this);
+        ArraySet<DelaunayVertex> facet = new ArraySet<>(this);
         if (!facet.remove(vertex)) {
             throw new IllegalArgumentException("Vertex not in triangle");
         }
@@ -137,7 +140,7 @@ public class DelaunayTriangle extends ArraySet<DelaunayVertex> {
 
     @Override
     public int hashCode() {
-        return (idNumber ^ (idNumber >>> 32));
+        return (idNumber ^ (idNumber >>> 31));
     }
 
     /**
@@ -164,17 +167,20 @@ public class DelaunayTriangle extends ArraySet<DelaunayVertex> {
     public Iterator<DelaunayVertex> iterator() {
         return new Iterator<DelaunayVertex>() {
 
-            private Iterator<DelaunayVertex> it = DelaunayTriangle.super
+            private final Iterator<DelaunayVertex> it = DelaunayTriangle.super
                     .iterator();
 
+            @Override
             public boolean hasNext() {
                 return it.hasNext();
             }
 
+            @Override
             public DelaunayVertex next() {
                 return it.next();
             }
 
+            @Override
             public void remove() {
                 throw new UnsupportedOperationException();
             }

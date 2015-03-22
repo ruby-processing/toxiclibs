@@ -55,6 +55,7 @@ public class BezierInterpolation implements InterpolateStrategy {
         this.c2 = h2;
     }
 
+    @Override
     public double interpolate(double a, double b, double t) {
         double tSquared = t * t;
         double invT = 1.0f - t;
@@ -65,6 +66,7 @@ public class BezierInterpolation implements InterpolateStrategy {
                 + (b * tSquared * t);
     }
 
+    @Override
     public float interpolate(float a, float b, float t) {
         float tSquared = t * t;
         float invT = 1.0f - t;

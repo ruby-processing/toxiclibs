@@ -84,6 +84,7 @@ public class FMSineWave extends AbstractWave {
      * 
      * @see toxi.math.waves.AbstractWave#reset()
      */
+    @Override
     public void reset() {
         super.reset();
         fmod.reset();
@@ -94,8 +95,10 @@ public class FMSineWave extends AbstractWave {
      * update() method on the modulating wave since this is handled
      * automatically by this method.
      * 
+     * @return 
      * @see toxi.math.waves.AbstractWave#update()
      */
+    @Override
     public float update() {
         value = (float) (Math.sin(phase) * amp) + offset;
         cyclePhase(frequency + fmod.update());

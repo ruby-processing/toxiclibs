@@ -80,6 +80,7 @@ public class Face {
         return verts;
     }
 
+    @Override
     public String toString() {
         return getClass().getName() + " " + a + ", " + b + ", " + c;
     }

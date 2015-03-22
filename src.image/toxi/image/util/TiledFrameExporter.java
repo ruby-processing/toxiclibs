@@ -33,17 +33,17 @@ import toxi.geom.Vec3D;
 
 public class TiledFrameExporter {
 
-    private PApplet parent;
+    private final PApplet parent;
 
-    private PImage buffer;
+    private final PImage buffer;
 
-    private Vec3D[] offsets;
+    private final Vec3D[] offsets;
 
-    private double normTileSize;
+    private final double normTileSize;
 
-    private double aspect;
+    private final double aspect;
 
-    private int numTiles;
+    private final int numTiles;
 
     private int tileID;
 

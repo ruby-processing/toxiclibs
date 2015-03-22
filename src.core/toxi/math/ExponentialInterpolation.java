@@ -55,10 +55,12 @@ public class ExponentialInterpolation implements InterpolateStrategy {
         this.exponent = exp;
     }
 
+    @Override
     public double interpolate(double a, double b, double f) {
         return a + (b - a) * Math.pow(f, exponent);
     }
 
+    @Override
     public float interpolate(float a, float b, float f) {
         return a + (b - a) * (float) Math.pow(f, exponent);
     }

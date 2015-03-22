@@ -52,6 +52,7 @@ public class Vertex extends Vec3D {
         normal.normalize();
     }
 
+    @Override
     public String toString() {
         return id + ": p: " + super.toString() + " n:" + normal.toString();
     }

@@ -144,7 +144,7 @@ public class DoubleRange {
     }
 
     public Double[] toArray(double step) {
-        List<Double> range = new LinkedList<Double>();
+        List<Double> range = new LinkedList<>();
         double v = min;
         while (v < max) {
             range.add(v);

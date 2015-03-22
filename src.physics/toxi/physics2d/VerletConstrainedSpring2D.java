@@ -66,6 +66,7 @@ public class VerletConstrainedSpring2D extends VerletSpring2D {
         this.limit = limit;
     }
 
+    @Override
     protected void update(boolean applyConstraints) {
         Vec2D delta = b.sub(a);
         // add minute offset to avoid div-by-zero errors

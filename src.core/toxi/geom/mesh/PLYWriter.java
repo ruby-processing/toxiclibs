@@ -32,7 +32,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import toxi.geom.Vec3D;
 import toxi.util.FileUtils;
 
@@ -52,21 +51,21 @@ public class PLYWriter {
 
     /**
      * Creates a little-endian version of the given float.
-     * 
+     *
      * @param f
      * @return
      */
-    private final byte[] le(float f) {
+    private byte[] le(float f) {
         return le(Float.floatToRawIntBits(f));
     }
 
     /**
      * Creates a little-endian version of the given int.
-     * 
+     *
      * @param i
      * @return
      */
-    private final byte[] le(int i) {
+    private byte[] le(int i) {
         buf[3] = (byte) (i >>> 24);
         buf[2] = (byte) (i >> 16 & 0xff);
         buf[1] = (byte) (i >> 8 & 0xff);
@@ -79,37 +78,34 @@ public class PLYWriter {
      * required header information. The mesh data itself is stored in binary.
      * The output stream itself will be wrapped in a buffered version (128KB) in
      * order to improve write performance.
-     * 
-     * @param mesh
-     *            mesh instance to export
-     * @param stream
-     *            valid output stream
+     *
+     * @param mesh mesh instance to export
+     * @param stream valid output stream
      */
     public void saveMesh(TriangleMesh mesh, OutputStream stream) {
         try {
-            BufferedOutputStream out = new BufferedOutputStream(stream, 0x20000);
-            out.write("ply\n".getBytes());
-            out.write("format binary_little_endian 1.0\n".getBytes());
-            out.write(("element vertex " + mesh.getNumVertices() + "\n")
-                    .getBytes());
-            out.write("property float x\n".getBytes());
-            out.write("property float y\n".getBytes());
-            out.write("property float z\n".getBytes());
-            if (doWriteNormals) {
-                out.write("property float nx\n".getBytes());
-                out.write("property float ny\n".getBytes());
-                out.write("property float nz\n".getBytes());
-            }
-            out.write(("element face " + mesh.getNumFaces() + "\n").getBytes());
-            out.write("property list uchar uint vertex_indices\n".getBytes());
-            out.write("end_header\n".getBytes());
-            Vec3D[] verts = new Vec3D[mesh.getNumVertices()];
-            float[] normals = mesh.getNormalsForUniqueVerticesAsArray();
-            int i = 0, j = 0;
-            for (Vec3D v : mesh.getVertices()) {
-                verts[i++] = v;
-            }
-            try {
+            try (BufferedOutputStream out = new BufferedOutputStream(stream, 0x20000)) {
+                out.write("ply\n".getBytes());
+                out.write("format binary_little_endian 1.0\n".getBytes());
+                out.write(("element vertex " + mesh.getNumVertices() + "\n")
+                        .getBytes());
+                out.write("property float x\n".getBytes());
+                out.write("property float y\n".getBytes());
+                out.write("property float z\n".getBytes());
+                if (doWriteNormals) {
+                    out.write("property float nx\n".getBytes());
+                    out.write("property float ny\n".getBytes());
+                    out.write("property float nz\n".getBytes());
+                }
+                out.write(("element face " + mesh.getNumFaces() + "\n").getBytes());
+                out.write("property list uchar uint vertex_indices\n".getBytes());
+                out.write("end_header\n".getBytes());
+                Vec3D[] verts = new Vec3D[mesh.getNumVertices()];
+                float[] normals = mesh.getNormalsForUniqueVerticesAsArray();
+                int i = 0, j = 0;
+                for (Vec3D v : mesh.getVertices()) {
+                    verts[i++] = v;
+                }
                 for (i = 0, j = 0; i < verts.length; i++, j += 3) {
                     Vec3D v = verts[i];
                     out.write(le(v.x));
@@ -121,18 +117,15 @@ public class PLYWriter {
                         out.write(le(-normals[j + 1]));
                     }
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
+                for (Face f : mesh.getFaces()) {
+                    out.write((byte) 3);
+                    out.write(le(f.a.id));
+                    out.write(le(f.b.id));
+                    out.write(le(f.c.id));
+                }
+                out.flush();
             }
-            for (Face f : mesh.getFaces()) {
-                out.write((byte) 3);
-                out.write(le(f.a.id));
-                out.write(le(f.b.id));
-                out.write(le(f.c.id));
-            }
-            out.flush();
-            out.close();
-            logger.info(mesh.getNumFaces() + " faces written");
+            logger.log(Level.INFO, "{0} faces written", mesh.getNumFaces());
         } catch (IOException e) {
             logger.log(Level.SEVERE, "error exporting mesh", e);
         }
@@ -141,11 +134,9 @@ public class PLYWriter {
     /**
      * Exports the given mesh to the specified file path, including required
      * header information. The mesh data itself is stored in binary.
-     * 
-     * @param mesh
-     *            mesh instance to export
-     * @param path
-     *            file path
+     *
+     * @param mesh mesh instance to export
+     * @param path file path
      */
     public void saveMesh(TriangleMesh mesh, String path) {
         try {
@@ -164,9 +155,8 @@ public class PLYWriter {
 
     /**
      * Setter enable export of vertex normals (false by default).
-     * 
-     * @param doWriteNormals
-     *            true to enable
+     *
+     * @param doWriteNormals true to enable
      */
     public void writeNormals(boolean doWriteNormals) {
         this.doWriteNormals = doWriteNormals;

@@ -169,7 +169,6 @@ public class FileUtils {
      * @param input
      *            stream
      * @return reader instance
-     * @throws IOException
      */
     public static BufferedReader createReader(InputStream input) {
         return createReader(input, "UTF-8");
@@ -184,7 +183,6 @@ public class FileUtils {
      * @param encoding
      *            text encoding to use
      * @return reader instance
-     * @throws IOException
      */
     public static BufferedReader createReader(InputStream input, String encoding) {
         InputStreamReader isr = null;
@@ -212,7 +210,6 @@ public class FileUtils {
      * 
      * @param out
      * @return writer instance
-     * @throws IOException
      */
     public static BufferedWriter createWriter(OutputStream out) {
         return createWriter(out, "UTF-8");
@@ -227,7 +224,6 @@ public class FileUtils {
      * @param encoding
      *            text encoding to use
      * @return writer instance
-     * @throws IOException
      */
     public static BufferedWriter createWriter(OutputStream out, String encoding) {
         OutputStreamWriter w = null;
@@ -390,6 +386,7 @@ public class FileUtils {
         String result = showFileDialog(frame, title, path,
                 new FilenameFilter() {
 
+                    @Override
                     public boolean accept(File dir, String name) {
                         return new File(dir + "/" + name).isDirectory();
                     }
@@ -458,10 +455,11 @@ public class FileUtils {
         if (formats != null) {
             fd.setFilenameFilter(new FilenameFilter() {
 
+                @Override
                 public boolean accept(File dir, String name) {
                     boolean isAccepted = false;
                     for (String ext : formats) {
-                        if (name.indexOf(ext) != -1) {
+                        if (name.contains(ext)) {
                             isAccepted = true;
                             break;
                         }

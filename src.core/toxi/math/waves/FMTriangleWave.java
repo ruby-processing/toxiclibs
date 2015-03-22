@@ -77,6 +77,7 @@ public class FMTriangleWave extends AbstractWave {
      * 
      * @see toxi.math.waves.AbstractWave#reset()
      */
+    @Override
     public void reset() {
         super.reset();
         fmod.reset();

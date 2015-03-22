@@ -20,10 +20,12 @@ public class MeshIntersector implements Intersector3D {
         this.isec = new IsectData3D();
     }
 
+    @Override
     public IsectData3D getIntersectionData() {
         return isec;
     }
 
+    @Override
     public boolean intersectsRay(Ray3D ray) {
         isec.isIntersection = false;
         if (bounds.intersectsRay(ray, 0, Float.MAX_VALUE) != null) {
@@ -70,7 +72,7 @@ public class MeshIntersector implements Intersector3D {
         return t;
     }
 
-    public void setMesh(TriangleMesh mesh) {
+    public final void setMesh(TriangleMesh mesh) {
         this.mesh = mesh;
         this.bounds = mesh.getBoundingBox();
     }

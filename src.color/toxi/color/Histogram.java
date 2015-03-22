@@ -107,7 +107,7 @@ public class Histogram implements Iterable<HistEntry> {
      * @return sorted histogram as List of HistEntry
      */
     public List<HistEntry> compute(float tolerance, boolean blendCols) {
-        entries = new ArrayList<HistEntry>(palette.size() / 4);
+        entries = new ArrayList<>(palette.size() / 4);
         float maxFreq = 1;
         tolerance /= MathUtils.SQRT3;
         for (TColor c : palette) {

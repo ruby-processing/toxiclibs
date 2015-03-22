@@ -48,7 +48,7 @@ public class TriangleMeshTest extends TestCase {
     }
 
     public void testUniqueVertices() {
-        ArrayList<Vertex> verts = new ArrayList<Vertex>(mesh.vertices.values());
+        ArrayList<Vertex> verts = new ArrayList<>(mesh.vertices.values());
         assertEquals(6, mesh.vertices.size());
         for (Face f : mesh.faces) {
             assertEquals(verts.get(f.a.id), f.a);

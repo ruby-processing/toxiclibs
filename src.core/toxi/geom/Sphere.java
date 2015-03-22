@@ -64,6 +64,7 @@ public class Sphere extends Vec3D implements Shape3D {
         this(s, s.radius);
     }
 
+    @Override
     public boolean containsPoint(ReadonlyVec3D p) {
         float d = this.sub(p).magSquared();
         return (d <= radius * radius);

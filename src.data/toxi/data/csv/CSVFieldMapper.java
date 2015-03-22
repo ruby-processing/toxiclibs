@@ -82,7 +82,7 @@ public class CSVFieldMapper {
 
     public CSVFieldMapper(HashMap<String, String> cols) {
         fieldNames = cols;
-        fieldOrder = new HashMap<String, Integer>();
+        fieldOrder = new HashMap<>();
     }
 
     /**

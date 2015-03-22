@@ -28,9 +28,9 @@ package toxi.geom.nurbs;
 public class KnotVector {
 
     private boolean isOpen;
-    private float knots[];
-    private int degree;
-    private int n;
+    private final float knots[];
+    private final int degree;
+    private final int n;
 
     /**
      * Create a Knotvector from the given knot values of the desired degree.

@@ -38,6 +38,7 @@ public class HSVAccessor extends AccessCriteria {
         component = comp;
     }
 
+    @Override
     public int compare(ReadonlyTColor a, ReadonlyTColor b) {
         float ca, cb;
         switch (component) {
@@ -57,6 +58,7 @@ public class HSVAccessor extends AccessCriteria {
         return Float.compare(ca, cb);
     }
 
+    @Override
     public float getComponentValueFor(ReadonlyTColor col) {
         float comp;
         switch (component) {
@@ -73,6 +75,7 @@ public class HSVAccessor extends AccessCriteria {
         return comp;
     }
 
+    @Override
     public void setComponentValueFor(TColor col, float val) {
         switch (component) {
             case 0:

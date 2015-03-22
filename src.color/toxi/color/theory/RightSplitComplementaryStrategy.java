@@ -40,6 +40,7 @@ public class RightSplitComplementaryStrategy implements ColorTheoryStrategy {
      */
     public static final String NAME = "rightSplitComplementary";
 
+    @Override
     public ColorList createListFromColor(ReadonlyTColor src) {
         ReadonlyTColor left = src.getComplement().rotateRYB(30).lighten(0.1f);
         ColorList colors = ColorTheoryRegistry.COMPLEMENTARY
@@ -56,6 +57,7 @@ public class RightSplitComplementaryStrategy implements ColorTheoryStrategy {
      * 
      * @see toxi.color.ColorTheoryStrategy#getName()
      */
+    @Override
     public String getName() {
         return NAME;
     }

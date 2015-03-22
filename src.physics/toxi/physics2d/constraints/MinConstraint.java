@@ -40,6 +40,7 @@ public class MinConstraint implements ParticleConstraint2D {
         this.threshold = threshold;
     }
 
+    @Override
     public void apply(VerletParticle2D p) {
         if (p.getComponent(axis) < threshold) {
             p.setComponent(axis, threshold);

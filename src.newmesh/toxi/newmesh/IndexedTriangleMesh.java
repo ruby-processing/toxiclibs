@@ -30,11 +30,11 @@ public class IndexedTriangleMesh {
 
     public SpatialIndex vertices = new SpatialIndex(0.001f);
 
-    public ItemIndex<Vec3D> fnormals = new UniqueItemIndex<Vec3D>();
+    public ItemIndex<Vec3D> fnormals = new UniqueItemIndex<>();
 
-    public final ArrayList<AttributedFace> faces = new ArrayList<AttributedFace>();
+    public final ArrayList<AttributedFace> faces = new ArrayList<>();
 
-    public final HashMap<String, UniqueItemIndex<Object>> attributes = new HashMap<String, UniqueItemIndex<Object>>();
+    public final HashMap<String, UniqueItemIndex<Object>> attributes = new HashMap<>();
 
     public IndexedTriangleMesh() {
     }
@@ -56,7 +56,7 @@ public class IndexedTriangleMesh {
             Vec2D uvb, Vec2D uvc) {
         HashMap<String, Object[]> attribs = null;
         if (uva != null && uvb != null && uvc != null) {
-            attribs = new HashMap<String, Object[]>();
+            attribs = new HashMap<>();
             attribs.put(ATTR_UVCOORDS, new Object[] {
                     uva, uvb, uvc
             });
@@ -108,7 +108,7 @@ public class IndexedTriangleMesh {
     }
 
     public IndexedTriangleMesh addMeshWithAttribs(IndexedTriangleMesh mesh) {
-        HashMap<String, Object[]> attribs = new HashMap<String, Object[]>();
+        HashMap<String, Object[]> attribs = new HashMap<>();
         Vec3D[] v = null;
         for (AttributedFace f : mesh.faces) {
             attribs.clear();
@@ -130,7 +130,7 @@ public class IndexedTriangleMesh {
     }
 
     public HashMap<String, float[]> compile() {
-        HashSet<String> attribs = new HashSet<String>();
+        HashSet<String> attribs = new HashSet<>();
         attribs.add(ATTR_VERTICES);
         attribs.add(ATTR_FNORMALS);
         return compile(attribs, null);
@@ -138,12 +138,12 @@ public class IndexedTriangleMesh {
 
     public HashMap<String, float[]> compile(HashSet<String> attribs,
             HashMap<String, MeshAttributeCompiler> compilers) {
-        HashMap<String, MeshAttributeCompiler> mergedComps = new HashMap<String, MeshAttributeCompiler>(
+        HashMap<String, MeshAttributeCompiler> mergedComps = new HashMap<>(
                 getDefaultCompilers());
         if (compilers != null) {
             mergedComps.putAll(compilers);
         }
-        HashMap<String, float[]> buffers = new HashMap<String, float[]>();
+        HashMap<String, float[]> buffers = new HashMap<>();
         int numF = faces.size();
         for (String attrib : attribs) {
             MeshAttributeCompiler comp = mergedComps.get(attrib);
@@ -168,7 +168,7 @@ public class IndexedTriangleMesh {
         edges.clear();
         for (AttributedFace f : faces) {
             if (f.attribs == null) {
-                f.attribs = new HashMap<String, int[]>();
+                f.attribs = new HashMap<>();
             }
             f.attribs.put(ATTR_EDGES, new int[] {
                     indexFaceEdge(f, f.a, f.b), indexFaceEdge(f, f.b, f.c),
@@ -200,14 +200,14 @@ public class IndexedTriangleMesh {
             vnorms[f.b].addSelf(n);
             vnorms[f.c].addSelf(n);
         }
-        for (int i = 0; i < vnorms.length; i++) {
-            vnorms[i].normalize();
+        for (Vec3D vnorm : vnorms) {
+            vnorm.normalize();
         }
         ItemIndex<Object> idx = getAttributeIndex(ATTR_VNORMALS);
         idx.clear();
         for (AttributedFace f : faces) {
             if (f.attribs == null) {
-                f.attribs = new HashMap<String, int[]>();
+                f.attribs = new HashMap<>();
             }
             f.attribs.put(
                     ATTR_VNORMALS,
@@ -275,7 +275,7 @@ public class IndexedTriangleMesh {
     public ItemIndex<Object> getAttributeIndex(String attID) {
         UniqueItemIndex<Object> idx = attributes.get(attID);
         if (idx == null) {
-            idx = new UniqueItemIndex<Object>();
+            idx = new UniqueItemIndex<>();
             attributes.put(attID, idx);
         }
         return idx;
@@ -307,7 +307,7 @@ public class IndexedTriangleMesh {
     }
 
     public HashMap<String, MeshAttributeCompiler> getDefaultCompilers() {
-        HashMap<String, MeshAttributeCompiler> compilers = new HashMap<String, MeshAttributeCompiler>();
+        HashMap<String, MeshAttributeCompiler> compilers = new HashMap<>();
         compilers.put(ATTR_VERTICES, new MeshVertexCompiler());
         compilers.put(ATTR_FNORMALS, new MeshFaceNormalCompiler());
         compilers.put(ATTR_VNORMALS, new MeshVertexNormalCompiler());
@@ -333,7 +333,7 @@ public class IndexedTriangleMesh {
     }
 
     public List<AttributedEdge> getEdgesForVertexID(int id) {
-        List<AttributedEdge> vedges = new ArrayList<AttributedEdge>(2);
+        List<AttributedEdge> vedges = new ArrayList<>(2);
         for (Object o : getEdges()) {
             AttributedEdge e = (AttributedEdge) o;
             if (e.a == id || e.b == id) {
@@ -350,7 +350,7 @@ public class IndexedTriangleMesh {
 
     public HashMap<String, Object[]> getFaceAttribValues(AttributedFace f,
             String... attribs) {
-        HashMap<String, Object[]> values = new HashMap<String, Object[]>(
+        HashMap<String, Object[]> values = new HashMap<>(
                 attribs.length, 1);
         for (String a : attribs) {
             values.put(a, getFaceAttribValues(f, a));
@@ -388,7 +388,7 @@ public class IndexedTriangleMesh {
         List<AttributedFace> vfaces = null;
         int id = vertices.getID(v);
         if (id != -1) {
-            vfaces = new ArrayList<AttributedFace>(2);
+            vfaces = new ArrayList<>(2);
             for (AttributedFace f : faces) {
                 if (f.a == id || f.b == id || f.c == id) {
                     vfaces.add(f);
@@ -416,7 +416,7 @@ public class IndexedTriangleMesh {
         List<AttributedEdge> vedges = getEdgesForVertexID(id);
         if (vedges.size() > 0) {
             if (neighbors == null) {
-                neighbors = new ArrayList<Vec3D>();
+                neighbors = new ArrayList<>();
             } else {
                 neighbors.clear();
             }
@@ -450,7 +450,7 @@ public class IndexedTriangleMesh {
 
     public List<Vec3D> getVerticesForIDs(List<Vec3D> verts, int... ids) {
         if (verts == null) {
-            verts = new ArrayList<Vec3D>(ids.length);
+            verts = new ArrayList<>(ids.length);
         }
         for (int id : ids) {
             verts.add(vertices.forID(id));
@@ -513,7 +513,7 @@ public class IndexedTriangleMesh {
     }
 
     public IndexedTriangleMesh smooth() {
-        HashMap<Integer, Vec3D> lapIndex = new HashMap<Integer, Vec3D>();
+        HashMap<Integer, Vec3D> lapIndex = new HashMap<>();
         List<Vec3D> neighbors = null;
         for (int i = 0, numV = getNumVertices(); i < numV; i++) {
             neighbors = getNeighborsForVertexID(i, neighbors);
@@ -543,8 +543,8 @@ public class IndexedTriangleMesh {
 
     public IndexedTriangleMesh subdivide(NewSubdivStrategy strategy) {
         Vec3D[] v = null;
-        List<Vec3D[]> splitFaces = new ArrayList<Vec3D[]>();
-        for (AttributedFace f : new ArrayList<AttributedFace>(faces)) {
+        List<Vec3D[]> splitFaces = new ArrayList<>();
+        for (AttributedFace f : new ArrayList<>(faces)) {
             removeFace(f);
             v = getFaceVertices(f, v);
             for (Vec3D[] fverts : strategy.subdivideTriangle(v[0], v[1], v[2],

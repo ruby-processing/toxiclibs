@@ -42,7 +42,7 @@ import toxi.geom.Vec2D;
  */
 public class ParticlePath2D extends Spline2D {
 
-    List<VerletParticle2D> particles = new ArrayList<VerletParticle2D>();
+    List<VerletParticle2D> particles = new ArrayList<>();
 
     public ParticlePath2D() {
         super();

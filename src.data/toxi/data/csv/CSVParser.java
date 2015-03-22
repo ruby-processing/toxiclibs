@@ -46,7 +46,7 @@ public class CSVParser {
 
     protected CSVFieldMapper mapper;
 
-    protected final EventDispatcher<CSVListener> dispatcher = new EventDispatcher<CSVListener>();
+    protected final EventDispatcher<CSVListener> dispatcher = new EventDispatcher<>();
 
     public CSVParser(CSVFieldMapper mapper) {
         this.mapper = mapper;
@@ -114,7 +114,7 @@ public class CSVParser {
         if (s == null) {
             return null;
         }
-        ArrayList<String> fields = new ArrayList<String>();
+        ArrayList<String> fields = new ArrayList<>();
         StringBuffer currField = new StringBuffer();
         boolean isOpen = false;
         do {

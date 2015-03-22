@@ -67,6 +67,7 @@ public class BasicNurbsCurve implements NurbsCurve, Cloneable {
         }
     }
 
+    @Override
     public Vec4D[][] curveDerivCpts(int d, int r1, int r2) {
 
         Vec4D[][] result = new Vec4D[d + 1][r2 - r1 + 1];
@@ -94,10 +95,12 @@ public class BasicNurbsCurve implements NurbsCurve, Cloneable {
         return result;
     }
 
+    @Override
     public Vec3D[] derivativesOnCurve(float u, int grade) {
         return derivativesOnCurve(u, grade, new Vec3D[grade + 1]);
     }
 
+    @Override
     public Vec3D[] derivativesOnCurve(float u, int grade, Vec3D[] derivs) {
 
         int span = uKnots.findSpan(u);

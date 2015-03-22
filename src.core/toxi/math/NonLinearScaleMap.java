@@ -15,18 +15,19 @@ public class NonLinearScaleMap {
             this.y = y;
         }
 
+        @Override
         public int compareTo(Sample b) {
             return (int) Math.signum(x - b.x);
         }
     }
 
-    private TreeSet<Sample> samples;
+    private final TreeSet<Sample> samples;
 
     private double rangeMin = Float.MAX_VALUE;
     private double rangeMax = Float.MIN_VALUE;
 
     public NonLinearScaleMap() {
-        samples = new TreeSet<Sample>();
+        samples = new TreeSet<>();
     }
 
     public NonLinearScaleMap addSample(double x, double y) {

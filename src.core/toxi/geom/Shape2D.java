@@ -37,6 +37,7 @@ public interface Shape2D {
     /**
      * Checks if the point is within the given shape.
      * 
+     * @param p
      * @return true, if inside
      */
     boolean containsPoint(ReadonlyVec2D p);

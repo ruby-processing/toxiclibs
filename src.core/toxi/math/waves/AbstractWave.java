@@ -151,7 +151,7 @@ public abstract class AbstractWave {
 
     public void push() {
         if (stateStack == null) {
-            stateStack = new Stack<WaveState>();
+            stateStack = new Stack<>();
         }
         stateStack.push(new WaveState(phase, frequency, amp, offset));
     }
@@ -171,7 +171,7 @@ public abstract class AbstractWave {
      * @param phase
      *            new phase
      */
-    public void setPhase(float phase) {
+    public final void setPhase(float phase) {
         this.phase = phase;
         cyclePhase();
         this.origPhase = phase;
@@ -182,8 +182,9 @@ public abstract class AbstractWave {
      * 
      * @see java.lang.Object#toString()
      */
+    @Override
     public String toString() {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         sb.append(this.getClass().getName()).append(" phase: ").append(phase);
         sb.append(" frequency: ").append(frequency);
         sb.append(" amp: ").append(amp);

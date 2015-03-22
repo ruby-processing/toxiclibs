@@ -40,6 +40,7 @@ public class PolygonConstraint implements ParticleConstraint2D {
         this.isContainer = isContainer;
     }
 
+    @Override
     public void apply(VerletParticle2D p) {
         if (poly.containsPoint(p) != isContainer) {
             p.constrain(poly);

@@ -78,6 +78,7 @@ public class BasicNurbsSurface implements NurbsSurface {
     // trimms.add(tc);
     // }
 
+    @Override
     public ControlNet getControlNet() {
         return cpnet;
     }
@@ -86,38 +87,47 @@ public class BasicNurbsSurface implements NurbsSurface {
     // return trimms;
     // }
 
+    @Override
     public int getUDegree() {
         return uKnots.getDegree();
     }
 
+    @Override
     public float[] getUKnots() {
         return uKnots.getArray();
     }
 
+    @Override
     public KnotVector getUKnotVector() {
         return uKnots;
     }
 
+    @Override
     public int getVDegree() {
         return vKnots.getDegree();
     }
 
+    @Override
     public float[] getVKnots() {
         return vKnots.getArray();
     }
 
+    @Override
     public KnotVector getVKnotVector() {
         return vKnots;
     }
 
+    @Override
     public Vec3D pointOnSurface(double u, double v) {
         return pointOnSurface((float) u, (float) v, new Vec3D());
     }
 
+    @Override
     public Vec3D pointOnSurface(float u, float v) {
         return pointOnSurface(u, v, new Vec3D());
     }
 
+    @Override
     public Vec3D pointOnSurface(float u, float v, Vec3D out) {
 
         // Piegl -> Algorithm A4.3 -> page 134
@@ -146,6 +156,7 @@ public class BasicNurbsSurface implements NurbsSurface {
         return sw.unweightInto(out);
     }
 
+    @Override
     public Vec4D[][][][] surfaceDerivCpts(int d, int r1, int r2, int s1, int s2) {
 
         Vec4D[][][][] result = new Vec4D[d + 1][d + 1][r2 - r1 + 1][s2 - s1 + 1];
@@ -178,9 +189,7 @@ public class BasicNurbsSurface implements NurbsSurface {
                 final int length = resk0[i].length;
                 final Vec4D[] resk0i = resk0[i];
                 Vec4D[] vcps = new Vec4D[length];
-                for (int idx = 0; idx < length; idx++) {
-                    vcps[idx] = resk0i[idx];
-                }
+                System.arraycopy(resk0i, 0, vcps, 0, length);
                 final int dd = (d - k) < dv ? (d - k) : dv;
                 Vec4D[][] tmp = new BasicNurbsCurve(vcps, vKnots)
                         .curveDerivCpts(dd, 0, s);

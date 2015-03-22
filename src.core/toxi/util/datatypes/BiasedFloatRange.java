@@ -61,6 +61,11 @@ public class BiasedFloatRange extends FloatRange {
         setStandardDeviation(sd);
     }
 
+    /**
+     *
+     * @return
+     */
+    @Override
     public BiasedFloatRange copy() {
         BiasedFloatRange r = new BiasedFloatRange(min, max, bias,
                 standardDeviation * 2);
@@ -95,7 +100,7 @@ public class BiasedFloatRange extends FloatRange {
      * @param bias
      *            the bias to set
      */
-    public void setBias(float bias) {
+    public final void setBias(float bias) {
         this.bias = MathUtils.clip(bias, min, max);
     }
 
@@ -103,7 +108,7 @@ public class BiasedFloatRange extends FloatRange {
      * @param sd
      *            the standardDeviation to set
      */
-    public void setStandardDeviation(float sd) {
+    public final void setStandardDeviation(float sd) {
         this.standardDeviation = MathUtils.clip(sd, 0, 1.0f) * 0.5f;
     }
 

@@ -51,6 +51,7 @@ public class RectConstraint implements ParticleConstraint2D {
         this(new Rect(min, max), false);
     }
 
+    @Override
     public void apply(VerletParticle2D p) {
         if (isContainer) {
             if (!rect.containsPoint(p)) {
@@ -69,7 +70,7 @@ public class RectConstraint implements ParticleConstraint2D {
         return rect.copy();
     }
 
-    public void setBox(Rect rect) {
+    public final void setBox(Rect rect) {
         this.rect = rect.copy();
         this.intersectRay = new Ray2D(rect.getCentroid(), new Vec2D());
     }

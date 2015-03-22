@@ -27,8 +27,9 @@ public class GlobalGridTesselator extends GridTesselator {
         super(res);
     }
 
+    @Override
     protected List<Vec2D> createInsidePoints(Polygon2D poly, Rect bounds) {
-        List<Vec2D> points = new ArrayList<Vec2D>();
+        List<Vec2D> points = new ArrayList<>();
         for (float y = bounds.y; y < bounds.getBottom(); y += res) {
             float yy = MathUtils.roundTo(y, res);
             for (float x = bounds.x; x < bounds.getRight(); x += res) {

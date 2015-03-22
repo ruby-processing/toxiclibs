@@ -41,6 +41,7 @@ public class VerletMinDistanceSpring2D extends VerletSpring2D {
         setRestLength(len);
     }
 
+    @Override
     protected void update(boolean applyConstraints) {
         if (b.distanceToSquared(a) < restLengthSquared) {
             super.update(applyConstraints);

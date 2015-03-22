@@ -39,8 +39,9 @@ import toxi.geom.mesh.WingedEdge;
  */
 public class TriSubdivision extends SubdivisionStrategy {
 
+    @Override
     public List<Vec3D> computeSplitPoints(WingedEdge edge) {
-        List<Vec3D> mid = new ArrayList<Vec3D>(3);
+        List<Vec3D> mid = new ArrayList<>(3);
         mid.add(edge.a.interpolateTo(edge.b, 0.25f));
         mid.add(edge.a.interpolateTo(edge.b, 0.5f));
         mid.add(edge.a.interpolateTo(edge.b, 0.75f));

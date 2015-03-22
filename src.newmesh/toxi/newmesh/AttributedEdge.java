@@ -15,7 +15,7 @@ public class AttributedEdge {
 
     public void addFace(AttributedFace f) {
         if (faces == null) {
-            faces = new ArrayList<AttributedFace>(2);
+            faces = new ArrayList<>(2);
         }
         faces.add(f);
     }
@@ -40,10 +40,7 @@ public class AttributedEdge {
         if (a != other.a) {
             return false;
         }
-        if (b != other.b) {
-            return false;
-        }
-        return true;
+        return (b != other.b) ;
     }
 
     /*
@@ -59,6 +56,7 @@ public class AttributedEdge {
         return result;
     }
 
+    @Override
     public String toString() {
         return String.format("a=%d, b=%d", a, b);
     }

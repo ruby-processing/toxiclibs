@@ -130,19 +130,23 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
         init(name, numV, numF);
     }
 
+    @Override
     public TriangleMesh addFace(Vec3D a, Vec3D b, Vec3D c) {
         return addFace(a, b, c, null, null, null, null);
     }
 
+    @Override
     public TriangleMesh addFace(Vec3D a, Vec3D b, Vec3D c, Vec2D uvA,
             Vec2D uvB, Vec2D uvC) {
         return addFace(a, b, c, null, uvA, uvB, uvC);
     }
 
+    @Override
     public TriangleMesh addFace(Vec3D a, Vec3D b, Vec3D c, Vec3D n) {
         return addFace(a, b, c, n, null, null, null);
     }
 
+    @Override
     public TriangleMesh addFace(Vec3D a, Vec3D b, Vec3D c, Vec3D n, Vec2D uvA,
             Vec2D uvB, Vec2D uvC) {
         Vertex va = checkVertex(a);
@@ -150,7 +154,7 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
         Vertex vc = checkVertex(c);
         if (va.id == vb.id || va.id == vc.id || vb.id == vc.id) {
             if (logger.isLoggable(Level.FINE)) {
-                logger.fine("ignorning invalid face: " + a + "," + b + "," + c);
+                logger.log(Level.FINE, "ignorning invalid face: {0},{1},{2}", new Object[]{a, b, c});
             }
         } else {
             if (n != null) {
@@ -173,7 +177,9 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
      * 
      * @param m
      *            source mesh instance
+     * @return 
      */
+    @Override
     public TriangleMesh addMesh(Mesh3D m) {
         for (Face f : m.getFaces()) {
             addFace(f.a, f.b, f.c, f.uvA, f.uvB, f.uvC);
@@ -181,6 +187,7 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
         return this;
     }
 
+    @Override
     public AABB center(ReadonlyVec3D origin) {
         computeCentroid();
         Vec3D delta = origin != null ? origin.sub(centroid) : centroid
@@ -192,7 +199,7 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
         return bounds;
     }
 
-    private final Vertex checkVertex(Vec3D v) {
+    private Vertex checkVertex(Vec3D v) {
         Vertex vertex = vertices.get(v);
         if (vertex == null) {
             vertex = createVertex(v, uniqueVertexID++);
@@ -205,6 +212,7 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
     /**
      * Clears all counters, and vertex & face buffers.
      */
+    @Override
     public TriangleMesh clear() {
         vertices.clear();
         faces.clear();
@@ -215,6 +223,7 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
         return this;
     }
 
+    @Override
     public Vec3D computeCentroid() {
         centroid.clear();
         for (Vec3D v : vertices.values()) {
@@ -226,6 +235,7 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
     /**
      * Re-calculates all face normals.
      */
+    @Override
     public TriangleMesh computeFaceNormals() {
         for (Face f : faces) {
             f.computeNormal();
@@ -236,6 +246,7 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
     /**
      * Computes the smooth vertex normals for the entire mesh.
      */
+    @Override
     public TriangleMesh computeVertexNormals() {
         for (Vertex v : vertices.values()) {
             v.clearNormal();
@@ -269,6 +280,7 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
         return new Vertex(v, id);
     }
 
+    @Override
     public TriangleMesh faceOutwards() {
         computeCentroid();
         for (Face f : faces) {
@@ -281,6 +293,7 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
         return this;
     }
 
+    @Override
     public TriangleMesh flipVertexOrder() {
         for (Face f : faces) {
             Vertex t = f.a;
@@ -294,12 +307,14 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
         return this;
     }
 
+    @Override
     public TriangleMesh flipYAxis() {
         transform(new Matrix4x4().scaleSelf(1, -1, 1));
         flipVertexOrder();
         return this;
     }
 
+    @Override
     public AABB getBoundingBox() {
         final Vec3D minBounds = Vec3D.MAX_VALUE.copy();
         final Vec3D maxBounds = Vec3D.NEG_MAX_VALUE.copy();
@@ -311,6 +326,7 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
         return bounds;
     }
 
+    @Override
     public Sphere getBoundingSphere() {
         float radius = 0;
         computeCentroid();
@@ -320,6 +336,7 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
         return new Sphere(centroid, (float) Math.sqrt(radius));
     }
 
+    @Override
     public Vertex getClosestVertexToPoint(ReadonlyVec3D p) {
         Vertex closest = null;
         float minDist = Float.MAX_VALUE;
@@ -386,6 +403,7 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
         return normals;
     }
 
+    @Override
     public List<Face> getFaces() {
         return faces;
     }
@@ -408,6 +426,7 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
         return faceList;
     }
 
+    @Override
     public IsectData3D getIntersectionData() {
         return intersector.getIntersectionData();
     }
@@ -507,10 +526,12 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
         return normals;
     }
 
+    @Override
     public int getNumFaces() {
         return numFaces;
     }
 
+    @Override
     public int getNumVertices() {
         return numVertices;
     }
@@ -622,6 +643,7 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
         return normals;
     }
 
+    @Override
     public Collection<Vertex> getVertices() {
         return vertices.values();
     }
@@ -638,16 +660,25 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
             }
         }
         stl.endSave();
-        logger.info(numFaces + " faces written");
+        logger.log(Level.INFO, "{0} faces written", numFaces);
     }
 
+    /**
+     *
+     * @param name
+     * @param numV
+     * @param numF
+     * @return
+     */
+    @Override
     public TriangleMesh init(String name, int numV, int numF) {
         setName(name);
-        vertices = new LinkedHashMap<Vec3D, Vertex>(numV, 1.5f, false);
-        faces = new ArrayList<Face>(numF);
+        vertices = new LinkedHashMap<>(numV, 1.5f, false);
+        faces = new ArrayList<>(numF);
         return this;
     }
 
+    @Override
     public boolean intersectsRay(Ray3D ray) {
         Triangle3D tri = intersector.getTriangle();
         for (Face f : faces) {
@@ -660,11 +691,11 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
     }
 
     public Triangle3D perforateFace(Face f, float size) {
-        Vec3D centroid = f.getCentroid();
+        Vec3D centrd = f.getCentroid();
         float d = 1 - size;
-        Vec3D a2 = f.a.interpolateTo(centroid, d);
-        Vec3D b2 = f.b.interpolateTo(centroid, d);
-        Vec3D c2 = f.c.interpolateTo(centroid, d);
+        Vec3D a2 = f.a.interpolateTo(centrd, d);
+        Vec3D b2 = f.b.interpolateTo(centrd, d);
+        Vec3D c2 = f.c.interpolateTo(centrd, d);
         removeFace(f);
         addFace(f.a, b2, a2);
         addFace(f.a, f.b, b2);
@@ -739,7 +770,7 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
     public void saveAsOBJ(OBJWriter obj, boolean saveNormals) {
         int vOffset = obj.getCurrVertexOffset() + 1;
         int nOffset = obj.getCurrNormalOffset() + 1;
-        logger.info("writing OBJMesh: " + this.toString());
+        logger.log(Level.INFO, "writing OBJMesh: {0}", this.toString());
         obj.newObject(name);
         // vertices
         for (Vertex v : vertices.values()) {
@@ -873,6 +904,7 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
         return transform(matrix.identity().scaleSelf(scale));
     }
 
+    @Override
     public TriangleMesh setName(String name) {
         this.name = name;
         return this;

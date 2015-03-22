@@ -32,6 +32,7 @@ package toxi.color;
  */
 public class LuminanceAccessor extends AccessCriteria {
 
+    @Override
     public int compare(ReadonlyTColor a, ReadonlyTColor b) {
         float lumA = a.luminance();
         float lumB = b.luminance();
@@ -45,6 +46,7 @@ public class LuminanceAccessor extends AccessCriteria {
         }
     }
 
+    @Override
     public float getComponentValueFor(ReadonlyTColor col) {
         return col.luminance();
     }
@@ -56,6 +58,7 @@ public class LuminanceAccessor extends AccessCriteria {
      * @see toxi.color.AccessCriteria#setComponentValueFor(toxi.color.TColor,
      *      float)
      */
+    @Override
     public void setComponentValueFor(TColor col, float value) {
 
     }
