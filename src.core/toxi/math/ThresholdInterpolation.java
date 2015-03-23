@@ -39,10 +39,12 @@ public class ThresholdInterpolation implements InterpolateStrategy {
         this.threshold = threshold;
     }
 
+    @Override
     public double interpolate(double a, double b, double f) {
         return f < threshold ? a : b;
     }
 
+    @Override
     public float interpolate(float a, float b, float f) {
         return f < threshold ? a : b;
     }

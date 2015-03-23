@@ -51,11 +51,13 @@ public class SigmoidInterpolation implements InterpolateStrategy {
         return sharpness;
     }
 
+    @Override
     public double interpolate(double a, double b, double f) {
         f = 1.0 + Math.exp(-((f * 2 - 1) * sharpPremult));
         return a + (b - a) / f;
     }
 
+    @Override
     public float interpolate(float a, float b, float f) {
         f = (float) (1.0 + Math.exp(-((f * 2 - 1) * sharpPremult)));
         return a + (b - a) / f;

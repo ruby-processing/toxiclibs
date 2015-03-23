@@ -410,7 +410,7 @@ public class AABB extends Vec3D implements Shape3D {
         // compute plane equation of triangle: normal*x+d=0
         normal = e0.cross(e1);
         float d = -normal.dot(v0);
-        return (!planeBoxOverlap(normal, d, extent));
+        return planeBoxOverlap(normal, d, extent);
     }
 
     private boolean planeBoxOverlap(Vec3D normal, float d, Vec3D maxbox) {

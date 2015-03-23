@@ -64,6 +64,7 @@ public class CAWolfram1D implements CARule {
         rules = new boolean[numBits];
     }
 
+    @Override
     public void evolve(EvolvableMatrix m) {
         int[] cells = m.getMatrix();
         int[] nextgen = m.getSwapBuffer();
@@ -127,6 +128,7 @@ public class CAWolfram1D implements CARule {
      * 
      * @see toxi.sim.automata.CARule#getStateCount()
      */
+    @Override
     public int getStateCount() {
         return stateCount;
     }
@@ -134,6 +136,7 @@ public class CAWolfram1D implements CARule {
     /**
      * @return the isAutoexpire
      */
+    @Override
     public boolean isAutoExpire() {
         return isAutoexpire;
     }
@@ -143,6 +146,7 @@ public class CAWolfram1D implements CARule {
      * 
      * @see toxi.sim.automata.CARule#isTiling()
      */
+    @Override
     public boolean isTiling() {
         return isTiling;
     }
@@ -152,6 +156,7 @@ public class CAWolfram1D implements CARule {
      * 
      * @see toxi.sim.automata.CARule#randomize()
      */
+    @Override
     public void randomize() {
         setRuleID(new BigInteger(numBits, new Random()));
     }
@@ -163,6 +168,7 @@ public class CAWolfram1D implements CARule {
      *            true, if cells expire automatically when their max. state is
      *            reached (i.e. state reverts back to 0)
      */
+    @Override
     public void setAutoExpire(boolean isAutoexpire) {
         this.isAutoexpire = isAutoexpire;
     }
@@ -200,7 +206,7 @@ public class CAWolfram1D implements CARule {
      * <li>kernelWidth = 1 -> number of bits 2*(4^1)=8</li>
      * <li>kernelWidth = 2 -> number of bits 2*(4^2)=32</li>
      * <li>kernelWidth = 3 -> number of bits 2*(4^2)=128</li>
-     * 
+     * </ul>
      * @param id
      * @return itself
      */
@@ -219,10 +225,12 @@ public class CAWolfram1D implements CARule {
         return this;
     }
 
+    @Override
     public void setStateCount(int num) {
         stateCount = num;
     }
 
+    @Override
     public void setTiling(boolean state) {
         isTiling = state;
     }

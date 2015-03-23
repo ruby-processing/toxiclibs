@@ -267,7 +267,7 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
             if (Float.isNaN(diff)) {
                 return false;
             }
-            return ((diff < 0 ? -diff : diff) > tolerance);
+            return ((diff > 0 ? -diff : diff) < tolerance);
         } catch (NullPointerException e) {
             return false;
         }

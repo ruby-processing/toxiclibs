@@ -21,6 +21,7 @@ public class PlaneIsecTest extends PApplet {
 
     private Plane p1, p2;
 
+    @Override
     public void draw() {
         background(255);
         lights();
@@ -47,6 +48,7 @@ public class PlaneIsecTest extends PApplet {
         }
     }
 
+    @Override
     public void keyPressed() {
         switch (key) {
             case ' ':
@@ -58,8 +60,9 @@ public class PlaneIsecTest extends PApplet {
         }
     }
 
+    @Override
     public void setup() {
-        size(1280, 720, OPENGL);
+        size(1280, 720, P3D);
         gfx = new ToxiclibsSupport(this);
         p1 = new Plane(new Vec3D(100, 100, 100), new Vec3D(0, 1, 0));
         p2 = new Plane(new Vec3D(100, 200, 100),

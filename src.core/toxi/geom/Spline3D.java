@@ -71,7 +71,7 @@ public class Spline3D {
     protected Vec3D[] points;
 
     @XmlElement(name = "p")
-    public List<Vec3D> pointList = new ArrayList<Vec3D>();
+    public List<Vec3D> pointList = new ArrayList<>();
 
     @XmlTransient
     public BernsteinPolynomial bernstein;
@@ -236,7 +236,7 @@ public class Spline3D {
      * @since 0014 (rev. 216)
      * @return itself
      */
-    public Spline3D setTightness(float tightness) {
+    public final Spline3D setTightness(float tightness) {
         this.tightness = tightness;
         this.invTightness = 1f / tightness;
         return this;

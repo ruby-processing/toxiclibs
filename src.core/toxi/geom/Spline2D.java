@@ -73,7 +73,7 @@ public class Spline2D {
     protected Vec2D[] points;
 
     @XmlElement(name = "p")
-    public List<Vec2D> pointList = new ArrayList<Vec2D>();
+    public List<Vec2D> pointList = new ArrayList<>();
 
     @XmlTransient
     public BernsteinPolynomial bernstein;
@@ -231,9 +231,10 @@ public class Spline2D {
      * @param tightness
      *            the tightness value used for the next call to
      *            {@link #toLineStrip2D(int)}
+     * @return 
      * @since 0014 (rev. 216)
      */
-    public Spline2D setTightness(float tightness) {
+    public final Spline2D setTightness(float tightness) {
         this.tightness = tightness;
         this.invTightness = 1f / tightness;
         return this;

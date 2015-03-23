@@ -60,7 +60,7 @@ public class VolumetricTest extends PApplet {
     IsoSurface surface;
     TriangleMesh mesh;
 
-    boolean isWireframe = false;
+    boolean isWireframe = true;
     float currScale = 1;
 
     @Override

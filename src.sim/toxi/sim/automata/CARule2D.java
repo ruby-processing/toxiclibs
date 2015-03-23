@@ -36,7 +36,7 @@ import toxi.util.datatypes.ArrayUtil;
 public class CARule2D implements CARule {
 
     public static final byte[] booleanToByteArray(boolean[] kernel) {
-        List<Byte> buf = new ArrayList<Byte>(kernel.length);
+        List<Byte> buf = new ArrayList<>(kernel.length);
         for (byte i = 0; i < kernel.length; i++) {
             if (kernel[i]) {
                 buf.add(i);
@@ -70,6 +70,11 @@ public class CARule2D implements CARule {
         setTiling(tiled);
     }
 
+    /**
+     *
+     * @param m
+     */
+    @Override
     public void evolve(EvolvableMatrix m) {
         int width = m.getWidth();
         int height = m.getHeight();
@@ -150,6 +155,7 @@ public class CARule2D implements CARule {
         return booleanToByteArray(birthRules);
     }
 
+    @Override
     public int getStateCount() {
         return stateCount;
     }
@@ -158,37 +164,41 @@ public class CARule2D implements CARule {
         return booleanToByteArray(survivalRules);
     }
 
+    @Override
     public boolean isAutoExpire() {
         return isAutoExpire;
     }
 
+    @Override
     public boolean isTiling() {
         return isTiling;
     }
 
     protected byte[] randomArray(double chance) {
-        List<Byte> rules = new ArrayList<Byte>();
+        List<Byte> rules = new ArrayList<>();
         for (byte i = 0; i < 9; i++) {
             if (MathUtils.randomChance(chance)) {
                 rules.add(i);
             }
         }
-        if (rules.size() == 0) {
+        if (rules.isEmpty()) {
             rules.add((byte) MathUtils.random(9));
         }
         return byteListToArray(rules);
     }
 
+    @Override
     public void randomize() {
         setRuleArray(randomArray(randomBirthChance), birthRules);
         setRuleArray(randomArray(randomSurvivalChance), survivalRules);
     }
 
+    @Override
     public void setAutoExpire(boolean state) {
         this.isAutoExpire = state;
     }
 
-    public void setBirthRules(byte[] b) {
+    public final void setBirthRules(byte[] b) {
         setRuleArray(b, birthRules);
     }
 
@@ -212,18 +222,21 @@ public class CARule2D implements CARule {
         }
     }
 
+    @Override
     public void setStateCount(int num) {
         stateCount = num;
     }
 
-    public void setSurvivalRules(byte[] s) {
+    public final void setSurvivalRules(byte[] s) {
         setRuleArray(s, survivalRules);
     }
 
-    public void setTiling(boolean state) {
+    @Override
+    public final void setTiling(boolean state) {
         isTiling = state;
     }
 
+    @Override
     public String toString() {
         return "births: " + ArrayUtil.toString(getBirthRules()) + " survivals:"
                 + ArrayUtil.toString(getSurvivalRules());

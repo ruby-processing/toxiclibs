@@ -128,6 +128,7 @@ public class CAMatrix implements EvolvableMatrix {
      * 
      * @see toxi.sim.automata.EvolvableMatrix#getGeneration()
      */
+    @Override
     public final int getGeneration() {
         return generation;
     }
@@ -137,6 +138,7 @@ public class CAMatrix implements EvolvableMatrix {
      * 
      * @see toxi.sim.automata.EvolvableMatrix#getHeight()
      */
+    @Override
     public final int getHeight() {
         return height;
     }
@@ -152,6 +154,7 @@ public class CAMatrix implements EvolvableMatrix {
         return x + y * width;
     }
 
+    @Override
     public final int[] getMatrix() {
         return matrix;
     }
@@ -163,10 +166,12 @@ public class CAMatrix implements EvolvableMatrix {
         return rule;
     }
 
+    @Override
     public final int[] getSwapBuffer() {
         return swap;
     }
 
+    @Override
     public final int getWidth() {
         return width;
     }
