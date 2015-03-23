@@ -10,7 +10,7 @@ public class SizeOf {
         for (int i = 0; (usedMem1 < usedMem2) && (i < 500); ++i) {
             s_runtime.runFinalization();
             s_runtime.gc();
-            Thread.currentThread().yield();
+            Thread.yield();
 
             usedMem2 = usedMem1;
             usedMem1 = usedMemory();
@@ -28,7 +28,7 @@ public class SizeOf {
         long heap1 = 0;
         // Allocate count+1 objects, discard the first one
         for (int i = -1; i < count; ++i) {
-            Object object = null;
+            Object object;
 
             // Instantiate your data here and assign it to object
 

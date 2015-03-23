@@ -3,6 +3,8 @@ package toxi.test;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -33,8 +35,8 @@ public class JAXBGeomTest {
             JAXBGeomTest test = (JAXBGeomTest) context.createUnmarshaller()
                     .unmarshal(file);
             return test;
-        } catch (JAXBException e) {
-            e.printStackTrace();
+        } catch (JAXBException ex) {
+            Logger.getLogger(JAXBGeomTest.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -58,13 +60,13 @@ public class JAXBGeomTest {
             test.rect = new Rect(0, 0, 100, 200);
             test.sphere = new Sphere();
             test.tri = new Triangle3D(new Vec3D(), new Vec3D(), new Vec3D());
-            List<Vec2D> points2d = new ArrayList<Vec2D>();
+            List<Vec2D> points2d = new ArrayList<>();
             points2d.add(new Vec2D());
             points2d.add(new Vec2D());
             points2d.add(new Vec2D());
             points2d.add(new Vec2D());
             test.spline2d = new Spline2D(points2d);
-            List<Vec3D> points = new ArrayList<Vec3D>();
+            List<Vec3D> points = new ArrayList<>();
             points.add(new Vec3D());
             points.add(new Vec3D());
             points.add(new Vec3D());
@@ -73,8 +75,8 @@ public class JAXBGeomTest {
             JAXBContext context = JAXBContext.newInstance(JAXBGeomTest.class);
             File file = new File(XML_FILE);
             context.createMarshaller().marshal(test, file);
-        } catch (JAXBException e) {
-            e.printStackTrace();
+        } catch (JAXBException ex) {
+            Logger.getLogger(JAXBGeomTest.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

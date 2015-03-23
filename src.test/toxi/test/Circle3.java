@@ -13,6 +13,7 @@ public class Circle3 extends PApplet {
 
     private ToxiclibsSupport gfx;
 
+    @Override
     public void draw() {
         background(255);
         noFill();
@@ -28,6 +29,7 @@ public class Circle3 extends PApplet {
         }
     }
 
+    @Override
     public void setup() {
         size(400, 400);
         gfx = new ToxiclibsSupport(this);
@@ -36,5 +38,9 @@ public class Circle3 extends PApplet {
         Ray3DIntersector ri = new Ray3DIntersector(r);
         ri.intersectsRay(r2);
         println(ri.getIntersectionData());
+    }
+    
+    public static void main(String[] args) {
+        PApplet.main(new String[] { "toxi.test.Circle3" });
     }
 }

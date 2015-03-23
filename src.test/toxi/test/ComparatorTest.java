@@ -8,6 +8,7 @@ public class ComparatorTest {
 
     static class NonComparator implements Comparator<Float> {
 
+        @Override
         public int compare(Float a, Float b) {
             return (int) (a - b);
         }
@@ -15,7 +16,7 @@ public class ComparatorTest {
     }
 
     public static void main(String[] args) {
-        SortedSet<Float> set = new TreeSet<Float>(new NonComparator());
+        SortedSet<Float> set = new TreeSet<>(new NonComparator());
         set.add(23f);
         set.add(5f);
         set.add(99f);

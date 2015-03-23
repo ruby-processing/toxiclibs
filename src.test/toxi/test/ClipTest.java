@@ -72,4 +72,8 @@ public class ClipTest extends PApplet {
         convexClipper = new ConvexPolygonClipper(bounds);
         textFont(createFont("SansSerif", 10));
     }
+    
+    public static void main(String[] args) {
+        PApplet.main(new String[] { "toxi.test.ClipTest" });
+    }
 }

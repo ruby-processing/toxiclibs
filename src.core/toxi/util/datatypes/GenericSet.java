@@ -48,6 +48,10 @@ public class GenericSet<T> implements Iterable<T> {
         pickRandom();
     }
 
+    /**
+     *
+     * @param obj
+     */
     public GenericSet(T... obj) {
         items = new ArrayList<>(obj.length);
         items.addAll(Arrays.asList(obj));

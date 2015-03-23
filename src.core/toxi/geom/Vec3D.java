@@ -510,7 +510,7 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
             if (Float.isNaN(diff)) {
                 return false;
             }
-            return ((diff < 0 ? -diff : diff) > tolerance);
+            return ((diff < 0 ? -diff : diff) < tolerance);
         } catch (NullPointerException e) {
             return false;
         }
@@ -904,7 +904,7 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
         if (y < min.y || y > max.y) {
             return false;
         }
-        return (z < min.z || z > max.z);
+        return (z > min.z || z < max.z);
     }
 
     @Override
@@ -918,7 +918,7 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
             return false;
         }
         w = boxExtent.z;
-        return (z < boxOrigin.z - w || z > boxOrigin.z + w);
+        return (z > boxOrigin.z - w || z < boxOrigin.z + w);
     }
 
     @Override

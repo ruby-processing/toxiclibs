@@ -1,7 +1,5 @@
 package toxi.test;
 
-import java.util.Iterator;
-
 import processing.core.PApplet;
 import toxi.geom.Vec3D;
 import toxi.physics3d.ParticleString3D;
@@ -18,8 +16,9 @@ public class PhysTest extends PApplet {
     VerletParticle3D head, tail;
 
     boolean isTailLocked;
-    private Vec3D mousePos = new Vec3D();
+    private final Vec3D mousePos = new Vec3D();
 
+    @Override
     public void draw() {
         background(0);
         translate(width / 2, height * 0.25f, 0);
@@ -28,14 +27,13 @@ public class PhysTest extends PApplet {
         head.set(mouseX, mouseY, 0);
         physics.update();
         beginShape();
-        for (Iterator<VerletParticle3D> i = physics.particles.iterator(); i
-                .hasNext();) {
-            VerletParticle3D p = i.next();
+        for (VerletParticle3D p : physics.particles) {
             vertex(p.x, p.y, p.z);
         }
         endShape();
     }
 
+    @Override
     public void mousePressed() {
         isTailLocked = !isTailLocked;
         if (isTailLocked) {
@@ -45,6 +43,7 @@ public class PhysTest extends PApplet {
         }
     }
 
+    @Override
     public void setup() {
         size(1024, 768, P3D);
         smooth();
@@ -58,5 +57,9 @@ public class PhysTest extends PApplet {
         head.lock();
         tail = s.getTail();
         physics.addBehavior(new AttractionBehavior3D(new Vec3D(), 400, 0.5f));
+    }
+    
+    public static void main(String[] args) {
+        PApplet.main(new String[] { "toxi.test.PhysTest" });
     }
 }

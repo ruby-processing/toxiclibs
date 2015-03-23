@@ -24,6 +24,7 @@ public class QuadtreeTest extends PApplet {
 
     private PointQuadtree tree;
 
+    @Override
     public void draw() {
         background(255);
         Circle c = new Circle(new Vec2D(mouseX, mouseY), 100);
@@ -64,4 +65,6 @@ public class QuadtreeTest extends PApplet {
             tree.index(new Vec2D(random(width), random(height)));
         }
     }
+    
+
 }

@@ -17,7 +17,7 @@ public class ArrayUtilTest extends TestCase {
     }
 
     public void testGenericSet() {
-        GenericSet<Integer> set = new GenericSet<Integer>(1, 2, 23, 42, 81);
+        GenericSet<Integer> set = new GenericSet<>(1, 2, 23, 42, 81);
         assertEquals(5, set.getItems().size());
         int prev = 0;
         for (int i = 0; i < set.size(); i++) {

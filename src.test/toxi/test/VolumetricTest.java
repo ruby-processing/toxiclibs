@@ -63,6 +63,7 @@ public class VolumetricTest extends PApplet {
     boolean isWireframe = false;
     float currScale = 1;
 
+    @Override
     public void draw() {
         background(128);
         translate(width / 2, height / 2, 0);
@@ -93,6 +94,7 @@ public class VolumetricTest extends PApplet {
         endShape();
     }
 
+    @Override
     public void keyPressed() {
         if (key == '-') {
             currScale = max(currScale - 0.1f, 0.5f);
@@ -106,6 +108,7 @@ public class VolumetricTest extends PApplet {
         }
     }
 
+    @Override
     public void mousePressed() {
         isWireframe = !isWireframe;
     }
@@ -114,6 +117,7 @@ public class VolumetricTest extends PApplet {
         normal(v.x, v.y, v.z);
     }
 
+    @Override
     public void setup() {
         //size(100, 100);
         size(1024, 768, P3D);

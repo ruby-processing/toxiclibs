@@ -70,7 +70,7 @@ public class AABB extends Vec3D implements Shape3D {
      * @return bounding rect
      */
     public static final AABB getBoundingBox(List<? extends Vec3D> points) {
-        if (points == null || points.size() == 0) {
+        if (points == null || points.isEmpty()) {
             return null;
         }
         Vec3D first = points.get(0);
@@ -137,10 +137,12 @@ public class AABB extends Vec3D implements Shape3D {
         setExtent(extent);
     }
 
+    @Override
     public boolean containsPoint(ReadonlyVec3D p) {
         return p.isInAABB(this);
     }
 
+    @Override
     public AABB copy() {
         return new AABB(this);
     }
@@ -408,10 +410,7 @@ public class AABB extends Vec3D implements Shape3D {
         // compute plane equation of triangle: normal*x+d=0
         normal = e0.cross(e1);
         float d = -normal.dot(v0);
-        if (!planeBoxOverlap(normal, d, extent)) {
-            return false;
-        }
-        return true;
+        return (!planeBoxOverlap(normal, d, extent));
     }
 
     private boolean planeBoxOverlap(Vec3D normal, float d, Vec3D maxbox) {
@@ -444,10 +443,7 @@ public class AABB extends Vec3D implements Shape3D {
         if (normal.dot(vmin) + d > 0.0f) {
             return false;
         }
-        if (normal.dot(vmax) + d >= 0.0f) {
-            return true;
-        }
-        return false;
+        return (normal.dot(vmax) + d >= 0.0f);
     }
 
     public AABB set(AABB box) {
@@ -495,7 +491,7 @@ public class AABB extends Vec3D implements Shape3D {
      *            new box size
      * @return itself, for method chaining
      */
-    public AABB setExtent(ReadonlyVec3D extent) {
+    public final AABB setExtent(ReadonlyVec3D extent) {
         this.extent = extent.copy();
         return updateBounds();
     }

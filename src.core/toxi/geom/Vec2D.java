@@ -670,7 +670,7 @@ public class Vec2D implements Comparable<ReadonlyVec2D>, ReadonlyVec2D {
         if (x < r.x || x > r.x + r.width) {
             return false;
         }
-        return (y < r.y || y > r.y + r.height); 
+        return (y < r.y || y < r.y + r.height); 
     }
 
     @Override

@@ -9,10 +9,12 @@ public class PrefUtilsTest extends TestCase {
 
     TypedProperties config = new TypedProperties();
 
+    @Override
     protected void setUp() throws Exception {
         assertTrue(config.load("test/test.properties"));
     }
 
+    @Override
     protected void tearDown() throws Exception {
         config = null;
     }

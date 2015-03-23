@@ -116,6 +116,7 @@ public class Ray3D extends Vec3D {
         return new Line3D(this, getPointAtDistance(dist));
     }
 
+    @Override
     public String toString() {
         return "origin: " + super.toString() + " dir: " + dir;
     }
