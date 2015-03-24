@@ -33,7 +33,6 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-
 import toxi.math.MathUtils;
 
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -117,16 +116,14 @@ public class Rect implements Shape2D {
      *            point to check
      * @return true, if point is contained
      */
+    @Override
     public boolean containsPoint(ReadonlyVec2D p) {
         float px = p.x();
         float py = p.y();
         if (px < x || px >= x + width) {
             return false;
         }
-        if (py < y || py >= y + height) {
-            return false;
-        }
-        return true;
+        return (py > y || py < y + height);
     }
 
     /**
@@ -146,17 +143,16 @@ public class Rect implements Shape2D {
      *            the Object with which the comparison is made
      * @return true or false
      */
+    @Override
     public boolean equals(Object o) {
-        try {
+        if (o instanceof Rect) {
             Rect r = (Rect) o;
             return (x == r.x && y == r.y && width == r.width && height == r.height);
-        } catch (NullPointerException e) {
-            return false;
-        } catch (ClassCastException e) {
-            return false;
         }
+        return false;
     }
 
+    @Override
     public final float getArea() {
         return width * height;
     }
@@ -182,6 +178,7 @@ public class Rect implements Shape2D {
         return new Vec2D(x + width, y + height);
     }
 
+    @Override
     public Circle getBoundingCircle() {
         return new Circle(getCentroid(),
                 new Vec2D(width, height).magnitude() / 2);
@@ -195,6 +192,7 @@ public class Rect implements Shape2D {
      * 
      * @see toxi.geom.Shape2D#getBounds()
      */
+    @Override
     public Rect getBounds() {
         return this;
     }
@@ -208,6 +206,7 @@ public class Rect implements Shape2D {
         return new Vec2D(x + width * 0.5f, y + height * 0.5f);
     }
 
+    @Override
     public final float getCircumference() {
         return 2 * width + 2 * height;
     }
@@ -259,8 +258,9 @@ public class Rect implements Shape2D {
         return edge;
     }
 
+    @Override
     public List<Line2D> getEdges() {
-        List<Line2D> edges = new ArrayList<Line2D>();
+        List<Line2D> edges = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             edges.add(getEdge(i));
         }
@@ -291,6 +291,7 @@ public class Rect implements Shape2D {
      * 
      * @return Vec2D
      */
+    @Override
     public Vec2D getRandomPoint() {
         return new Vec2D(MathUtils.random(x, x + width), MathUtils.random(y, y
                 + height));
@@ -355,6 +356,7 @@ public class Rect implements Shape2D {
      * 
      * @return the integer hash code value
      */
+    @Override
     public int hashCode() {
         long bits = 1L;
         bits = 31L * bits + VecMathUtil.floatToIntBits(x);
@@ -533,6 +535,7 @@ public class Rect implements Shape2D {
      * 
      * @return rect as polygon
      */
+    @Override
     public Polygon2D toPolygon2D() {
         Polygon2D poly = new Polygon2D();
         poly.add(new Vec2D(x, y));

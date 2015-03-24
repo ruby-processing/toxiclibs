@@ -58,8 +58,8 @@ public class ParticleString3D {
     public ParticleString3D(VerletPhysics3D physics, List<VerletParticle3D> plist,
             float strength) {
         this.physics = physics;
-        particles = new ArrayList<VerletParticle3D>(plist);
-        links = new ArrayList<VerletSpring3D>(particles.size() - 1);
+        particles = new ArrayList<>(plist);
+        links = new ArrayList<>(particles.size() - 1);
         VerletParticle3D prev = null;
         for (VerletParticle3D p : particles) {
             physics.addParticle(p);
@@ -94,8 +94,8 @@ public class ParticleString3D {
     public ParticleString3D(VerletPhysics3D physics, Vec3D pos, Vec3D step,
             int num, float mass, float strength) {
         this.physics = physics;
-        particles = new ArrayList<VerletParticle3D>(num);
-        links = new ArrayList<VerletSpring3D>(num - 1);
+        particles = new ArrayList<>(num);
+        links = new ArrayList<>(num - 1);
         float len = step.magnitude();
         VerletParticle3D prev = null;
         pos = pos.copy();
@@ -139,7 +139,7 @@ public class ParticleString3D {
      * @param strength
      * @return spring
      */
-    protected VerletSpring3D createSpring(VerletParticle3D a, VerletParticle3D b,
+    protected final VerletSpring3D createSpring(VerletParticle3D a, VerletParticle3D b,
             float len, float strength) {
         return new VerletSpring3D(a, b, len, strength);
     }

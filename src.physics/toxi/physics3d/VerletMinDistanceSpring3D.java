@@ -40,6 +40,7 @@ public class VerletMinDistanceSpring3D extends VerletSpring3D {
         super(a, b, len, str);
     }
 
+    @Override
     public void update(boolean applyConstraints) {
         if (b.distanceToSquared(a) < restLengthSquared) {
             super.update(applyConstraints);

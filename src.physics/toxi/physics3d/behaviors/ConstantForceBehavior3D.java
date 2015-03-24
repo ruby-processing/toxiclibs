@@ -40,10 +40,16 @@ public class ConstantForceBehavior3D implements ParticleBehavior3D {
         this.force = force;
     }
 
+    @Override
     public void apply(VerletParticle3D p) {
         p.addForce(scaledForce);
     }
 
+    /**
+     *
+     * @param timeStep
+     */
+    @Override
     public void configure(float timeStep) {
         this.timeStep = timeStep;
         setForce(force);

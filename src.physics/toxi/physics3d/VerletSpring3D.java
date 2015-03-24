@@ -135,6 +135,7 @@ public class VerletSpring3D {
     /**
      * Updates both particle positions (if not locked) based on their current
      * distance, weight and spring configuration *
+     * @param applyConstraints
      */
     protected void update(boolean applyConstraints) {
         Vec3D delta = b.sub(a);

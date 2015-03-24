@@ -41,6 +41,7 @@ class PullBackSpring3D extends VerletSpring3D {
         setRestLength(0);
     }
 
+    @Override
     protected void update(boolean applyConstraints) {
         if (b.distanceToSquared(a) > 0.5f) {
             super.update(applyConstraints);

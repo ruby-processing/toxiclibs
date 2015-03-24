@@ -52,6 +52,7 @@ public class AttractionBehavior3D implements ParticleBehavior3D {
         setRadius(radius);
     }
 
+    @Override
     public void apply(VerletParticle3D p) {
         Vec3D delta = attractor.sub(p);
         float dist = delta.magSquared();
@@ -62,6 +63,11 @@ public class AttractionBehavior3D implements ParticleBehavior3D {
         }
     }
 
+    /**
+     *
+     * @param timeStep
+     */
+    @Override
     public void configure(float timeStep) {
         this.timeStep = timeStep;
         setStrength(strength);
@@ -111,7 +117,7 @@ public class AttractionBehavior3D implements ParticleBehavior3D {
         this.jitter = jitter;
     }
 
-    public void setRadius(float r) {
+    public final void setRadius(float r) {
         this.radius = r;
         this.radiusSquared = r * r;
     }

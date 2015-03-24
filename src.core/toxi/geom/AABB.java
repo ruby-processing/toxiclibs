@@ -317,6 +317,11 @@ public class AABB extends Vec3D implements Shape3D {
         return d <= r * r;
     }
 
+    /**
+     *
+     * @param tri
+     * @return
+     */
     public boolean intersectsTriangle(Triangle3D tri) {
         // use separating axis theorem to test overlap between triangle and box
         // need to test for overlap in these directions:
@@ -443,7 +448,7 @@ public class AABB extends Vec3D implements Shape3D {
         if (normal.dot(vmin) + d > 0.0f) {
             return false;
         }
-        return (normal.dot(vmax) + d >= 0.0f);
+        return (normal.dot(vmax) + d >= 0.0f); // returns true or false
     }
 
     public AABB set(AABB box) {

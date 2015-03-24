@@ -47,6 +47,7 @@ public class BoxConstraint implements ParticleConstraint3D {
         this(AABB.fromMinMax(min, max));
     }
 
+    @Override
     public void apply(VerletParticle3D p) {
         if (p.isInAABB(box)) {
             Vec3D dir = p.getVelocity();

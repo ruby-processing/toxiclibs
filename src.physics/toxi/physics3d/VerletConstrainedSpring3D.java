@@ -65,6 +65,7 @@ public class VerletConstrainedSpring3D extends VerletSpring3D {
         this.limit = limit;
     }
 
+    @Override
     protected void update(boolean applyConstraints) {
         Vec3D delta = b.sub(a);
         // add minute offset to avoid div-by-zero errors
