@@ -394,6 +394,24 @@ public class Vec2D implements Comparable<ReadonlyVec2D>, ReadonlyVec2D {
         }
             return false; 
     }
+    
+    /**
+     * Returns a hash code value based on the data values in this object. Two
+     * different Vec2D objects with identical data values (i.e., Vec2D.equals
+     * returns true) will return the same hash code value. Two objects with
+     * different data members may return the same hash value, although this is
+     * not likely.
+     *
+     * @return the hash code value of this vector.
+     */
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + Float.floatToIntBits(this.x);
+        hash = 97 * hash + Float.floatToIntBits(this.y);
+        return hash;
+    }
 
     /**
      * Returns true if all of the data members of ReadonlyVec2D v are equal to
@@ -571,23 +589,6 @@ public class Vec2D implements Comparable<ReadonlyVec2D>, ReadonlyVec2D {
         return new Vec2D(this).signum();
     }
 
-    /**
-     * Returns a hash code value based on the data values in this object. Two
-     * different Vec2D objects with identical data values (i.e., Vec2D.equals
-     * returns true) will return the same hash code value. Two objects with
-     * different data members may return the same hash value, although this is
-     * not likely.
-     *
-     * @return the hash code value of this vector.
-     */
-    @Override
-    public int hashCode() {
-        long bits = 1L;
-        bits = 31L * bits + VecMathUtil.floatToIntBits(x);
-        bits = 31L * bits + VecMathUtil.floatToIntBits(y);
-        return (int) (bits ^ (bits >> 32));
-    }
-
     @Override
     public final float heading() {
         return (float) Math.atan2(y, x);
@@ -670,7 +671,7 @@ public class Vec2D implements Comparable<ReadonlyVec2D>, ReadonlyVec2D {
         if (x < r.x || x > r.x + r.width) {
             return false;
         }
-        return (y < r.y || y < r.y + r.height); 
+        return (y >= r.y || y >= r.y + r.height); 
     }
 
     @Override

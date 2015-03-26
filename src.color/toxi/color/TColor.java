@@ -568,6 +568,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#alpha()
      */
+    @Override
     public float alpha() {
         return alpha;
     }
@@ -866,6 +867,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#getRotatedRYB(int)
      */
+    @Override
     public TColor getRotatedRYB(int angle) {
         return new TColor(this).rotateRYB(angle);
     }
@@ -875,6 +877,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#getSaturated(float)
      */
+    @Override
     public TColor getSaturated(float step) {
         return new TColor(this).saturate(step);
     }
@@ -884,6 +887,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#green()
      */
+    @Override
     public float green() {
         return rgb[1];
     }
@@ -903,6 +907,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#hue()
      */
+    @Override
     public float hue() {
         return hsv[0];
     }

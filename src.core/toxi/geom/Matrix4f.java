@@ -689,7 +689,7 @@ public class Matrix4f implements java.io.Serializable, Cloneable {
      */
     @Override
     public boolean equals(Object t1) {
-        try {
+        if (t1 instanceof Matrix4f) {
             Matrix4f m2 = (Matrix4f) t1;
             return (this.m00 == m2.m00 && this.m01 == m2.m01
                     && this.m02 == m2.m02 && this.m03 == m2.m03
@@ -699,11 +699,30 @@ public class Matrix4f implements java.io.Serializable, Cloneable {
                     && this.m22 == m2.m22 && this.m23 == m2.m23
                     && this.m30 == m2.m30 && this.m31 == m2.m31
                     && this.m32 == m2.m32 && this.m33 == m2.m33);
-        } catch (ClassCastException e1) {
-            return false;
-        } catch (NullPointerException e2) {
-            return false;
         }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 23 * hash + Float.floatToIntBits(this.m00);
+        hash = 23 * hash + Float.floatToIntBits(this.m01);
+        hash = 23 * hash + Float.floatToIntBits(this.m02);
+        hash = 23 * hash + Float.floatToIntBits(this.m03);
+        hash = 23 * hash + Float.floatToIntBits(this.m10);
+        hash = 23 * hash + Float.floatToIntBits(this.m11);
+        hash = 23 * hash + Float.floatToIntBits(this.m12);
+        hash = 23 * hash + Float.floatToIntBits(this.m13);
+        hash = 23 * hash + Float.floatToIntBits(this.m20);
+        hash = 23 * hash + Float.floatToIntBits(this.m21);
+        hash = 23 * hash + Float.floatToIntBits(this.m22);
+        hash = 23 * hash + Float.floatToIntBits(this.m23);
+        hash = 23 * hash + Float.floatToIntBits(this.m30);
+        hash = 23 * hash + Float.floatToIntBits(this.m31);
+        hash = 23 * hash + Float.floatToIntBits(this.m32);
+        hash = 23 * hash + Float.floatToIntBits(this.m33);
+        return hash;
     }
 
     /**
@@ -1285,27 +1304,27 @@ public class Matrix4f implements java.io.Serializable, Cloneable {
      * 
      * @return the integer hash code value
      */
-    @Override
-    public int hashCode() {
-        long bits = 1L;
-        bits = 31L * bits + VecMathUtil.floatToIntBits(m00);
-        bits = 31L * bits + VecMathUtil.floatToIntBits(m01);
-        bits = 31L * bits + VecMathUtil.floatToIntBits(m02);
-        bits = 31L * bits + VecMathUtil.floatToIntBits(m03);
-        bits = 31L * bits + VecMathUtil.floatToIntBits(m10);
-        bits = 31L * bits + VecMathUtil.floatToIntBits(m11);
-        bits = 31L * bits + VecMathUtil.floatToIntBits(m12);
-        bits = 31L * bits + VecMathUtil.floatToIntBits(m13);
-        bits = 31L * bits + VecMathUtil.floatToIntBits(m20);
-        bits = 31L * bits + VecMathUtil.floatToIntBits(m21);
-        bits = 31L * bits + VecMathUtil.floatToIntBits(m22);
-        bits = 31L * bits + VecMathUtil.floatToIntBits(m23);
-        bits = 31L * bits + VecMathUtil.floatToIntBits(m30);
-        bits = 31L * bits + VecMathUtil.floatToIntBits(m31);
-        bits = 31L * bits + VecMathUtil.floatToIntBits(m32);
-        bits = 31L * bits + VecMathUtil.floatToIntBits(m33);
-        return (int) (bits ^ (bits >> 32));
-    }
+    // @Override
+    // public int hashCode() {
+        // long bits = 1L;
+        // bits = 31L * bits + VecMathUtil.floatToIntBits(m00);
+        // bits = 31L * bits + VecMathUtil.floatToIntBits(m01);
+        // bits = 31L * bits + VecMathUtil.floatToIntBits(m02);
+        // bits = 31L * bits + VecMathUtil.floatToIntBits(m03);
+        // bits = 31L * bits + VecMathUtil.floatToIntBits(m10);
+        // bits = 31L * bits + VecMathUtil.floatToIntBits(m11);
+        // bits = 31L * bits + VecMathUtil.floatToIntBits(m12);
+        // bits = 31L * bits + VecMathUtil.floatToIntBits(m13);
+        // bits = 31L * bits + VecMathUtil.floatToIntBits(m20);
+        // bits = 31L * bits + VecMathUtil.floatToIntBits(m21);
+        // bits = 31L * bits + VecMathUtil.floatToIntBits(m22);
+        // bits = 31L * bits + VecMathUtil.floatToIntBits(m23);
+        // bits = 31L * bits + VecMathUtil.floatToIntBits(m30);
+        // bits = 31L * bits + VecMathUtil.floatToIntBits(m31);
+        // bits = 31L * bits + VecMathUtil.floatToIntBits(m32);
+        // bits = 31L * bits + VecMathUtil.floatToIntBits(m33);
+        // return (int) (bits ^ (bits >> 32));
+    // }
 
     /**
      * Inverts this matrix in place.
@@ -1463,64 +1482,64 @@ public class Matrix4f implements java.io.Serializable, Cloneable {
      *            the other matrix
      */
     public final void mul(Matrix4f m1) {
-        float m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33; // vars
+        float mm00, mm01, mm02, mm03, mm10, mm11, mm12, mm13, mm20, mm21, mm22, mm23, mm30, mm31, mm32, mm33; // vars
                                                                                               // for
                                                                                               // temp
                                                                                               // result
                                                                                               // matrix
 
-        m00 = this.m00 * m1.m00 + this.m01 * m1.m10 + this.m02 * m1.m20
+        mm00 = this.m00 * m1.m00 + this.m01 * m1.m10 + this.m02 * m1.m20
                 + this.m03 * m1.m30;
-        m01 = this.m00 * m1.m01 + this.m01 * m1.m11 + this.m02 * m1.m21
+        mm01 = this.m00 * m1.m01 + this.m01 * m1.m11 + this.m02 * m1.m21
                 + this.m03 * m1.m31;
-        m02 = this.m00 * m1.m02 + this.m01 * m1.m12 + this.m02 * m1.m22
+        mm02 = this.m00 * m1.m02 + this.m01 * m1.m12 + this.m02 * m1.m22
                 + this.m03 * m1.m32;
-        m03 = this.m00 * m1.m03 + this.m01 * m1.m13 + this.m02 * m1.m23
+        mm03 = this.m00 * m1.m03 + this.m01 * m1.m13 + this.m02 * m1.m23
                 + this.m03 * m1.m33;
 
-        m10 = this.m10 * m1.m00 + this.m11 * m1.m10 + this.m12 * m1.m20
+        mm10 = this.m10 * m1.m00 + this.m11 * m1.m10 + this.m12 * m1.m20
                 + this.m13 * m1.m30;
-        m11 = this.m10 * m1.m01 + this.m11 * m1.m11 + this.m12 * m1.m21
+        mm11 = this.m10 * m1.m01 + this.m11 * m1.m11 + this.m12 * m1.m21
                 + this.m13 * m1.m31;
-        m12 = this.m10 * m1.m02 + this.m11 * m1.m12 + this.m12 * m1.m22
+        mm12 = this.m10 * m1.m02 + this.m11 * m1.m12 + this.m12 * m1.m22
                 + this.m13 * m1.m32;
-        m13 = this.m10 * m1.m03 + this.m11 * m1.m13 + this.m12 * m1.m23
+        mm13 = this.m10 * m1.m03 + this.m11 * m1.m13 + this.m12 * m1.m23
                 + this.m13 * m1.m33;
 
-        m20 = this.m20 * m1.m00 + this.m21 * m1.m10 + this.m22 * m1.m20
+        mm20 = this.m20 * m1.m00 + this.m21 * m1.m10 + this.m22 * m1.m20
                 + this.m23 * m1.m30;
-        m21 = this.m20 * m1.m01 + this.m21 * m1.m11 + this.m22 * m1.m21
+        mm21 = this.m20 * m1.m01 + this.m21 * m1.m11 + this.m22 * m1.m21
                 + this.m23 * m1.m31;
-        m22 = this.m20 * m1.m02 + this.m21 * m1.m12 + this.m22 * m1.m22
+        mm22 = this.m20 * m1.m02 + this.m21 * m1.m12 + this.m22 * m1.m22
                 + this.m23 * m1.m32;
-        m23 = this.m20 * m1.m03 + this.m21 * m1.m13 + this.m22 * m1.m23
+        mm23 = this.m20 * m1.m03 + this.m21 * m1.m13 + this.m22 * m1.m23
                 + this.m23 * m1.m33;
 
-        m30 = this.m30 * m1.m00 + this.m31 * m1.m10 + this.m32 * m1.m20
+        mm30 = this.m30 * m1.m00 + this.m31 * m1.m10 + this.m32 * m1.m20
                 + this.m33 * m1.m30;
-        m31 = this.m30 * m1.m01 + this.m31 * m1.m11 + this.m32 * m1.m21
+        mm31 = this.m30 * m1.m01 + this.m31 * m1.m11 + this.m32 * m1.m21
                 + this.m33 * m1.m31;
-        m32 = this.m30 * m1.m02 + this.m31 * m1.m12 + this.m32 * m1.m22
+        mm32 = this.m30 * m1.m02 + this.m31 * m1.m12 + this.m32 * m1.m22
                 + this.m33 * m1.m32;
-        m33 = this.m30 * m1.m03 + this.m31 * m1.m13 + this.m32 * m1.m23
+        mm33 = this.m30 * m1.m03 + this.m31 * m1.m13 + this.m32 * m1.m23
                 + this.m33 * m1.m33;
 
-        this.m00 = m00;
-        this.m01 = m01;
-        this.m02 = m02;
-        this.m03 = m03;
-        this.m10 = m10;
-        this.m11 = m11;
-        this.m12 = m12;
-        this.m13 = m13;
-        this.m20 = m20;
-        this.m21 = m21;
-        this.m22 = m22;
-        this.m23 = m23;
-        this.m30 = m30;
-        this.m31 = m31;
-        this.m32 = m32;
-        this.m33 = m33;
+        this.m00 = mm00;
+        this.m01 = mm01;
+        this.m02 = mm02;
+        this.m03 = mm03;
+        this.m10 = mm10;
+        this.m11 = mm11;
+        this.m12 = mm12;
+        this.m13 = mm13;
+        this.m20 = mm20;
+        this.m21 = mm21;
+        this.m22 = mm22;
+        this.m23 = mm23;
+        this.m30 = mm30;
+        this.m31 = mm31;
+        this.m32 = mm32;
+        this.m33 = mm33;
     }
 
     /**
@@ -1571,63 +1590,63 @@ public class Matrix4f implements java.io.Serializable, Cloneable {
             this.m33 = m1.m30 * m2.m03 + m1.m31 * m2.m13 + m1.m32 * m2.m23
                     + m1.m33 * m2.m33;
         } else {
-            float m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33; // vars
+            float mm00, mm01, mm02, mm03, mm10, mm11, mm12, mm13, mm20, mm21, mm22, mm23, mm30, mm31, mm32, mm33; // vars
                                                                                                   // for
                                                                                                   // temp
                                                                                                   // result
                                                                                                   // matrix
-            m00 = m1.m00 * m2.m00 + m1.m01 * m2.m10 + m1.m02 * m2.m20 + m1.m03
+            mm00 = m1.m00 * m2.m00 + m1.m01 * m2.m10 + m1.m02 * m2.m20 + m1.m03
                     * m2.m30;
-            m01 = m1.m00 * m2.m01 + m1.m01 * m2.m11 + m1.m02 * m2.m21 + m1.m03
+            mm01 = m1.m00 * m2.m01 + m1.m01 * m2.m11 + m1.m02 * m2.m21 + m1.m03
                     * m2.m31;
-            m02 = m1.m00 * m2.m02 + m1.m01 * m2.m12 + m1.m02 * m2.m22 + m1.m03
+            mm02 = m1.m00 * m2.m02 + m1.m01 * m2.m12 + m1.m02 * m2.m22 + m1.m03
                     * m2.m32;
-            m03 = m1.m00 * m2.m03 + m1.m01 * m2.m13 + m1.m02 * m2.m23 + m1.m03
+            mm03 = m1.m00 * m2.m03 + m1.m01 * m2.m13 + m1.m02 * m2.m23 + m1.m03
                     * m2.m33;
 
-            m10 = m1.m10 * m2.m00 + m1.m11 * m2.m10 + m1.m12 * m2.m20 + m1.m13
+            mm10 = m1.m10 * m2.m00 + m1.m11 * m2.m10 + m1.m12 * m2.m20 + m1.m13
                     * m2.m30;
-            m11 = m1.m10 * m2.m01 + m1.m11 * m2.m11 + m1.m12 * m2.m21 + m1.m13
+            mm11 = m1.m10 * m2.m01 + m1.m11 * m2.m11 + m1.m12 * m2.m21 + m1.m13
                     * m2.m31;
-            m12 = m1.m10 * m2.m02 + m1.m11 * m2.m12 + m1.m12 * m2.m22 + m1.m13
+            mm12 = m1.m10 * m2.m02 + m1.m11 * m2.m12 + m1.m12 * m2.m22 + m1.m13
                     * m2.m32;
-            m13 = m1.m10 * m2.m03 + m1.m11 * m2.m13 + m1.m12 * m2.m23 + m1.m13
+            mm13 = m1.m10 * m2.m03 + m1.m11 * m2.m13 + m1.m12 * m2.m23 + m1.m13
                     * m2.m33;
 
-            m20 = m1.m20 * m2.m00 + m1.m21 * m2.m10 + m1.m22 * m2.m20 + m1.m23
+            mm20 = m1.m20 * m2.m00 + m1.m21 * m2.m10 + m1.m22 * m2.m20 + m1.m23
                     * m2.m30;
-            m21 = m1.m20 * m2.m01 + m1.m21 * m2.m11 + m1.m22 * m2.m21 + m1.m23
+            mm21 = m1.m20 * m2.m01 + m1.m21 * m2.m11 + m1.m22 * m2.m21 + m1.m23
                     * m2.m31;
-            m22 = m1.m20 * m2.m02 + m1.m21 * m2.m12 + m1.m22 * m2.m22 + m1.m23
+            mm22 = m1.m20 * m2.m02 + m1.m21 * m2.m12 + m1.m22 * m2.m22 + m1.m23
                     * m2.m32;
-            m23 = m1.m20 * m2.m03 + m1.m21 * m2.m13 + m1.m22 * m2.m23 + m1.m23
+            mm23 = m1.m20 * m2.m03 + m1.m21 * m2.m13 + m1.m22 * m2.m23 + m1.m23
                     * m2.m33;
 
-            m30 = m1.m30 * m2.m00 + m1.m31 * m2.m10 + m1.m32 * m2.m20 + m1.m33
+            mm30 = m1.m30 * m2.m00 + m1.m31 * m2.m10 + m1.m32 * m2.m20 + m1.m33
                     * m2.m30;
-            m31 = m1.m30 * m2.m01 + m1.m31 * m2.m11 + m1.m32 * m2.m21 + m1.m33
+            mm31 = m1.m30 * m2.m01 + m1.m31 * m2.m11 + m1.m32 * m2.m21 + m1.m33
                     * m2.m31;
-            m32 = m1.m30 * m2.m02 + m1.m31 * m2.m12 + m1.m32 * m2.m22 + m1.m33
+            mm32 = m1.m30 * m2.m02 + m1.m31 * m2.m12 + m1.m32 * m2.m22 + m1.m33
                     * m2.m32;
-            m33 = m1.m30 * m2.m03 + m1.m31 * m2.m13 + m1.m32 * m2.m23 + m1.m33
+            mm33 = m1.m30 * m2.m03 + m1.m31 * m2.m13 + m1.m32 * m2.m23 + m1.m33
                     * m2.m33;
 
-            this.m00 = m00;
-            this.m01 = m01;
-            this.m02 = m02;
-            this.m03 = m03;
-            this.m10 = m10;
-            this.m11 = m11;
-            this.m12 = m12;
-            this.m13 = m13;
-            this.m20 = m20;
-            this.m21 = m21;
-            this.m22 = m22;
-            this.m23 = m23;
-            this.m30 = m30;
-            this.m31 = m31;
-            this.m32 = m32;
-            this.m33 = m33;
+            this.m00 = mm00;
+            this.m01 = mm01;
+            this.m02 = mm02;
+            this.m03 = mm03;
+            this.m10 = mm10;
+            this.m11 = mm11;
+            this.m12 = mm12;
+            this.m13 = mm13;
+            this.m20 = mm20;
+            this.m21 = mm21;
+            this.m22 = mm22;
+            this.m23 = mm23;
+            this.m30 = mm30;
+            this.m31 = mm31;
+            this.m32 = mm32;
+            this.m33 = mm33;
         }
     }
 
@@ -1678,65 +1697,65 @@ public class Matrix4f implements java.io.Serializable, Cloneable {
             this.m33 = m1.m03 * m2.m30 + m1.m13 * m2.m31 + m1.m23 * m2.m32
                     + m1.m33 * m2.m33;
         } else {
-            float m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, // vars
+            float mm00, mm01, mm02, mm03, mm10, mm11, mm12, mm13, mm20, mm21, mm22, mm23, // vars
                                                                               // for
                                                                               // temp
                                                                               // result
                                                                               // matrix
-            m30, m31, m32, m33;
+            mm30, mm31, mm32, mm33;
 
-            m00 = m1.m00 * m2.m00 + m1.m10 * m2.m01 + m1.m20 * m2.m02 + m1.m30
+            mm00 = m1.m00 * m2.m00 + m1.m10 * m2.m01 + m1.m20 * m2.m02 + m1.m30
                     * m2.m03;
-            m01 = m1.m00 * m2.m10 + m1.m10 * m2.m11 + m1.m20 * m2.m12 + m1.m30
+            mm01 = m1.m00 * m2.m10 + m1.m10 * m2.m11 + m1.m20 * m2.m12 + m1.m30
                     * m2.m13;
-            m02 = m1.m00 * m2.m20 + m1.m10 * m2.m21 + m1.m20 * m2.m22 + m1.m30
+            mm02 = m1.m00 * m2.m20 + m1.m10 * m2.m21 + m1.m20 * m2.m22 + m1.m30
                     * m2.m23;
-            m03 = m1.m00 * m2.m30 + m1.m10 * m2.m31 + m1.m20 * m2.m32 + m1.m30
+            mm03 = m1.m00 * m2.m30 + m1.m10 * m2.m31 + m1.m20 * m2.m32 + m1.m30
                     * m2.m33;
 
-            m10 = m1.m01 * m2.m00 + m1.m11 * m2.m01 + m1.m21 * m2.m02 + m1.m31
+            mm10 = m1.m01 * m2.m00 + m1.m11 * m2.m01 + m1.m21 * m2.m02 + m1.m31
                     * m2.m03;
-            m11 = m1.m01 * m2.m10 + m1.m11 * m2.m11 + m1.m21 * m2.m12 + m1.m31
+            mm11 = m1.m01 * m2.m10 + m1.m11 * m2.m11 + m1.m21 * m2.m12 + m1.m31
                     * m2.m13;
-            m12 = m1.m01 * m2.m20 + m1.m11 * m2.m21 + m1.m21 * m2.m22 + m1.m31
+            mm12 = m1.m01 * m2.m20 + m1.m11 * m2.m21 + m1.m21 * m2.m22 + m1.m31
                     * m2.m23;
-            m13 = m1.m01 * m2.m30 + m1.m11 * m2.m31 + m1.m21 * m2.m32 + m1.m31
+            mm13 = m1.m01 * m2.m30 + m1.m11 * m2.m31 + m1.m21 * m2.m32 + m1.m31
                     * m2.m33;
 
-            m20 = m1.m02 * m2.m00 + m1.m12 * m2.m01 + m1.m22 * m2.m02 + m1.m32
+            mm20 = m1.m02 * m2.m00 + m1.m12 * m2.m01 + m1.m22 * m2.m02 + m1.m32
                     * m2.m03;
-            m21 = m1.m02 * m2.m10 + m1.m12 * m2.m11 + m1.m22 * m2.m12 + m1.m32
+            mm21 = m1.m02 * m2.m10 + m1.m12 * m2.m11 + m1.m22 * m2.m12 + m1.m32
                     * m2.m13;
-            m22 = m1.m02 * m2.m20 + m1.m12 * m2.m21 + m1.m22 * m2.m22 + m1.m32
+            mm22 = m1.m02 * m2.m20 + m1.m12 * m2.m21 + m1.m22 * m2.m22 + m1.m32
                     * m2.m23;
-            m23 = m1.m02 * m2.m30 + m1.m12 * m2.m31 + m1.m22 * m2.m32 + m1.m32
+            mm23 = m1.m02 * m2.m30 + m1.m12 * m2.m31 + m1.m22 * m2.m32 + m1.m32
                     * m2.m33;
 
-            m30 = m1.m03 * m2.m00 + m1.m13 * m2.m01 + m1.m23 * m2.m02 + m1.m33
+            mm30 = m1.m03 * m2.m00 + m1.m13 * m2.m01 + m1.m23 * m2.m02 + m1.m33
                     * m2.m03;
-            m31 = m1.m03 * m2.m10 + m1.m13 * m2.m11 + m1.m23 * m2.m12 + m1.m33
+            mm31 = m1.m03 * m2.m10 + m1.m13 * m2.m11 + m1.m23 * m2.m12 + m1.m33
                     * m2.m13;
-            m32 = m1.m03 * m2.m20 + m1.m13 * m2.m21 + m1.m23 * m2.m22 + m1.m33
+            mm32 = m1.m03 * m2.m20 + m1.m13 * m2.m21 + m1.m23 * m2.m22 + m1.m33
                     * m2.m23;
-            m33 = m1.m03 * m2.m30 + m1.m13 * m2.m31 + m1.m23 * m2.m32 + m1.m33
+            mm33 = m1.m03 * m2.m30 + m1.m13 * m2.m31 + m1.m23 * m2.m32 + m1.m33
                     * m2.m33;
 
-            this.m00 = m00;
-            this.m01 = m01;
-            this.m02 = m02;
-            this.m03 = m03;
-            this.m10 = m10;
-            this.m11 = m11;
-            this.m12 = m12;
-            this.m13 = m13;
-            this.m20 = m20;
-            this.m21 = m21;
-            this.m22 = m22;
-            this.m23 = m23;
-            this.m30 = m30;
-            this.m31 = m31;
-            this.m32 = m32;
-            this.m33 = m33;
+            this.m00 = mm00;
+            this.m01 = mm01;
+            this.m02 = mm02;
+            this.m03 = mm03;
+            this.m10 = mm10;
+            this.m11 = mm11;
+            this.m12 = mm12;
+            this.m13 = mm13;
+            this.m20 = mm20;
+            this.m21 = mm21;
+            this.m22 = mm22;
+            this.m23 = mm23;
+            this.m30 = mm30;
+            this.m31 = mm31;
+            this.m32 = mm32;
+            this.m33 = mm33;
         }
 
     }
@@ -1788,65 +1807,65 @@ public class Matrix4f implements java.io.Serializable, Cloneable {
             this.m33 = m1.m03 * m2.m03 + m1.m13 * m2.m13 + m1.m23 * m2.m23
                     + m1.m33 * m2.m33;
         } else {
-            float m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, // vars
+            float mm00, mm01, mm02, mm03, mm10, mm11, mm12, mm13, mm20, mm21, mm22, mm23, // vars
                                                                               // for
                                                                               // temp
                                                                               // result
                                                                               // matrix
-            m30, m31, m32, m33;
+            mm30, mm31, mm32, mm33;
 
-            m00 = m1.m00 * m2.m00 + m1.m10 * m2.m10 + m1.m20 * m2.m20 + m1.m30
+            mm00 = m1.m00 * m2.m00 + m1.m10 * m2.m10 + m1.m20 * m2.m20 + m1.m30
                     * m2.m30;
-            m01 = m1.m00 * m2.m01 + m1.m10 * m2.m11 + m1.m20 * m2.m21 + m1.m30
+            mm01 = m1.m00 * m2.m01 + m1.m10 * m2.m11 + m1.m20 * m2.m21 + m1.m30
                     * m2.m31;
-            m02 = m1.m00 * m2.m02 + m1.m10 * m2.m12 + m1.m20 * m2.m22 + m1.m30
+            mm02 = m1.m00 * m2.m02 + m1.m10 * m2.m12 + m1.m20 * m2.m22 + m1.m30
                     * m2.m32;
-            m03 = m1.m00 * m2.m03 + m1.m10 * m2.m13 + m1.m20 * m2.m23 + m1.m30
+            mm03 = m1.m00 * m2.m03 + m1.m10 * m2.m13 + m1.m20 * m2.m23 + m1.m30
                     * m2.m33;
 
-            m10 = m1.m01 * m2.m00 + m1.m11 * m2.m10 + m1.m21 * m2.m20 + m1.m31
+            mm10 = m1.m01 * m2.m00 + m1.m11 * m2.m10 + m1.m21 * m2.m20 + m1.m31
                     * m2.m30;
-            m11 = m1.m01 * m2.m01 + m1.m11 * m2.m11 + m1.m21 * m2.m21 + m1.m31
+            mm11 = m1.m01 * m2.m01 + m1.m11 * m2.m11 + m1.m21 * m2.m21 + m1.m31
                     * m2.m31;
-            m12 = m1.m01 * m2.m02 + m1.m11 * m2.m12 + m1.m21 * m2.m22 + m1.m31
+            mm12 = m1.m01 * m2.m02 + m1.m11 * m2.m12 + m1.m21 * m2.m22 + m1.m31
                     * m2.m32;
-            m13 = m1.m01 * m2.m03 + m1.m11 * m2.m13 + m1.m21 * m2.m23 + m1.m31
+            mm13 = m1.m01 * m2.m03 + m1.m11 * m2.m13 + m1.m21 * m2.m23 + m1.m31
                     * m2.m33;
 
-            m20 = m1.m02 * m2.m00 + m1.m12 * m2.m10 + m1.m22 * m2.m20 + m1.m32
+            mm20 = m1.m02 * m2.m00 + m1.m12 * m2.m10 + m1.m22 * m2.m20 + m1.m32
                     * m2.m30;
-            m21 = m1.m02 * m2.m01 + m1.m12 * m2.m11 + m1.m22 * m2.m21 + m1.m32
+            mm21 = m1.m02 * m2.m01 + m1.m12 * m2.m11 + m1.m22 * m2.m21 + m1.m32
                     * m2.m31;
-            m22 = m1.m02 * m2.m02 + m1.m12 * m2.m12 + m1.m22 * m2.m22 + m1.m32
+            mm22 = m1.m02 * m2.m02 + m1.m12 * m2.m12 + m1.m22 * m2.m22 + m1.m32
                     * m2.m32;
-            m23 = m1.m02 * m2.m03 + m1.m12 * m2.m13 + m1.m22 * m2.m23 + m1.m32
+            mm23 = m1.m02 * m2.m03 + m1.m12 * m2.m13 + m1.m22 * m2.m23 + m1.m32
                     * m2.m33;
 
-            m30 = m1.m03 * m2.m00 + m1.m13 * m2.m10 + m1.m23 * m2.m20 + m1.m33
+            mm30 = m1.m03 * m2.m00 + m1.m13 * m2.m10 + m1.m23 * m2.m20 + m1.m33
                     * m2.m30;
-            m31 = m1.m03 * m2.m01 + m1.m13 * m2.m11 + m1.m23 * m2.m21 + m1.m33
+            mm31 = m1.m03 * m2.m01 + m1.m13 * m2.m11 + m1.m23 * m2.m21 + m1.m33
                     * m2.m31;
-            m32 = m1.m03 * m2.m02 + m1.m13 * m2.m12 + m1.m23 * m2.m22 + m1.m33
+            mm32 = m1.m03 * m2.m02 + m1.m13 * m2.m12 + m1.m23 * m2.m22 + m1.m33
                     * m2.m32;
-            m33 = m1.m03 * m2.m03 + m1.m13 * m2.m13 + m1.m23 * m2.m23 + m1.m33
+            mm33 = m1.m03 * m2.m03 + m1.m13 * m2.m13 + m1.m23 * m2.m23 + m1.m33
                     * m2.m33;
 
-            this.m00 = m00;
-            this.m01 = m01;
-            this.m02 = m02;
-            this.m03 = m03;
-            this.m10 = m10;
-            this.m11 = m11;
-            this.m12 = m12;
-            this.m13 = m13;
-            this.m20 = m20;
-            this.m21 = m21;
-            this.m22 = m22;
-            this.m23 = m23;
-            this.m30 = m30;
-            this.m31 = m31;
-            this.m32 = m32;
-            this.m33 = m33;
+            this.m00 = mm00;
+            this.m01 = mm01;
+            this.m02 = mm02;
+            this.m03 = mm03;
+            this.m10 = mm10;
+            this.m11 = mm11;
+            this.m12 = mm12;
+            this.m13 = mm13;
+            this.m20 = mm20;
+            this.m21 = mm21;
+            this.m22 = mm22;
+            this.m23 = mm23;
+            this.m30 = mm30;
+            this.m31 = mm31;
+            this.m32 = mm32;
+            this.m33 = mm33;
         }
 
     }
@@ -1898,65 +1917,65 @@ public class Matrix4f implements java.io.Serializable, Cloneable {
             this.m33 = m1.m30 * m2.m30 + m1.m31 * m2.m31 + m1.m32 * m2.m32
                     + m1.m33 * m2.m33;
         } else {
-            float m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, // vars
+            float mm00, mm01, mm02, mm03, mm10, mm11, mm12, mm13, mm20, mm21, mm22, mm23, // vars
                                                                               // for
                                                                               // temp
                                                                               // result
                                                                               // matrix
-            m30, m31, m32, m33;
+            mm30, mm31, mm32, mm33;
 
-            m00 = m1.m00 * m2.m00 + m1.m01 * m2.m01 + m1.m02 * m2.m02 + m1.m03
+            mm00 = m1.m00 * m2.m00 + m1.m01 * m2.m01 + m1.m02 * m2.m02 + m1.m03
                     * m2.m03;
-            m01 = m1.m00 * m2.m10 + m1.m01 * m2.m11 + m1.m02 * m2.m12 + m1.m03
+            mm01 = m1.m00 * m2.m10 + m1.m01 * m2.m11 + m1.m02 * m2.m12 + m1.m03
                     * m2.m13;
-            m02 = m1.m00 * m2.m20 + m1.m01 * m2.m21 + m1.m02 * m2.m22 + m1.m03
+            mm02 = m1.m00 * m2.m20 + m1.m01 * m2.m21 + m1.m02 * m2.m22 + m1.m03
                     * m2.m23;
-            m03 = m1.m00 * m2.m30 + m1.m01 * m2.m31 + m1.m02 * m2.m32 + m1.m03
+            mm03 = m1.m00 * m2.m30 + m1.m01 * m2.m31 + m1.m02 * m2.m32 + m1.m03
                     * m2.m33;
 
-            m10 = m1.m10 * m2.m00 + m1.m11 * m2.m01 + m1.m12 * m2.m02 + m1.m13
+            mm10 = m1.m10 * m2.m00 + m1.m11 * m2.m01 + m1.m12 * m2.m02 + m1.m13
                     * m2.m03;
-            m11 = m1.m10 * m2.m10 + m1.m11 * m2.m11 + m1.m12 * m2.m12 + m1.m13
+            mm11 = m1.m10 * m2.m10 + m1.m11 * m2.m11 + m1.m12 * m2.m12 + m1.m13
                     * m2.m13;
-            m12 = m1.m10 * m2.m20 + m1.m11 * m2.m21 + m1.m12 * m2.m22 + m1.m13
+            mm12 = m1.m10 * m2.m20 + m1.m11 * m2.m21 + m1.m12 * m2.m22 + m1.m13
                     * m2.m23;
-            m13 = m1.m10 * m2.m30 + m1.m11 * m2.m31 + m1.m12 * m2.m32 + m1.m13
+            mm13 = m1.m10 * m2.m30 + m1.m11 * m2.m31 + m1.m12 * m2.m32 + m1.m13
                     * m2.m33;
 
-            m20 = m1.m20 * m2.m00 + m1.m21 * m2.m01 + m1.m22 * m2.m02 + m1.m23
+            mm20 = m1.m20 * m2.m00 + m1.m21 * m2.m01 + m1.m22 * m2.m02 + m1.m23
                     * m2.m03;
-            m21 = m1.m20 * m2.m10 + m1.m21 * m2.m11 + m1.m22 * m2.m12 + m1.m23
+            mm21 = m1.m20 * m2.m10 + m1.m21 * m2.m11 + m1.m22 * m2.m12 + m1.m23
                     * m2.m13;
-            m22 = m1.m20 * m2.m20 + m1.m21 * m2.m21 + m1.m22 * m2.m22 + m1.m23
+            mm22 = m1.m20 * m2.m20 + m1.m21 * m2.m21 + m1.m22 * m2.m22 + m1.m23
                     * m2.m23;
-            m23 = m1.m20 * m2.m30 + m1.m21 * m2.m31 + m1.m22 * m2.m32 + m1.m23
+            mm23 = m1.m20 * m2.m30 + m1.m21 * m2.m31 + m1.m22 * m2.m32 + m1.m23
                     * m2.m33;
 
-            m30 = m1.m30 * m2.m00 + m1.m31 * m2.m01 + m1.m32 * m2.m02 + m1.m33
+            mm30 = m1.m30 * m2.m00 + m1.m31 * m2.m01 + m1.m32 * m2.m02 + m1.m33
                     * m2.m03;
-            m31 = m1.m30 * m2.m10 + m1.m31 * m2.m11 + m1.m32 * m2.m12 + m1.m33
+            mm31 = m1.m30 * m2.m10 + m1.m31 * m2.m11 + m1.m32 * m2.m12 + m1.m33
                     * m2.m13;
-            m32 = m1.m30 * m2.m20 + m1.m31 * m2.m21 + m1.m32 * m2.m22 + m1.m33
+            mm32 = m1.m30 * m2.m20 + m1.m31 * m2.m21 + m1.m32 * m2.m22 + m1.m33
                     * m2.m23;
-            m33 = m1.m30 * m2.m30 + m1.m31 * m2.m31 + m1.m32 * m2.m32 + m1.m33
+            mm33 = m1.m30 * m2.m30 + m1.m31 * m2.m31 + m1.m32 * m2.m32 + m1.m33
                     * m2.m33;
 
-            this.m00 = m00;
-            this.m01 = m01;
-            this.m02 = m02;
-            this.m03 = m03;
-            this.m10 = m10;
-            this.m11 = m11;
-            this.m12 = m12;
-            this.m13 = m13;
-            this.m20 = m20;
-            this.m21 = m21;
-            this.m22 = m22;
-            this.m23 = m23;
-            this.m30 = m30;
-            this.m31 = m31;
-            this.m32 = m32;
-            this.m33 = m33;
+            this.m00 = mm00;
+            this.m01 = mm01;
+            this.m02 = mm02;
+            this.m03 = mm03;
+            this.m10 = mm10;
+            this.m11 = mm11;
+            this.m12 = mm12;
+            this.m13 = mm13;
+            this.m20 = mm20;
+            this.m21 = mm21;
+            this.m22 = mm22;
+            this.m23 = mm23;
+            this.m30 = mm30;
+            this.m31 = mm31;
+            this.m32 = mm32;
+            this.m33 = mm33;
         }
 
     }

@@ -26,6 +26,7 @@
  */
 package toxi.geom;
 
+import java.util.Arrays;
 import toxi.math.InterpolateStrategy;
 import toxi.math.MathUtils;
 
@@ -342,6 +343,24 @@ public class GVector implements java.lang.Cloneable, java.io.Serializable {
         }
         return false;
     }
+    
+    /**
+     * Returns a hash code value based on the data values in this object. Two
+     * different GVector objects with identical data values (i.e.,
+     * GVector.equals returns true) will return the same hash number. Two
+     * GVector objects with different data members may return the same hash
+     * value, although this is not likely.
+     *
+     * @return the integer hash code value
+     */
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 43 * hash + this.length;
+        hash = 43 * hash + Arrays.hashCode(this.values);
+        return hash;
+    }
 
     /**
      * Returns true if the L-infinite distance between this vector and vector v
@@ -354,7 +373,7 @@ public class GVector implements java.lang.Cloneable, java.io.Serializable {
      * @return
      */
     public boolean equalsWithTolerance(GVector v, double tolerance) {
-        try {
+        if (v instanceof GVector) {
             double diff;
             if (length != v.length) {
                 return false;
@@ -366,9 +385,8 @@ public class GVector implements java.lang.Cloneable, java.io.Serializable {
                 }
             }
             return true;
-        } catch (NullPointerException e) {
-            return false;
-        }
+        } 
+            return false;        
     }
 
     /**
@@ -379,24 +397,6 @@ public class GVector implements java.lang.Cloneable, java.io.Serializable {
      */
     public final double get(int index) {
         return values[index];
-    }
-
-    /**
-     * Returns a hash code value based on the data values in this object. Two
-     * different GVector objects with identical data values (i.e.,
-     * GVector.equals returns true) will return the same hash number. Two
-     * GVector objects with different data members may return the same hash
-     * value, although this is not likely.
-     *
-     * @return the integer hash code value
-     */
-    @Override
-    public int hashCode() {
-        long bits = 1L;
-        for (int i = 0; i < length; i++) {
-            bits = 31L * bits + VecMathUtil.doubleToLongBits(values[i]);
-        }
-        return (int) (bits ^ (bits >> 32));
     }
 
     /**

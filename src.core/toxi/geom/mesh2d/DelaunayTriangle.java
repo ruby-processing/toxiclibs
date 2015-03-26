@@ -89,6 +89,13 @@ public class DelaunayTriangle extends ArraySet<DelaunayVertex> {
         return false;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + this.idNumber;
+        return hash;
+    }
+
     /**
      * Report the facet opposite vertex.
      * 
@@ -134,13 +141,6 @@ public class DelaunayTriangle extends ArraySet<DelaunayVertex> {
             }
         }
         throw new NoSuchElementException("No vertex found");
-    }
-
-    /* The following two methods ensure that a DelaunayTriangle is immutable */
-
-    @Override
-    public int hashCode() {
-        return (idNumber ^ (idNumber >>> 31));
     }
 
     /**

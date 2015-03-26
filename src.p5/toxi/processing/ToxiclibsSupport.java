@@ -313,7 +313,7 @@ public class ToxiclibsSupport {
      * 
      * @param mesh
      * @param smooth
-     *            true to enable gouroud shading (uses vertex normals, which
+     *            true to enable Gouraud shading (uses vertex normals, which
      *            should have been computed beforehand) or false for flat
      *            shading
      */

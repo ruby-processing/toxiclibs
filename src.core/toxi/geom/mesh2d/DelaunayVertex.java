@@ -336,15 +336,15 @@ public class DelaunayVertex {
         return new DelaunayVertex(result);
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        for (double c : this.coordinates) {
-            long bits = Double.doubleToLongBits(c);
-            hash = (31 * hash) ^ (int) (bits ^ (bits >> 32));
-        }
-        return hash;
-    }
+    // @Override
+    // public int hashCode() {
+        // int hash = 0;
+        // for (double c : this.coordinates) {
+            // long bits = Double.doubleToLongBits(c);
+            // hash = (31 * hash) ^ (int) (bits ^ (bits >> 32));
+        // }
+        // return hash;
+    // }
 
     /* Pnts as simplices */
 

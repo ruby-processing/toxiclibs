@@ -24,6 +24,7 @@
  */
 package toxi.geom;
 
+import java.util.Arrays;
 import toxi.math.MathUtils;
 
 /**
@@ -836,6 +837,10 @@ public class GMatrix implements java.io.Serializable, Cloneable {
      * "even_row_xchg" is 1 when the number of row exchanges is even, or -1
      * otherwise. Assumes data type is always double.
      *
+     * @param dim
+     * @param matrix0
+     * @param row_perm
+     * @param even_row_xchg
      * @return true if the matrix is nonsingular, or false otherwise.
      */
     //
@@ -975,7 +980,7 @@ public class GMatrix implements java.io.Serializable, Cloneable {
 
         mtmp.mul(u, mtmp);
         mtmp.mul(mtmp, v);
-        System.out.println("\n m = \n" + mtmp.toString(mtmp));
+        System.out.println("\n m = \n" + GMatrix.toString(mtmp));
 
     }
 
@@ -1018,7 +1023,7 @@ public class GMatrix implements java.io.Serializable, Cloneable {
     }
 
     private static String toString(GMatrix m) {
-        StringBuffer buffer = new StringBuffer(m.nRow * m.nCol * 8);
+        StringBuilder buffer = new StringBuilder(m.nRow * m.nCol * 8);
         int i, j;
 
         for (i = 0; i < m.nRow; i++) {
@@ -1243,25 +1248,24 @@ public class GMatrix implements java.io.Serializable, Cloneable {
      * @see java.lang.Cloneable
      * @since vecmath 1.3
      */
-    public Object clone() {
-        GMatrix m1 = null;
-        try {
-            m1 = (GMatrix) super.clone();
-        } catch (CloneNotSupportedException e) {
-            // this shouldn't happen, since we are Cloneable
-            throw new InternalError();
-        }
-
-        // Also need to clone array of values
-        m1.values = new double[nRow][nCol];
-        for (int i = 0; i < nRow; i++) {
-            for (int j = 0; j < nCol; j++) {
-                m1.values[i][j] = values[i][j];
-            }
-        }
-
-        return m1;
-    }
+//    @Override
+//    public Object clone() throws CloneNotSupportedException {
+//        GMatrix m1 = null;
+//        try {
+//            m1 = (GMatrix) super.clone();
+//        } catch (CloneNotSupportedException e) {
+//            // this shouldn't happen, since we are Cloneable
+//            throw new InternalError();
+//        }
+//
+//        // Also need to clone array of values
+//        m1.values = new double[nRow][nCol];
+//        for (int i = 0; i < nRow; i++) {
+//            System.arraycopy(values[i], 0, m1.values[i], 0, nCol);
+//        }
+//
+//        return m1;
+//    }
 
     /**
      * LU Decomposition: this matrix must be a square matrix and the LU GMatrix
@@ -1450,6 +1454,7 @@ public class GMatrix implements java.io.Serializable, Cloneable {
      *
      * @param m1 The matrix to be compared to this matrix
      * @param epsilon the threshold value
+     * @return 
      */
     public boolean epsilonEquals(GMatrix m1, double epsilon) {
         int i, j;
@@ -1470,6 +1475,9 @@ public class GMatrix implements java.io.Serializable, Cloneable {
     }
 
     /**
+     * @param m1
+     * @param epsilon
+     * @return 
      * @deprecated Use epsilonEquals(GMatrix, double) instead
      */
     @Deprecated
@@ -1533,6 +1541,15 @@ public class GMatrix implements java.io.Serializable, Cloneable {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + this.nRow;
+        hash = 67 * hash + this.nCol;
+        hash = 67 * hash + Arrays.deepHashCode(this.values);
+        return hash;
     }
         /**
          * Places the values in the this GMatrix into the matrix m1; m1 should
@@ -1806,21 +1823,21 @@ public class GMatrix implements java.io.Serializable, Cloneable {
      *
      * @return the integer hash code value
      */
-    @Override
-    public int hashCode() {
-        long bits = 1L;
-
-        bits = 31L * bits + nRow;
-        bits = 31L * bits + nCol;
-
-        for (int i = 0; i < nRow; i++) {
-            for (int j = 0; j < nCol; j++) {
-                bits = 31L * bits + VecMathUtil.doubleToLongBits(values[i][j]);
-            }
-        }
-
-        return (int) (bits ^ (bits >> 32));
-    }
+    // @Override
+    // public int hashCode() {
+        // long bits = 1L;
+// 
+        // bits = 31L * bits + nRow;
+        // bits = 31L * bits + nCol;
+// 
+        // for (int i = 0; i < nRow; i++) {
+            // for (int j = 0; j < nCol; j++) {
+                // bits = 31L * bits + VecMathUtil.doubleToLongBits(values[i][j]);
+            // }
+        // }
+// 
+        // return (int) (bits ^ (bits >> 32));
+    // }
 
     /**
      * Sets this GMatrix to the identity matrix.

@@ -29,6 +29,7 @@ package toxi.geom;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlElement;
 
@@ -239,6 +240,14 @@ public class Line3D {
                 && (b.equals(l.b) || b.equals(l.a));
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.a);
+        hash = 53 * hash + Objects.hashCode(this.b);
+        return hash;
+    }
+
     /**
      * Returns the line's axis-aligned bounding box.
      * 
@@ -273,18 +282,6 @@ public class Line3D {
         return a.equals(p) || b.equals(p);
     }
 
-    /**
-     * Computes a hash code ignoring the directionality of the line.
-     * 
-     * @return hash code
-     * 
-     * @see java.lang.Object#hashCode()
-     * @see #hashCodeWithDirection()
-     */
-    @Override
-    public int hashCode() {
-        return a.hashCode() + b.hashCode();
-    }
 
     /**
      * Computes the hash code for this instance taking directionality into

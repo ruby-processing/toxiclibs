@@ -222,6 +222,26 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
         }
         return false;
     }
+    
+    /**
+     * Returns a hash code value based on the data values in this object. Two
+     * different Vec4D objects with identical data values (i.e., Vec4D.equals
+     * returns true) will return the same hash code value. Two objects with
+     * different data members may return the same hash value, although this is
+     * not likely.
+     * 
+     * @return the integer hash code value
+     */
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + Float.floatToIntBits(this.x);
+        hash = 29 * hash + Float.floatToIntBits(this.y);
+        hash = 29 * hash + Float.floatToIntBits(this.z);
+        hash = 29 * hash + Float.floatToIntBits(this.w);
+        return hash;
+    }
 
     /**
      * Returns true if the Object v is of type Vec4D and all of the data members
@@ -345,25 +365,6 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
     @Override
     public Vec4D getWeighted() {
         return copy().weight();
-    }
-
-    /**
-     * Returns a hash code value based on the data values in this object. Two
-     * different Vec4D objects with identical data values (i.e., Vec4D.equals
-     * returns true) will return the same hash code value. Two objects with
-     * different data members may return the same hash value, although this is
-     * not likely.
-     * 
-     * @return the integer hash code value
-     */
-    @Override
-    public int hashCode() {
-        long bits = 1L;
-        bits = 31L * bits + VecMathUtil.floatToIntBits(x);
-        bits = 31L * bits + VecMathUtil.floatToIntBits(y);
-        bits = 31L * bits + VecMathUtil.floatToIntBits(z);
-        bits = 31L * bits + VecMathUtil.floatToIntBits(w);
-        return (int) (bits ^ (bits >> 32));
     }
 
     @Override

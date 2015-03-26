@@ -205,7 +205,7 @@ public class CAWolfram1D implements CARule {
      * <ul>
      * <li>kernelWidth = 1 -> number of bits 2*(4^1)=8</li>
      * <li>kernelWidth = 2 -> number of bits 2*(4^2)=32</li>
-     * <li>kernelWidth = 3 -> number of bits 2*(4^2)=128</li>
+     * <li>kernelWidth = 3 -> number of bits 2*(4^3)=128</li>
      * </ul>
      * @param id
      * @return itself

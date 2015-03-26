@@ -119,6 +119,7 @@ public class PointQuadtree extends Rect implements SpatialIndex<Vec2D> {
         }
     }
 
+    @Override
     public void clear() {
         childNW = childNE = childSW = childSE = null;
         type = Type.EMPTY;
@@ -146,6 +147,12 @@ public class PointQuadtree extends Rect implements SpatialIndex<Vec2D> {
         }
     }
 
+    /**
+     *
+     * @param p
+     * @return
+     */
+    @Override
     public boolean index(Vec2D p) {
         if (containsPoint(p)) {
             switch (type) {
@@ -168,17 +175,19 @@ public class PointQuadtree extends Rect implements SpatialIndex<Vec2D> {
         return false;
     }
 
+    @Override
     public boolean isIndexed(Vec2D p) {
         return findNode(p) != null;
     }
 
+    @Override
     public List<Vec2D> itemsWithinRadius(Vec2D p, float radius,
             List<Vec2D> results) {
         if (intersectsCircle(p, radius)) {
             if (type == Type.LEAF) {
                 if (value.distanceToSquared(p) < radius * radius) {
                     if (results == null) {
-                        results = new ArrayList<Vec2D>();
+                        results = new ArrayList<>();
                     }
                     results.add(value);
                 }
@@ -202,7 +211,7 @@ public class PointQuadtree extends Rect implements SpatialIndex<Vec2D> {
             if (type == Type.LEAF) {
                 if (bounds.containsPoint(value)) {
                     if (results == null) {
-                        results = new ArrayList<Vec2D>();
+                        results = new ArrayList<>();
                     }
                     results.add(value);
                 }
@@ -236,6 +245,7 @@ public class PointQuadtree extends Rect implements SpatialIndex<Vec2D> {
         }
     }
 
+    @Override
     public boolean reindex(Vec2D p, Vec2D q) {
         unindex(p);
         return index(q);
@@ -249,6 +259,7 @@ public class PointQuadtree extends Rect implements SpatialIndex<Vec2D> {
         value = p;
     }
 
+    @Override
     public int size() {
         return 0;
     }
@@ -270,6 +281,7 @@ public class PointQuadtree extends Rect implements SpatialIndex<Vec2D> {
         index(oldPoint);
     }
 
+    @Override
     public boolean unindex(Vec2D p) {
         PointQuadtree node = findNode(p);
         if (node != null) {

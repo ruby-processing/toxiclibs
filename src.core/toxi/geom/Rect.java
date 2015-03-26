@@ -120,10 +120,10 @@ public class Rect implements Shape2D {
     public boolean containsPoint(ReadonlyVec2D p) {
         float px = p.x();
         float py = p.y();
-        if (px < x || px >= x + width) {
+        if (px < x || px > x + width) {
             return false;
         }
-        return (py > y || py < y + height);
+        return (py >= y || py <= y + height);
     }
 
     /**
