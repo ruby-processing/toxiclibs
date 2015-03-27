@@ -468,7 +468,13 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
     public boolean equals(Object v) {
         if (v instanceof ReadonlyVec3D) {
             ReadonlyVec3D vv = (ReadonlyVec3D) v;
-            return (x == vv.x() && y == vv.y() && z == vv.z());
+            if (!((Float)x).equals(vv.x())){
+                return false;
+            }
+            if (!((Float)y).equals(vv.y())){
+                return false;   
+            }
+            return ((Float)z).equals(vv.z());
         }
         return false;
     }
@@ -501,16 +507,18 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
      * @return true or false
      */
     public boolean equals(ReadonlyVec3D v) {
-        try {
-            return (x == v.x() && y == v.y() && z == v.z());
-        } catch (NullPointerException e) {
+        if (!((Float) x).equals(v.x())) {
             return false;
         }
+        if (!((Float) y).equals(v.y())) {
+            return false;
+        }
+        return ((Float) z).equals(v.z());
     }
 
     @Override
     public boolean equalsWithTolerance(ReadonlyVec3D v, float tolerance) {
-        try {
+        if (v instanceof ReadonlyVec3D) {
             float diff = x - v.x();
             if (Float.isNaN(diff)) {
                 return false;
@@ -530,9 +538,8 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
                 return false;
             }
             return ((diff < 0 ? -diff : diff) < tolerance);
-        } catch (NullPointerException e) {
-            return false;
         }
+        return false;
     }
 
     /**

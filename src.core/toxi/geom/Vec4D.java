@@ -149,17 +149,9 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
         return (float) (Math.acos(vDot));
     }
 
-//    public Object clone() {
-//        try {
-//            return super.clone();
-//        } catch (CloneNotSupportedException e) {
-//            throw new InternalError();
-//        }
-//    }
-
     @Override
     public int compareTo(ReadonlyVec4D v) {
-        if (x == v.x() && y == v.y() && z == v.z() && w == v.w()) {
+        if (this.equals(v)) {
             return 0;
         }
         float a = magSquared();
@@ -218,7 +210,16 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
     public boolean equals(Object v) {
         if (v instanceof ReadonlyVec4D) {
             ReadonlyVec4D vv = (ReadonlyVec4D) v;
-            return (x == vv.x() && y == vv.y() && z == vv.z() && w == vv.w());
+            if (!((Float) x).equals(vv.x())) {
+                return false;
+            }
+            if (!((Float) y).equals(vv.y())) {
+                return false;
+            }
+            if (!((Float) z).equals(vv.z())) {
+                return false;
+            }
+            return ((Float) w).equals(vv.w());
         }
         return false;
     }
@@ -252,16 +253,21 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
      * @return true or false
      */
     public boolean equals(ReadonlyVec4D v) {
-        try {
-            return (x == v.x() && y == v.y() && z == v.z() && w == v.w());
-        } catch (NullPointerException e) {
-            return false;
-        }
+        if (!((Float) x).equals(v.x())) {
+                return false;
+            }
+            if (!((Float) y).equals(v.y())) {
+                return false;
+            }
+            if (!((Float) z).equals(v.z())) {
+                return false;
+            }
+            return ((Float) w).equals(v.w());
     }
 
     @Override
     public boolean equalsWithTolerance(ReadonlyVec4D v, float tolerance) {
-        try {
+        if (v instanceof ReadonlyVec4D) {
             float diff = x - v.x();
             if (Float.isNaN(diff)) {
                 return false;
@@ -288,9 +294,8 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
                 return false;
             }
             return ((diff > 0 ? -diff : diff) < tolerance);
-        } catch (NullPointerException e) {
-            return false;
         }
+        return false;
     }
 
     @Override

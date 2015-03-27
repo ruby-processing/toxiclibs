@@ -29,7 +29,6 @@ package toxi.geom;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlElement;
 
@@ -205,7 +204,7 @@ public class Line2D {
         }
         return false;
     }
-    
+     
     /**
      * Computes a hash code ignoring the directionality of the line.
      * 
@@ -218,8 +217,7 @@ public class Line2D {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 37 * hash + Objects.hashCode(this.a);
-        hash = 37 * hash + Objects.hashCode(this.b);
+        hash = 37 * hash + (a.hashCode() + b.hashCode());
         return hash;
     }
 
@@ -275,10 +273,10 @@ public class Line2D {
      * @see #hashCode()
      */
     public int hashCodeWithDirection() {
-        long bits = 1L;
-        bits = 31L * bits + a.hashCode();
-        bits = 31L * bits + b.hashCode();
-        return (int) (bits ^ (bits >> 32));
+        int hash = 5;
+        hash = 89 * hash + a.hashCode();
+        hash = 89 * hash + b.hashCode();
+        return hash;
     }
 
     /**

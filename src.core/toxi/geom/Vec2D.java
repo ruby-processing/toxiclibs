@@ -277,7 +277,7 @@ public class Vec2D implements Comparable<ReadonlyVec2D>, ReadonlyVec2D {
 
     @Override
     public int compareTo(ReadonlyVec2D v) {
-        if (x == v.x() && y == v.y()) {
+        if (this.equals(v)) {
             return 0;
         }
         float a = magSquared();
@@ -383,16 +383,20 @@ public class Vec2D implements Comparable<ReadonlyVec2D>, ReadonlyVec2D {
      * Returns true if the Object v is of type ReadonlyVec2D and all of the data
      * members of v are equal to the corresponding data members in this vector.
      *
-     * @param v the object with which the comparison is made
+     * @param obj the object with which the comparison is made
      * @return true or false
      */
+    
     @Override
-    public boolean equals(Object v) {
-        if (v instanceof ReadonlyVec2D) {
-            ReadonlyVec2D vv = (ReadonlyVec2D) v;
-            return (x == vv.x() && y == vv.y());
+    public boolean equals(Object obj) {
+        if (obj instanceof ReadonlyVec2D) {
+            final ReadonlyVec2D other = (ReadonlyVec2D) obj;
+            if (!((Float) x).equals(other.x())) {
+                return false;
+            }
+            return ((Float) y).equals(other.y());
         }
-            return false; 
+        return false;
     }
     
     /**
@@ -421,11 +425,12 @@ public class Vec2D implements Comparable<ReadonlyVec2D>, ReadonlyVec2D {
      * @return true or false
      */
     public boolean equals(ReadonlyVec2D v) {
-        if (v instanceof ReadonlyVec2D){
-            return (x == v.x() && y == v.y());
-        } 
-            return false;        
-    }
+        final ReadonlyVec2D other = (ReadonlyVec2D) v;
+            if (!((Float) x).equals(other.x())) {
+                return false;
+            }
+            return ((Float) y).equals(other.y());
+        }
 
     @Override
     public boolean equalsWithTolerance(ReadonlyVec2D v, float tolerance) {
@@ -441,7 +446,7 @@ public class Vec2D implements Comparable<ReadonlyVec2D>, ReadonlyVec2D {
             if (Float.isNaN(diff)) {
                 return false;
             }
-            return ((diff < 0 ? -diff : diff) > tolerance);
+            return ((diff < 0 ? -diff : diff) < tolerance);
         } 
             return false;        
     }
@@ -671,7 +676,7 @@ public class Vec2D implements Comparable<ReadonlyVec2D>, ReadonlyVec2D {
         if (x < r.x || x > r.x + r.width) {
             return false;
         }
-        return (y >= r.y || y >= r.y + r.height); 
+        return (y >= r.y || y <= r.y + r.height); 
     }
 
     @Override

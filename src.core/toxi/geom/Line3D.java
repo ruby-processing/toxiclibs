@@ -24,15 +24,10 @@
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA
  */
-
 package toxi.geom;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
 import javax.xml.bind.annotation.XmlElement;
-
 import toxi.geom.Line3D.LineIntersection.Type;
 import toxi.math.MathUtils;
 
@@ -41,6 +36,7 @@ public class Line3D {
     public static class LineIntersection {
 
         public static enum Type {
+
             NON_INTERSECTING,
             INTERSECTING
         }
@@ -56,8 +52,8 @@ public class Line3D {
         private LineIntersection(Type type, Line3D line, float mua, float mub) {
             this.type = type;
             this.line = line;
-            this.coeff = new float[] {
-                    mua, mub
+            this.coeff = new float[]{
+                mua, mub
             };
         }
 
@@ -101,17 +97,12 @@ public class Line3D {
      * last segment has a shorter length than the step length requested. The
      * first point (A) can be omitted and not be added to the list if so
      * desired.
-     * 
-     * @param a
-     *            start point
-     * @param b
-     *            end point (always added to results)
-     * @param stepLength
-     *            desired distance between points
-     * @param segments
-     *            existing array list for results (or a new list, if null)
-     * @param addFirst
-     *            false, if A is NOT to be added to results
+     *
+     * @param a start point
+     * @param b end point (always added to results)
+     * @param stepLength desired distance between points
+     * @param segments existing array list for results (or a new list, if null)
+     * @param addFirst false, if A is NOT to be added to results
      * @return list of result vectors
      */
     public static final List<Vec3D> splitIntoSegments(Vec3D a, Vec3D b,
@@ -161,13 +152,14 @@ public class Line3D {
      * within the 0.0 .. 1.0 interval the endpoints of the intersection line are
      * within the given line segments, if not then the intersection line is
      * outside.
-     * 
+     *
      * <p>
      * Code based on original by Paul Bourke:<br/>
      * http://local.wasp.uwa.edu.au/~pbourke/geometry/lineline3d/
      * </p>
+     *
      * @param l
-     * @return 
+     * @return
      */
     public LineIntersection closestLineTo(Line3D l) {
         Vec3D p43 = l.a.sub(l.b);
@@ -202,9 +194,8 @@ public class Line3D {
 
     /**
      * Computes the closest point on this line to the given one.
-     * 
-     * @param p
-     *            point to check against
+     *
+     * @param p point to check against
      * @return closest point on the line
      */
     public Vec3D closestPointTo(ReadonlyVec3D p) {
@@ -226,31 +217,22 @@ public class Line3D {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
+        if (obj instanceof Line3D) {
+            Line3D l = (Line3D) obj;
+            return (a.equals(l.a) || a.equals(l.b))
+                    && (b.equals(l.b) || b.equals(l.a));
         }
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof Line3D)) {
-            return false;
-        }
-        Line3D l = (Line3D) obj;
-        return (a.equals(l.a) || a.equals(l.b))
-                && (b.equals(l.b) || b.equals(l.a));
+        return false;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 53 * hash + Objects.hashCode(this.a);
-        hash = 53 * hash + Objects.hashCode(this.b);
-        return hash;
+        return a.hashCode() + b.hashCode();
     }
 
     /**
      * Returns the line's axis-aligned bounding box.
-     * 
+     *
      * @return aabb
      * @see toxi.geom.AABB
      */
@@ -282,22 +264,21 @@ public class Line3D {
         return a.equals(p) || b.equals(p);
     }
 
-
     /**
      * Computes the hash code for this instance taking directionality into
      * account. A->B will produce a different hash code than B->A. If
      * directionality is not required or desired use the default
      * {@link #hashCode()} method.
-     * 
+     *
      * @return hash code
-     * 
+     *
      * @see #hashCode()
      */
     public int hashCodeWithDirection() {
-        long bits = 1L;
-        bits = 31L * bits + a.hashCode();
-        bits = 31L * bits + b.hashCode();
-        return (int) (bits ^ (bits >> 32));
+        int hash = 7;
+        hash = 53 * hash + a.hashCode();
+        hash = 53 * hash + b.hashCode();
+        return hash;
     }
 
     public Line3D offsetAndGrowBy(float offset, float scale, Vec3D ref) {
