@@ -149,17 +149,13 @@ public class Vec4D implements ReadonlyVec4D, Cloneable {
         return (float) (Math.acos(vDot));
     }
 
-    @Override
-    public int compareTo(ReadonlyVec4D v) {
-        if (this.equals(v)) {
+   @Override
+    public int compareTo(ReadonlyVec4D o) {
+        if (this.equals(o)) {
             return 0;
         }
-        float a = magSquared();
-        float b = v.magSquared();
-        if (a < b) {
-            return -1;
-        }
-        return +1;
+        int result = (this.magSquared() < o.magSquared()) ? -1 : 1;
+        return result;
     }
 
     @Override

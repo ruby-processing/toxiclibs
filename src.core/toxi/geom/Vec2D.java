@@ -276,16 +276,12 @@ public class Vec2D implements Comparable<ReadonlyVec2D>, ReadonlyVec2D {
     }
 
     @Override
-    public int compareTo(ReadonlyVec2D v) {
-        if (this.equals(v)) {
+    public int compareTo(ReadonlyVec2D o) {
+        if (this.equals(o)) {
             return 0;
         }
-        float a = magSquared();
-        float b = v.magSquared();
-        if (a < b) {
-            return -1;
-        }
-        return +1;
+        int result = (this.magSquared() < o.magSquared()) ? -1 : 1;
+        return result;
     }
 
     /**

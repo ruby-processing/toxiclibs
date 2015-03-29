@@ -337,17 +337,13 @@ public class Vec3D implements Comparable<ReadonlyVec3D>, ReadonlyVec3D {
         return this;
     }
 
-    @Override
-    public int compareTo(ReadonlyVec3D v) {
-        if (x == v.x() && y == v.y() && z == v.z()) {
+   @Override
+    public int compareTo(ReadonlyVec3D o) {
+        if (this.equals(o)) {
             return 0;
         }
-        float a = magSquared();
-        float b = v.magSquared();
-        if (a < b) {
-            return -1;
-        }
-        return +1;
+        int result = (this.magSquared() < o.magSquared()) ? -1 : 1;
+        return result;
     }
 
     /**
