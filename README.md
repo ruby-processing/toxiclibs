@@ -10,7 +10,7 @@ Can be build with ant and jdk7+:-
 cd toxiclibs/ant
 ant -f build-all.xml
 ```
-See also [toxigem][] for the ruby gem built using the source developed here, that can be used by ruby-processing and JRubyArt.
+See also [toxigem][] for the ruby gem built using the source developed here, that can be used by both ruby-processing and JRubyArt (please let me know if you can use it elswhere).
 
 [postspectacular]:http://postspectacular.com/
 [Toxiclibs]:http://toxiclibs.org/
