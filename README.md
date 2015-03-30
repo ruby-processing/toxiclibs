@@ -12,7 +12,7 @@ ant -f build-all.xml
 ```
 Unzip toxiclibs-complete-***.zip in your sketchbook/libraries folder (or wherever else you put your libraries) to use with vanilla processing
 
-See also [toxigem][] for the ruby gem built using the source developed here, that can be used by both ruby-processing and JRubyArt (please let me know if you can use it elsewhere).
+See also [toxicgem][] for the ruby gem built using the source developed here, that can be used by both ruby-processing and JRubyArt (please let me know if you can use it elsewhere).
 ```bash
 gem install toxiclibs
 ```
@@ -20,4 +20,4 @@ gem install toxiclibs
 [postspectacular]:http://postspectacular.com/
 [Toxiclibs]:http://toxiclibs.org/
 [processing.org]:https://processing.org/
-[toxigem]:https://github.com/ruby-processing/toxicgem
+[toxicgem]:https://github.com/ruby-processing/toxicgem
