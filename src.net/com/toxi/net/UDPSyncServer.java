@@ -52,7 +52,7 @@ public class UDPSyncServer {
     private ServerState state;
 
     DatagramSocket socket;
-    HashMap<String, UDPConnection> connections = new HashMap<String, UDPConnection>();
+    HashMap<String, UDPConnection> connections = new HashMap<>();
 
     @Option(name = "-port", aliases = "-p", usage = "server socket port number")
     protected int port = DEFAULT_PORT;
