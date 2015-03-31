@@ -201,11 +201,7 @@ public class GMatrix implements java.io.Serializable, Cloneable {
         ha = MathUtils.abs(h);
 
         pmax = 1;
-        if (ha > fa) {
-            swap = true;
-        } else {
-            swap = false;
-        }
+        swap = ha > fa;
 
         if (swap) {
             pmax = 3;

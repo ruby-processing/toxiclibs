@@ -1454,11 +1454,7 @@ public class Matrix3d implements java.io.Serializable, Cloneable {
         }
 
         diff = m22 - m1.m22;
-        if ((diff < 0 ? -diff : diff) > epsilon) {
-            return false;
-        }
-
-        return true;
+        return (diff < 0 ? -diff : diff) <= epsilon;
     }
 
     /**
