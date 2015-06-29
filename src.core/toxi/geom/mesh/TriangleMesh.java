@@ -181,9 +181,9 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
      */
     @Override
     public TriangleMesh addMesh(Mesh3D m) {
-        for (Face f : m.getFaces()) {
+        m.getFaces().stream().forEach((f) -> {
             addFace(f.a, f.b, f.c, f.uvA, f.uvB, f.uvC);
-        }
+        });
         return this;
     }
 
@@ -192,9 +192,9 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
         computeCentroid();
         Vec3D delta = origin != null ? origin.sub(centroid) : centroid
                 .getInverted();
-        for (Vertex v : vertices.values()) {
+        vertices.values().stream().forEach((v) -> {
             v.addSelf(delta);
-        }
+        });
         getBoundingBox();
         return bounds;
     }
@@ -226,9 +226,9 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
     @Override
     public Vec3D computeCentroid() {
         centroid.clear();
-        for (Vec3D v : vertices.values()) {
+        vertices.values().stream().forEach((v) -> {
             centroid.addSelf(v);
-        }
+        });
         return centroid.scaleSelf(1f / numVertices).copy();
     }
 
@@ -237,9 +237,9 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
      */
     @Override
     public TriangleMesh computeFaceNormals() {
-        for (Face f : faces) {
+        faces.stream().forEach((f) -> {
             f.computeNormal();
-        }
+        });
         return this;
     }
 
@@ -248,17 +248,21 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
      */
     @Override
     public TriangleMesh computeVertexNormals() {
-        for (Vertex v : vertices.values()) {
+        vertices.values().stream().forEach((v) -> {
             v.clearNormal();
-        }
-        for (Face f : faces) {
+        });
+        faces.stream().map((f) -> {
             f.a.addFaceNormal(f.normal);
+            return f;
+        }).map((f) -> {
             f.b.addFaceNormal(f.normal);
+            return f;
+        }).forEach((f) -> {
             f.c.addFaceNormal(f.normal);
-        }
-        for (Vertex v : vertices.values()) {
+        });
+        vertices.values().stream().forEach((v) -> {
             v.computeNormal();
-        }
+        });
         return this;
     }
 
@@ -270,9 +274,9 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
      */
     public TriangleMesh copy() {
         TriangleMesh m = new TriangleMesh(name + "-copy", numVertices, numFaces);
-        for (Face f : faces) {
+        faces.stream().forEach((f) -> {
             m.addFace(f.a, f.b, f.c, f.normal, f.uvA, f.uvB, f.uvC);
-        }
+        });
         return m;
     }
 
@@ -283,27 +287,31 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
     @Override
     public TriangleMesh faceOutwards() {
         computeCentroid();
-        for (Face f : faces) {
+        faces.stream().forEach((f) -> {
             Vec3D n = f.getCentroid().sub(centroid);
             float dot = n.dot(f.normal);
             if (dot < 0) {
                 f.flipVertexOrder();
             }
-        }
+        });
         return this;
     }
 
     @Override
     public TriangleMesh flipVertexOrder() {
-        for (Face f : faces) {
+        faces.stream().map((f) -> {
             Vertex t = f.a;
             f.a = f.b;
             f.b = t;
+            return f;
+        }).map((f) -> {
             Vec2D tuv = f.uvA;
             f.uvA = f.uvB;
             f.uvB = tuv;
+            return f;
+        }).forEach((f) -> {
             f.normal.invert();
-        }
+        });
         return this;
     }
 
@@ -318,10 +326,12 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
     public AABB getBoundingBox() {
         final Vec3D minBounds = Vec3D.MAX_VALUE.copy();
         final Vec3D maxBounds = Vec3D.NEG_MAX_VALUE.copy();
-        for (Vertex v : vertices.values()) {
+        vertices.values().stream().map((v) -> {
             minBounds.minSelf(v);
+            return v;
+        }).forEach((v) -> {
             maxBounds.maxSelf(v);
-        }
+        });
         bounds = AABB.fromMinMax(minBounds, maxBounds);
         return bounds;
     }
@@ -651,13 +661,13 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
     protected void handleSaveAsSTL(STLWriter stl, boolean useFlippedY) {
         if (useFlippedY) {
             stl.setScale(new Vec3D(1, -1, 1));
-            for (Face f : faces) {
+            faces.stream().forEach((f) -> {
                 stl.face(f.a, f.b, f.c, f.normal, STLWriter.DEFAULT_RGB);
-            }
+            });
         } else {
-            for (Face f : faces) {
+            faces.stream().forEach((f) -> {
                 stl.face(f.b, f.a, f.c, f.normal, STLWriter.DEFAULT_RGB);
-            }
+            });
         }
         stl.endSave();
         logger.log(Level.INFO, "{0} faces written", numFaces);
@@ -681,13 +691,10 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
     @Override
     public boolean intersectsRay(Ray3D ray) {
         Triangle3D tri = intersector.getTriangle();
-        for (Face f : faces) {
+        return faces.stream().map((f) -> {
             tri.set(f.a, f.b, f.c);
-            if (intersector.intersectsRay(ray)) {
-                return true;
-            }
-        }
-        return false;
+            return f;
+        }).anyMatch((_item) -> (intersector.intersectsRay(ray)));
     }
 
     public Triangle3D perforateFace(Face f, float size) {
@@ -773,24 +780,24 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
         logger.log(Level.INFO, "writing OBJMesh: {0}", this.toString());
         obj.newObject(name);
         // vertices
-        for (Vertex v : vertices.values()) {
+        vertices.values().stream().forEach((v) -> {
             obj.vertex(v);
-        }
+        });
         // faces
         if (saveNormals) {
             // normals
-            for (Vertex v : vertices.values()) {
+            vertices.values().stream().forEach((v) -> {
                 obj.normal(v.normal);
-            }
-            for (Face f : faces) {
+            });
+            faces.stream().forEach((f) -> {
                 obj.faceWithNormals(f.b.id + vOffset, f.a.id + vOffset, f.c.id
                         + vOffset, f.b.id + nOffset, f.a.id + nOffset, f.c.id
-                        + nOffset);
-            }
+                                + nOffset);
+            });
         } else {
-            for (Face f : faces) {
+            faces.stream().forEach((f) -> {
                 obj.face(f.b.id + vOffset, f.a.id + vOffset, f.c.id + vOffset);
-            }
+            });
         }
     }
 
@@ -942,9 +949,9 @@ public class TriangleMesh implements Mesh3D, Intersector3D {
      * @return itself
      */
     public TriangleMesh transform(Matrix4x4 mat, boolean updateNormals) {
-        for (Vertex v : vertices.values()) {
+        vertices.values().stream().forEach((v) -> {
             v.set(mat.applyTo(v));
-        }
+        });
         if (updateNormals) {
             computeFaceNormals();
         }

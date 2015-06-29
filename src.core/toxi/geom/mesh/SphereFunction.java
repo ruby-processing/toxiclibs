@@ -66,6 +66,14 @@ public class SphereFunction implements SurfaceFunction {
         this.sphere = s;
     }
 
+    /**
+     *
+     * @param p
+     * @param phi
+     * @param theta
+     * @return
+     */
+    @Override
     public Vec3D computeVertexFor(Vec3D p, float phi, float theta) {
         phi -= MathUtils.HALF_PI;
         float cosPhi = MathUtils.cos(phi);
@@ -79,18 +87,40 @@ public class SphereFunction implements SurfaceFunction {
         return p.scaleSelf(sphere.radius).addSelf(sphere);
     }
 
+    /**
+     *
+     * @return
+     */
+    @Override
     public float getPhiRange() {
         return phiRange;
     }
 
+    /**
+     *
+     * @param res
+     * @return
+     */
+    @Override
     public int getPhiResolutionLimit(int res) {
         return res;
     }
 
+    /**
+     *
+     * @return
+     */
+    @Override
     public float getThetaRange() {
         return thetaRange;
     }
 
+    /**
+     *
+     * @param res
+     * @return
+     */
+    @Override
     public int getThetaResolutionLimit(int res) {
         return res;
     }

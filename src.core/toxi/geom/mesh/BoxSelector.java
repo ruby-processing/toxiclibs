@@ -45,11 +45,9 @@ public class BoxSelector extends VertexSelector {
     @Override
     public VertexSelector selectVertices() {
         clearSelection();
-        for (Vertex v : mesh.getVertices()) {
-            if (box.containsPoint(v)) {
-                selection.add(v);
-            }
-        }
+        mesh.getVertices().stream().filter((v) -> (box.containsPoint(v))).forEach((v) -> {
+            selection.add(v);
+        });
         return this;
     }
 

@@ -66,9 +66,9 @@ public class WEVertex extends Vertex {
 
     public List<WEVertex> getNeighbors() {
         List<WEVertex> neighbors = new ArrayList<>(edges.size());
-        for (WingedEdge e : edges) {
+        edges.stream().forEach((e) -> {
             neighbors.add(e.getOtherEndFor(this));
-        }
+        });
         return neighbors;
     }
 
@@ -79,9 +79,9 @@ public class WEVertex extends Vertex {
      */
     public List<WEFace> getRelatedFaces() {
         Set<WEFace> faces = new HashSet<>(edges.size() * 2);
-        for (WingedEdge e : edges) {
+        edges.stream().forEach((e) -> {
             faces.addAll(e.faces);
-        }
+        });
         return new ArrayList<>(faces);
     }
 

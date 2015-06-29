@@ -130,6 +130,7 @@ public interface ReadonlyVec4D {
      * 
      * @see java.lang.Object#equals(java.lang.Object)
      */
+    @Override
     public boolean equals(Object obj);
 
     /**
@@ -323,6 +324,7 @@ public interface ReadonlyVec4D {
      *            scale factor for Y coordinate
      * @param z
      *            scale factor for Z coordinate
+     * @param w
      * 
      * @return new vector
      */

@@ -127,26 +127,32 @@ public class BasicNurbsCurve implements NurbsCurve, Cloneable {
         return derivs;
     }
 
+    @Override
     public Vec4D[] getControlPoints() {
         return cpoly;
     }
 
+    @Override
     public int getDegree() {
         return uKnots.getDegree();
     }
 
+    @Override
     public float[] getKnots() {
         return uKnots.getArray();
     }
 
+    @Override
     public KnotVector getKnotVector() {
         return uKnots;
     }
 
+    @Override
     public Vec3D pointOnCurve(float u) {
         return pointOnCurve(u, new Vec3D());
     }
 
+    @Override
     public Vec3D pointOnCurve(float u, Vec3D out) {
         int span = uKnots.findSpan(u);
         int degree = uKnots.getDegree();
@@ -170,6 +176,12 @@ public class BasicNurbsCurve implements NurbsCurve, Cloneable {
         return cw.unweightInto(out);
     }
 
+    /**
+     *
+     * @param res
+     * @return
+     */
+    @Override
     public Polygon2D toPolygon2D(int res) {
         float delta = 1f / (res - 1);
         Polygon2D poly = new Polygon2D();

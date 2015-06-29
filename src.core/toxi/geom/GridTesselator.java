@@ -71,24 +71,20 @@ public abstract class GridTesselator implements PolygonTesselator {
         // scenes
         Voronoi voronoi = new Voronoi(rootSize);
         // add perimeter points
-        for (Vec2D v : poly.vertices) {
+        poly.vertices.stream().forEach((v) -> {
             voronoi.addPoint(v);
-        }
+        });
         // add random inliers
-        for (Vec2D v : createInsidePoints(poly, bounds)) {
+        createInsidePoints(poly, bounds).stream().forEach((v) -> {
             voronoi.addPoint(v);
-        }
+        });
         // get filtered delaunay triangles:
         // ignore any triangles which share a vertex with the initial root
         // triangle or whose centroid is outside the polygon
-        for (Triangle2D t : voronoi.getTriangles()) {
-            if (MathUtils.abs(t.a.x) != Voronoi.DEFAULT_SIZE
-                    && MathUtils.abs(t.a.y) != Voronoi.DEFAULT_SIZE) {
-                if (poly.containsPoint(t.computeCentroid())) {
+        voronoi.getTriangles().stream().filter((t) -> (MathUtils.abs(t.a.x) != Voronoi.DEFAULT_SIZE
+                && MathUtils.abs(t.a.y) != Voronoi.DEFAULT_SIZE)).filter((t) -> (poly.containsPoint(t.computeCentroid()))).forEach((t) -> {
                     triangles.add(t);
-                }
-            }
-        }
+                });
         return triangles;
     }
 

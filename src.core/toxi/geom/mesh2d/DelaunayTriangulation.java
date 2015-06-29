@@ -19,7 +19,6 @@ package toxi.geom.mesh2d;
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  */
-
 import java.util.AbstractSet;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -33,27 +32,26 @@ import toxi.util.datatypes.UndirectedGraph;
 
 /**
  * A 2D Delaunay DelaunayTriangulation (DT) with incremental site insertion.
- * 
+ *
  * This is not the fastest way to build a DT, but it's a reasonable way to build
  * a DT incrementally and it makes a nice interactive display. There are several
  * O(n log n) methods, but they require that the sites are all known initially.
- * 
+ *
  * A DelaunayTriangulation is a Set of Triangles. A DelaunayTriangulation is
  * unmodifiable as a Set; the only way to change it is to add sites (via
  * delaunayPlace).
- * 
+ *
  * @author Paul Chew
- * 
- *         Created July 2005. Derived from an earlier, messier version.
- * 
- *         Modified November 2007. Rewrote to use AbstractSet as parent class
- *         and to use the UndirectedGraph class internally. Tried to make the DT
- *         algorithm clearer by explicitly creating a cavity. Added code needed
- *         to find a Voronoi cell.
- * 
+ *
+ * Created July 2005. Derived from an earlier, messier version.
+ *
+ * Modified November 2007. Rewrote to use AbstractSet as parent class and to use
+ * the UndirectedGraph class internally. Tried to make the DT algorithm clearer
+ * by explicitly creating a cavity. Added code needed to find a Voronoi cell.
+ *
  * @author Karsten Schmidt
- * 
- *         Ported to use toxiclibs classes (June 2010).
+ *
+ * Ported to use toxiclibs classes (June 2010).
  */
 public class DelaunayTriangulation extends AbstractSet<DelaunayTriangle> {
 
@@ -63,9 +61,8 @@ public class DelaunayTriangulation extends AbstractSet<DelaunayTriangle> {
 
     /**
      * All sites must fall within the initial triangle.
-     * 
-     * @param triangle
-     *            the initial triangle
+     *
+     * @param triangle the initial triangle
      */
     public DelaunayTriangulation(DelaunayTriangle triangle) {
         triGraph = new UndirectedGraph<>();
@@ -76,10 +73,9 @@ public class DelaunayTriangulation extends AbstractSet<DelaunayTriangle> {
     /**
      * True iff triangle is a member of this triangulation. This method isn't
      * required by AbstractSet, but it improves efficiency.
-     * 
-     * @param triangle
-     *            the object to check for membership
-     * @return 
+     *
+     * @param triangle the object to check for membership
+     * @return
      */
     @Override
     public boolean contains(Object triangle) {
@@ -89,11 +85,9 @@ public class DelaunayTriangulation extends AbstractSet<DelaunayTriangle> {
     /**
      * Place a new site into the DT. Nothing happens if the site matches an
      * existing DT vertex.
-     * 
-     * @param site
-     *            the new DelaunayVertex
-     * @throws IllegalArgumentException
-     *             if site does not lie in any triangle
+     *
+     * @param site the new DelaunayVertex
+     * @throws IllegalArgumentException if site does not lie in any triangle
      */
     public void delaunayPlace(DelaunayVertex site) {
         // Uses straightforward scheme rather than best asymptotic time
@@ -113,11 +107,9 @@ public class DelaunayTriangulation extends AbstractSet<DelaunayTriangle> {
 
     /**
      * Determine the cavity caused by site.
-     * 
-     * @param site
-     *            the site causing the cavity
-     * @param triangle
-     *            the triangle containing site
+     *
+     * @param site the site causing the cavity
+     * @param triangle the triangle containing site
      * @return set of all triangles that have site in their circumcircle
      */
     private Set<DelaunayTriangle> getCavity(DelaunayVertex site,
@@ -154,9 +146,8 @@ public class DelaunayTriangulation extends AbstractSet<DelaunayTriangle> {
 
     /**
      * Locate the triangle with point inside it or on its boundary.
-     * 
-     * @param point
-     *            the point to locate
+     *
+     * @param point the point to locate
      * @return the triangle that holds point; null if no such triangle
      */
     public DelaunayTriangle locate(DelaunayVertex point) {
@@ -195,14 +186,11 @@ public class DelaunayTriangulation extends AbstractSet<DelaunayTriangle> {
 
     /**
      * Report neighbor opposite the given vertex of triangle.
-     * 
-     * @param site
-     *            a vertex of triangle
-     * @param triangle
-     *            we want the neighbor of this triangle
+     *
+     * @param site a vertex of triangle
+     * @param triangle we want the neighbor of this triangle
      * @return the neighbor opposite site in triangle; null if none
-     * @throws IllegalArgumentException
-     *             if site is not in this triangle
+     * @throws IllegalArgumentException if site is not in this triangle
      */
     public DelaunayTriangle neighborOpposite(DelaunayVertex site,
             DelaunayTriangle triangle) {
@@ -220,9 +208,8 @@ public class DelaunayTriangulation extends AbstractSet<DelaunayTriangle> {
 
     /**
      * Return the set of triangles adjacent to triangle.
-     * 
-     * @param triangle
-     *            the triangle to check
+     *
+     * @param triangle the triangle to check
      * @return the neighbors of triangle
      */
     public Set<DelaunayTriangle> neighbors(DelaunayTriangle triangle) {
@@ -236,14 +223,11 @@ public class DelaunayTriangulation extends AbstractSet<DelaunayTriangle> {
 
     /**
      * Report triangles surrounding site in order (cw or ccw).
-     * 
-     * @param site
-     *            we want the surrounding triangles for this site
-     * @param triangle
-     *            a "starting" triangle that has site as a vertex
+     *
+     * @param site we want the surrounding triangles for this site
+     * @param triangle a "starting" triangle that has site as a vertex
      * @return all triangles surrounding site in order (cw or ccw)
-     * @throws IllegalArgumentException
-     *             if site is not in triangle
+     * @throws IllegalArgumentException if site is not in triangle
      */
     public List<DelaunayTriangle> surroundingTriangles(DelaunayVertex site,
             DelaunayTriangle triangle) {
@@ -274,11 +258,9 @@ public class DelaunayTriangulation extends AbstractSet<DelaunayTriangle> {
     /**
      * Update the triangulation by removing the cavity triangles and then
      * filling the cavity with new triangles.
-     * 
-     * @param site
-     *            the site that created the cavity
-     * @param cavity
-     *            the triangles with site in their circumcircle
+     *
+     * @param site the site that created the cavity
+     * @param cavity the triangles with site in their circumcircle
      * @return one of the new triangles
      */
     private DelaunayTriangle update(DelaunayVertex site,
@@ -287,32 +269,35 @@ public class DelaunayTriangulation extends AbstractSet<DelaunayTriangle> {
         Set<DelaunayTriangle> theTriangles = new HashSet<>();
 
         // Find boundary facets and adjacent triangles
-        for (DelaunayTriangle triangle : cavity) {
+        cavity.stream().map((DelaunayTriangle triangle) -> {
             theTriangles.addAll(neighbors(triangle));
-            for (DelaunayVertex vertex : triangle) {
-                Set<DelaunayVertex> facet = triangle.facetOpposite(vertex);
+            return triangle;
+        }).forEach((DelaunayTriangle triangle) -> {
+            triangle.stream().map((vertex) -> triangle.facetOpposite(vertex)).forEach((facet) -> {
                 if (boundary.contains(facet)) {
                     boundary.remove(facet);
                 } else {
                     boundary.add(facet);
                 }
-            }
-        }
+            });
+        });
         theTriangles.removeAll(cavity); // Adj triangles only
-
         // Remove the cavity triangles from the triangulation
-        for (DelaunayTriangle triangle : cavity) {
+        cavity.stream().forEach((DelaunayTriangle triangle) -> {
             triGraph.remove(triangle);
-        }
+        });
 
         // Build each new triangle and add it to the triangulation
         Set<DelaunayTriangle> newTriangles = new HashSet<>();
-        for (Set<DelaunayVertex> vertices : boundary) {
+        boundary.stream().map((vertices) -> {
             vertices.add(site);
-            DelaunayTriangle tri = new DelaunayTriangle(vertices);
+            return vertices;
+        }).map((vertices) -> new DelaunayTriangle(vertices)).map((tri) -> {
             triGraph.add(tri);
+            return tri;
+        }).forEach((tri) -> {
             newTriangles.add(tri);
-        }
+        });
 
         // Update the graph links for each new triangle
         theTriangles.addAll(newTriangles); // Adj triangle + new triangles

@@ -1,5 +1,6 @@
 package toxi.geom.mesh2d;
 
+import java.util.Arrays;
 import toxi.geom.Vec2D;
 
 /*
@@ -304,6 +305,11 @@ public class DelaunayVertex {
         return sum;
     }
 
+    /**
+     *
+     * @param other
+     * @return
+     */
     @Override
     public boolean equals(Object other) {
         if (!(other instanceof DelaunayVertex)) {
@@ -321,6 +327,13 @@ public class DelaunayVertex {
         return true;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + Arrays.hashCode(this.coordinates);
+        return hash;
+    }
+
     /**
      * Create a new DelaunayVertex by adding additional coordinates to this
      * DelaunayVertex.
@@ -335,16 +348,6 @@ public class DelaunayVertex {
         System.arraycopy(coords, 0, result, coordinates.length, coords.length);
         return new DelaunayVertex(result);
     }
-
-    // @Override
-    // public int hashCode() {
-        // int hash = 0;
-        // for (double c : this.coordinates) {
-            // long bits = Double.doubleToLongBits(c);
-            // hash = (31 * hash) ^ (int) (bits ^ (bits >> 32));
-        // }
-        // return hash;
-    // }
 
     /* Pnts as simplices */
 

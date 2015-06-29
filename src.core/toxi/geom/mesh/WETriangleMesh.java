@@ -92,19 +92,23 @@ public class WETriangleMesh extends TriangleMesh {
         super(name, numV, numF);
     }
 
+    @Override
     public WETriangleMesh addFace(Vec3D a, Vec3D b, Vec3D c) {
         return addFace(a, b, c, null, null, null, null);
     }
 
+    @Override
     public WETriangleMesh addFace(Vec3D a, Vec3D b, Vec3D c, Vec2D uvA,
             Vec2D uvB, Vec2D uvC) {
         return addFace(a, b, c, null, uvA, uvB, uvC);
     }
 
+    @Override
     public WETriangleMesh addFace(Vec3D a, Vec3D b, Vec3D c, Vec3D n) {
         return addFace(a, b, c, n, null, null, null);
     }
 
+    @Override
     public WETriangleMesh addFace(Vec3D a, Vec3D b, Vec3D c, Vec3D n,
             Vec2D uvA, Vec2D uvB, Vec2D uvC) {
         WEVertex va = checkVertex(a);
@@ -112,7 +116,7 @@ public class WETriangleMesh extends TriangleMesh {
         WEVertex vc = checkVertex(c);
         if (va.id == vb.id || va.id == vc.id || vb.id == vc.id) {
             if (logger.isLoggable(Level.FINE)) {
-                logger.fine("ignorning invalid face: " + a + "," + b + "," + c);
+                logger.log(Level.FINE, "ignorning invalid face: {0},{1},{2}", new Object[]{a, b, c});
             }
         } else {
             if (n != null) {
@@ -138,7 +142,9 @@ public class WETriangleMesh extends TriangleMesh {
      * 
      * @param m
      *            source mesh instance
+     * @return 
      */
+    @Override
     public WETriangleMesh addMesh(Mesh3D m) {
         super.addMesh(m);
         return this;
@@ -151,7 +157,7 @@ public class WETriangleMesh extends TriangleMesh {
         return bounds;
     }
 
-    private final WEVertex checkVertex(Vec3D v) {
+    private WEVertex checkVertex(Vec3D v) {
         WEVertex vertex = (WEVertex) vertices.get(v);
         if (vertex == null) {
             vertex = createVertex(v, uniqueVertexID++);
@@ -163,7 +169,9 @@ public class WETriangleMesh extends TriangleMesh {
 
     /**
      * Clears all counters, and vertex & face buffers.
+     * @return 
      */
+    @Override
     public WETriangleMesh clear() {
         super.clear();
         edges.clear();
@@ -176,15 +184,17 @@ public class WETriangleMesh extends TriangleMesh {
      * 
      * @return new mesh instance
      */
+    @Override
     public WETriangleMesh copy() {
         WETriangleMesh m = new WETriangleMesh(name + "-copy", numVertices,
                 numFaces);
-        for (Face f : faces) {
+        faces.stream().forEach((f) -> {
             m.addFace(f.a, f.b, f.c, f.normal, f.uvA, f.uvB, f.uvC);
-        }
+        });
         return m;
     }
 
+    @Override
     protected WEVertex createVertex(Vec3D v, int id) {
         return new WEVertex(v, id);
     }
@@ -195,16 +205,19 @@ public class WETriangleMesh extends TriangleMesh {
      * 
      * @return itself
      */
+    @Override
     public WETriangleMesh flipVertexOrder() {
         super.flipVertexOrder();
         return this;
     }
 
+    @Override
     public WETriangleMesh flipYAxis() {
         super.flipYAxis();
         return this;
     }
 
+    @Override
     public WEVertex getClosestVertexToPoint(ReadonlyVec3D p) {
         return (WEVertex) super.getClosestVertexToPoint(p);
     }
@@ -217,26 +230,63 @@ public class WETriangleMesh extends TriangleMesh {
         return edges.size();
     }
 
+    /**
+     *
+     * @param axis
+     * @param theta
+     * @return
+     */
+    @Override
     public WETriangleMesh getRotatedAroundAxis(Vec3D axis, float theta) {
         return copy().rotateAroundAxis(axis, theta);
     }
 
+    /**
+     *
+     * @param theta
+     * @return
+     */
+    @Override
     public WETriangleMesh getRotatedX(float theta) {
         return copy().rotateX(theta);
     }
 
+    /**
+     *
+     * @param theta
+     * @return
+     */
+    @Override
     public WETriangleMesh getRotatedY(float theta) {
         return copy().rotateY(theta);
     }
 
+    /**
+     *
+     * @param theta
+     * @return
+     */
+    @Override
     public WETriangleMesh getRotatedZ(float theta) {
         return copy().rotateZ(theta);
     }
 
+    /**
+     *
+     * @param scale
+     * @return
+     */
+    @Override
     public WETriangleMesh getScaled(float scale) {
         return copy().scale(scale);
     }
 
+    /**
+     *
+     * @param scale
+     * @return
+     */
+    @Override
     public WETriangleMesh getScaled(Vec3D scale) {
         return copy().scale(scale);
     }
@@ -246,10 +296,22 @@ public class WETriangleMesh extends TriangleMesh {
         return copy().translate(trans);
     }
 
+    /**
+     *
+     * @param v
+     * @return
+     */
+    @Override
     public WEVertex getVertexAtPoint(Vec3D v) {
         return (WEVertex) vertices.get(v);
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @Override
     public WEVertex getVertexForID(int id) {
         return (WEVertex) super.getVertexForID(id);
     }
@@ -257,7 +319,7 @@ public class WETriangleMesh extends TriangleMesh {
     @Override
     public WETriangleMesh init(String name, int numV, int numF) {
         super.init(name, numV, numF);
-        edges = new LinkedHashMap<Line3D, WingedEdge>(numV, 1.5f, false);
+        edges = new LinkedHashMap<>(numV, 1.5f, false);
         return this;
     }
 
@@ -270,6 +332,7 @@ public class WETriangleMesh extends TriangleMesh {
      *            new target direction to point in
      * @return itself
      */
+    @Override
     public WETriangleMesh pointTowards(ReadonlyVec3D dir) {
         return transform(Quaternion.getAlignmentQuat(dir, Vec3D.Z_AXIS)
                 .toMatrix4x4(matrix), true);
@@ -286,6 +349,7 @@ public class WETriangleMesh extends TriangleMesh {
      *            current forward axis
      * @return itself
      */
+    @Override
     public WETriangleMesh pointTowards(ReadonlyVec3D dir, ReadonlyVec3D forward) {
         return transform(
                 Quaternion.getAlignmentQuat(dir, forward).toMatrix4x4(matrix),
@@ -293,33 +357,33 @@ public class WETriangleMesh extends TriangleMesh {
     }
 
     public void rebuildIndex() {
-        LinkedHashMap<Vec3D, Vertex> newV = new LinkedHashMap<Vec3D, Vertex>(
+        LinkedHashMap<Vec3D, Vertex> newV = new LinkedHashMap<>(
                 vertices.size());
-        for (Vertex v : vertices.values()) {
+        vertices.values().stream().forEach((v) -> {
             newV.put(v, v);
-        }
+        });
         vertices = newV;
-        LinkedHashMap<Line3D, WingedEdge> newE = new LinkedHashMap<Line3D, WingedEdge>(
+        LinkedHashMap<Line3D, WingedEdge> newE = new LinkedHashMap<>(
                 edges.size());
-        for (WingedEdge e : edges.values()) {
+        edges.values().stream().forEach((e) -> {
             newE.put(e, e);
-        }
+        });
         edges = newE;
     }
 
     protected void removeEdge(WingedEdge e) {
         e.remove();
         WEVertex v = (WEVertex) e.a;
-        if (v.edges.size() == 0) {
+        if (v.edges.isEmpty()) {
             vertices.remove(v);
         }
         v = (WEVertex) e.b;
-        if (v.edges.size() == 0) {
+        if (v.edges.isEmpty()) {
             vertices.remove(v);
         }
-        for (WEFace f : e.faces) {
+        e.faces.stream().forEach((f) -> {
             removeFace(f);
-        }
+        });
         WingedEdge removed = edges.remove(edgeCheck.set(e.a, e.b));
         if (removed != e) {
             throw new IllegalStateException("can't remove edge");
@@ -329,12 +393,12 @@ public class WETriangleMesh extends TriangleMesh {
     @Override
     public void removeFace(Face f) {
         faces.remove(f);
-        for (WingedEdge e : ((WEFace) f).edges) {
+        ((WEFace) f).edges.stream().map((WingedEdge e) -> {
             e.faces.remove(f);
-            if (e.faces.size() == 0) {
-                removeEdge(e);
-            }
-        }
+            return e;
+        }).filter((e) -> (e.faces.isEmpty())).forEach((e) -> {
+            removeEdge(e);
+        });
     }
 
     // FIXME
@@ -349,44 +413,53 @@ public class WETriangleMesh extends TriangleMesh {
                 }
             }
             if (!isUsed) {
-                logger.info("removing vertex: " + v);
+                logger.log(Level.INFO, "removing vertex: {0}", v);
                 i.remove();
             }
         }
     }
 
     public void removeVertices(Collection<Vertex> selection) {
-        for (Vertex v : selection) {
-            WEVertex wv = (WEVertex) v;
-            for (WingedEdge e : new ArrayList<WingedEdge>(wv.edges)) {
-                for (Face f : new ArrayList<Face>(e.faces)) {
+        selection.stream().map((v) -> (WEVertex) v).forEach((WEVertex wv) -> {
+            new ArrayList<>(wv.edges).stream().forEach((e) -> {
+                new ArrayList<>(e.faces).stream().forEach((f) -> {
                     removeFace(f);
-                }
-            }
-        }
-        // rebuildIndex();
+                });
+            });
+        }); // rebuildIndex();
     }
 
+    @Override
     public WETriangleMesh rotateAroundAxis(Vec3D axis, float theta) {
         return transform(matrix.identity().rotateAroundAxis(axis, theta));
     }
 
+    @Override
     public WETriangleMesh rotateX(float theta) {
         return transform(matrix.identity().rotateX(theta));
     }
 
+    @Override
     public WETriangleMesh rotateY(float theta) {
         return transform(matrix.identity().rotateY(theta));
     }
 
+    /**
+     *
+     * @param theta
+     * @return
+     */
+    @Override
     public WETriangleMesh rotateZ(float theta) {
         return transform(matrix.identity().rotateZ(theta));
     }
 
+    @Override
     public WETriangleMesh scale(float scale) {
         return transform(matrix.identity().scaleSelf(scale));
     }
 
+    @Override
     public WETriangleMesh scale(Vec3D scale) {
         return transform(matrix.identity().scaleSelf(scale));
     }
@@ -449,7 +522,7 @@ public class WETriangleMesh extends TriangleMesh {
     }
 
     public void subdivide(SubdivisionStrategy subDiv, float minLength) {
-        subdivideEdges(new ArrayList<WingedEdge>(edges.values()), subDiv,
+        subdivideEdges(new ArrayList<>(edges.values()), subDiv,
                 minLength);
     }
 
@@ -468,14 +541,12 @@ public class WETriangleMesh extends TriangleMesh {
 
     public void subdivideFaceEdges(List<WEFace> faces,
             SubdivisionStrategy subDiv, float minLength) {
-        List<WingedEdge> fedges = new ArrayList<WingedEdge>();
-        for (WEFace f : faces) {
-            for (WingedEdge e : f.edges) {
-                if (!fedges.contains(e)) {
-                    fedges.add(e);
-                }
-            }
-        }
+        List<WingedEdge> fedges = new ArrayList<>();
+        faces.stream().forEach((f) -> {
+            f.edges.stream().filter((e) -> (!fedges.contains(e))).forEach((e) -> {
+                fedges.add(e);
+            });
+        });
         subdivideEdges(fedges, subDiv, minLength);
     }
 
@@ -492,6 +563,7 @@ public class WETriangleMesh extends TriangleMesh {
      * @param mat
      * @return itself
      */
+    @Override
     public WETriangleMesh transform(Matrix4x4 mat) {
         return transform(mat, true);
     }
@@ -505,10 +577,11 @@ public class WETriangleMesh extends TriangleMesh {
      * @param updateNormals
      * @return itself
      */
+    @Override
     public WETriangleMesh transform(Matrix4x4 mat, boolean updateNormals) {
-        for (Vertex v : vertices.values()) {
+        vertices.values().stream().forEach((v) -> {
             mat.applyToSelf(v);
-        }
+        });
         rebuildIndex();
         if (updateNormals) {
             computeFaceNormals();
@@ -516,6 +589,7 @@ public class WETriangleMesh extends TriangleMesh {
         return this;
     }
 
+    @Override
     public WETriangleMesh translate(Vec3D trans) {
         return transform(matrix.identity().translateSelf(trans));
     }

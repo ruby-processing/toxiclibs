@@ -30,7 +30,6 @@ package toxi.geom.mesh;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-
 import toxi.geom.Vec3D;
 
 /**
@@ -51,18 +50,18 @@ public class LaplacianSmooth implements WEMeshFilterStrategy {
                 selection.size());
         for (int i = 0; i < numIterations; i++) {
             filtered.clear();
-            for (Vertex v : selection) {
+            selection.stream().forEach((Vertex v) -> {
                 final Vec3D laplacian = new Vec3D();
                 final List<WEVertex> neighbours = ((WEVertex) v).getNeighbors();
-                for (WEVertex n : neighbours) {
+                neighbours.stream().forEach((n) -> {
                     laplacian.addSelf(n);
-                }
+                });
                 laplacian.scaleSelf(1f / neighbours.size());
                 filtered.put(v, laplacian);
-            }
-            for (Vertex v : filtered.keySet()) {
+            });
+            filtered.keySet().stream().forEach((v) -> {
                 mesh.vertices.get(v).set(filtered.get(v));
-            }
+            });
             mesh.rebuildIndex();
         }
         mesh.computeFaceNormals();

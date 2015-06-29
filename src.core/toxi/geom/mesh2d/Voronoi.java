@@ -32,7 +32,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-
 import toxi.geom.Polygon2D;
 import toxi.geom.Triangle2D;
 import toxi.geom.Vec2D;
@@ -62,32 +61,31 @@ public class Voronoi {
     }
 
     public void addPoints(Collection<? extends Vec2D> points) {
-        for (Vec2D p : points) {
+        points.stream().forEach((p) -> {
             addPoint(p);
-        }
+        });
     }
 
     public List<Polygon2D> getRegions() {
         List<Polygon2D> regions = new LinkedList<>();
         HashSet<DelaunayVertex> done = new HashSet<>(
                 initialTriangle);
-        for (DelaunayTriangle triangle : delaunay) {
-            for (DelaunayVertex site : triangle) {
-                if (done.contains(site)) {
-                    continue;
-                }
+        delaunay.stream().forEach((DelaunayTriangle triangle) -> {
+            triangle.stream().filter((site) -> !(done.contains(site))).map((site) -> {
                 done.add(site);
-                List<DelaunayTriangle> list = delaunay.surroundingTriangles(
-                        site, triangle);
-                Polygon2D poly = new Polygon2D();
-                for (DelaunayTriangle tri : list) {
-                    DelaunayVertex circumeter = tri.getCircumcenter();
-                    poly.add(new Vec2D((float) circumeter.coord(0),
-                            (float) circumeter.coord(1)));
-                }
-                regions.add(poly);
-            }
-        }
+                return site;
+            }).map((site) -> delaunay.surroundingTriangles(
+                    site, triangle)).map((List<DelaunayTriangle> list) -> {
+                        Polygon2D poly = new Polygon2D();
+                        list.stream().map((tri) -> tri.getCircumcenter()).forEach((circumeter) -> {
+                            poly.add(new Vec2D((float) circumeter.coord(0),
+                                    (float) circumeter.coord(1)));
+                });
+                        return poly;
+                    }).forEach((poly) -> {
+                        regions.add(poly);
+                    });
+        });
         return regions;
     }
 

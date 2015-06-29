@@ -143,14 +143,14 @@ public interface ReadonlyVec2D {
     /**
      * Computes the scalar product (dot product) with the given vector.
      * 
-     * @see <a href="http://en.wikipedia.org/wiki/Dot_product">Wikipedia entry<
-     *      /a>
+     * @see <a href="http://en.wikipedia.org/wiki/Dot_product">Wikipedia entry</a>
      * 
      * @param v
      * @return dot product
      */
     public float dot(ReadonlyVec2D v);
 
+    @Override
     public boolean equals(Object obj);
 
     /**
@@ -352,6 +352,9 @@ public interface ReadonlyVec2D {
      * 
      * Note: The triangle must be defined in clockwise order a,b,c
      * 
+     * @param a
+     * @param b
+     * @param c
      * @return true, if point is in triangle.
      */
     public boolean isInTriangle(Vec2D a, Vec2D b, Vec2D c);

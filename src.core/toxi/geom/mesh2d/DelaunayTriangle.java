@@ -153,11 +153,7 @@ public class DelaunayTriangle extends ArraySet<DelaunayVertex> {
      */
     public boolean isNeighbor(DelaunayTriangle triangle) {
         int count = 0;
-        for (DelaunayVertex vertex : this) {
-            if (!triangle.contains(vertex)) {
-                count++;
-            }
-        }
+        count = this.stream().filter((vertex) -> (!triangle.contains(vertex))).map((_item) -> 1).reduce(count, Integer::sum);
         return count == 1;
     }
 
