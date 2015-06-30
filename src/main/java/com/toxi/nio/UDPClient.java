@@ -1,11 +1,17 @@
 package com.toxi.nio;
 
-import java.net.*;
-import java.io.*;
-import java.nio.*;
-import java.nio.channels.*;
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.DatagramChannel;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
 import java.nio.channels.spi.SelectorProvider;
-import java.util.*;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UDPClient {
 
@@ -84,13 +90,13 @@ public class UDPClient {
     public static void main(String[] args) {
         UDPClient client = new UDPClient(Integer.parseInt(args[0]));
         client.send(1);
-        try {
             while (true) {
+            try {
                 System.out.println(client.receive());
                 Thread.sleep(33);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(UDPClient.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+            }
     }
 }

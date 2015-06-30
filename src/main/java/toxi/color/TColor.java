@@ -600,6 +600,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#black()
      */
+    @Override
     public float black() {
         return cmyk[3];
     }
@@ -627,6 +628,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#blue()
      */
+    @Override
     public float blue() {
         return rgb[2];
     }
@@ -636,6 +638,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#brightness()
      */
+    @Override
     public float brightness() {
         return hsv[2];
     }
@@ -652,6 +655,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#copy()
      */
+    @Override
     public TColor copy() {
         return new TColor(this);
     }
@@ -661,6 +665,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#cyan()
      */
+    @Override
     public float cyan() {
         return cmyk[0];
     }
@@ -697,6 +702,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#distanceToCMYK(toxi.color.TColor)
      */
+    @Override
     public float distanceToCMYK(ReadonlyTColor c) {
         float[] ccmyk = c.toCMYKAArray(null);
         float dc = cmyk[0] - ccmyk[0];
@@ -711,6 +717,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#distanceToHSV(toxi.color.TColor)
      */
+    @Override
     public float distanceToHSV(ReadonlyTColor c) {
         float hue = hsv[0] * MathUtils.TWO_PI;
         float hue2 = c.hue() * MathUtils.TWO_PI;
@@ -726,6 +733,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#distanceToRGB(toxi.color.TColor)
      */
+    @Override
     public float distanceToRGB(ReadonlyTColor c) {
         float[] crgb = c.toRGBAArray(null);
         float dr = rgb[0] - crgb[0];
@@ -753,6 +761,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#getAnalog(float, float)
      */
+    @Override
     public TColor getAnalog(float theta, float delta) {
         return new TColor(this).analog(theta, delta);
     }
@@ -762,6 +771,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#getAnalog(int, float)
      */
+    @Override
     public TColor getAnalog(int angle, float delta) {
         return new TColor(this).analog(angle, delta);
     }
@@ -772,6 +782,7 @@ public class TColor implements ReadonlyTColor {
      * @see toxi.color.ReadonlyTColor#getBlended(toxi.color.ReadonlyTColor,
      * float)
      */
+    @Override
     public TColor getBlended(ReadonlyTColor c, float t) {
         return new TColor(this).blend(c, t);
     }
@@ -781,6 +792,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#getClosestHue()
      */
+    @Override
     public Hue getClosestHue() {
         return Hue.getClosest(hsv[0], false);
     }
@@ -790,6 +802,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#getClosestHue(boolean)
      */
+    @Override
     public Hue getClosestHue(boolean primaryOnly) {
         return Hue.getClosest(hsv[0], primaryOnly);
     }
@@ -799,6 +812,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#getComplement()
      */
+    @Override
     public TColor getComplement() {
         return new TColor(this).complement();
     }
@@ -809,6 +823,7 @@ public class TColor implements ReadonlyTColor {
      * @see
      * toxi.color.ReadonlyTColor#getComponentValue(toxi.color.AccessCriteria)
      */
+    @Override
     public float getComponentValue(AccessCriteria criteria) {
         return criteria.getComponentValueFor(this);
     }
@@ -818,6 +833,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#getDarkened(float)
      */
+    @Override
     public TColor getDarkened(float step) {
         return new TColor(this).darken(step);
     }
@@ -827,6 +843,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#getDesaturated(float)
      */
+    @Override
     public TColor getDesaturated(float step) {
         return new TColor(this).desaturate(step);
     }
@@ -840,6 +857,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#getInverted()
      */
+    @Override
     public TColor getInverted() {
         return new TColor(this).invert();
     }
@@ -849,6 +867,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#getLightened(float)
      */
+    @Override
     public TColor getLightened(float step) {
         return new TColor(this).lighten(step);
     }
@@ -858,6 +877,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#getRotatedRYB(float)
      */
+    @Override
     public TColor getRotatedRYB(float theta) {
         return new TColor(this).rotateRYB(theta);
     }
@@ -929,6 +949,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#isBlack()
      */
+    @Override
     public boolean isBlack() {
         return (rgb[0] <= BLACK_POINT && Float.compare(rgb[0], rgb[1]) == 0 && Float
                 .compare(rgb[0], rgb[2]) == 0);
@@ -939,6 +960,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#isGrey()
      */
+    @Override
     public boolean isGrey() {
         return hsv[1] < GREY_THRESHOLD;
     }
@@ -948,6 +970,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#isPrimary()
      */
+    @Override
     public boolean isPrimary() {
         return Hue.isPrimary(hsv[0]);
     }
@@ -957,6 +980,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#isWhite()
      */
+    @Override
     public boolean isWhite() {
         return (rgb[0] >= WHITE_POINT && Float.compare(rgb[0], rgb[1]) == 0 && Float
                 .compare(rgb[0], rgb[2]) == 0);
@@ -978,6 +1002,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#luminance()
      */
+    @Override
     public float luminance() {
         return rgb[0] * 0.299f + rgb[1] * 0.587f + rgb[2] * 0.114f;
     }
@@ -987,6 +1012,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#magenta()
      */
+    @Override
     public float magenta() {
         return cmyk[1];
     }
@@ -996,6 +1022,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#red()
      */
+    @Override
     public float red() {
         return rgb[0];
     }
@@ -1064,6 +1091,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#saturation()
      */
+    @Override
     public float saturation() {
         return hsv[1];
     }
@@ -1244,6 +1272,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#toARGB()
      */
+    @Override
     public int toARGB() {
         return (int) (rgb[0] * 255) << 16 | (int) (rgb[1] * 255) << 8
                 | (int) (rgb[2] * 255) | (int) (alpha * 255) << 24;
@@ -1254,6 +1283,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#toCMYKAArray(float[])
      */
+    @Override
     public float[] toCMYKAArray(float[] cmyka) {
         if (cmyka == null || cmyka.length < 5) {
             cmyka = new float[5];
@@ -1284,6 +1314,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#toHSVAArray(float[])
      */
+    @Override
     public float[] toHSVAArray(float[] hsva) {
         if (hsva == null || hsva.length < 4) {
             hsva = new float[4];
@@ -1300,6 +1331,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#toRGBAArray(float[])
      */
+    @Override
     public float[] toRGBAArray(float[] rgba) {
         return toRGBAArray(rgba, 0);
     }
@@ -1309,6 +1341,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#toRGBAArray(float[], int)
      */
+    @Override
     public float[] toRGBAArray(float[] rgba, int offset) {
         if (rgba == null || rgba.length < offset + 4) {
             rgba = new float[4];
@@ -1334,6 +1367,7 @@ public class TColor implements ReadonlyTColor {
      * 
      * @see toxi.color.ReadonlyTColor#yellow()
      */
+    @Override
     public float yellow() {
         return cmyk[2];
     }

@@ -1,13 +1,19 @@
 package com.toxi.nio;
 
-import java.net.*;
-import java.io.*;
-import java.nio.*;
-import java.nio.channels.*;
+import java.io.IOException;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.DatagramChannel;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UDPServer extends Thread {
+
     public final static int DEFAULT_PORT = 9876;
     public final static int MAX_PACKET_SIZE = 32;
 
@@ -21,13 +27,13 @@ public class UDPServer extends Thread {
 
     public static void main(String[] args) {
         new UDPServer(1, 25).start();
-        try {
-            while (true) {
+        //try {
+        while (true) {
+            try {
                 Thread.sleep(1000);
-                // System.out.println("running.");
+            } catch (InterruptedException ex) {
+                Logger.getLogger(UDPServer.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 
@@ -40,11 +46,12 @@ public class UDPServer extends Thread {
         this.numClients = numClients;
         this.packetSize = maxPacketSize;
         frameDuration = 1000 / fps;
-        clients = new ArrayList<UDPClientState>();
+        clients = new ArrayList<>();
     }
 
+    @Override
     public void run() {
-        DatagramChannel channel = null;
+        DatagramChannel channel;
         DatagramSocket socket = null;
         ByteBuffer buffer = null;
         try {
@@ -85,13 +92,15 @@ public class UDPServer extends Thread {
                     Thread.sleep(2);
                 }
             }
-        } catch (Exception ex) {
+        } catch (IOException | InterruptedException ex) {
             System.err.println(ex);
         } finally {
-            if (socket != null)
+            if (socket != null) {
                 socket.close();
-            if (buffer != null)
+            }
+            if (buffer != null) {
                 buffer = null;
+            }
             System.out.println("server shutdown.");
         }
     }
