@@ -5,12 +5,12 @@ This is a super convenient github fork of the official toxiclibs repo, for my ru
 
 Refactored/reworked for jdk7+ and processing-2.2.1 (in Netbeans)....
 
-Can be build with ant and jdk7+:-
+Can be build with maven and jdk7+:-
 ```bash
-cd toxiclibs/ant
-ant -f build-all.xml
+cd toxiclibs
+mvn ...
 ```
-Unzip toxiclibs-complete-***.zip in your sketchbook/libraries folder (or wherever else you put your libraries) to use with vanilla processing
+Buils as a single jar for use with [toxicgem][]
 
 See also [toxicgem][] for the ruby gem built using the source developed here, that can be used by both ruby-processing and JRubyArt (please let me know if you can use it elsewhere).
 ```bash
