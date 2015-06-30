@@ -10,7 +10,7 @@ Can be build with maven and jdk7+:-
 cd toxiclibs
 mvn ...
 ```
-Buils as a single jar for use with [toxicgem][]
+Builds as a single jar for use with [toxicgem][]
 
 See also [toxicgem][] for the ruby gem built using the source developed here, that can be used by both ruby-processing and JRubyArt (please let me know if you can use it elsewhere).
 ```bash
