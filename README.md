@@ -8,7 +8,7 @@ Refactored/reworked for jdk7+ and processing-2.2.1 (in Netbeans)....
 Can be build with maven and jdk7+:-
 ```bash
 cd toxiclibs
-mvn ...
+mvn package
 ```
 Builds as a single jar for use with [toxicgem][]
 
