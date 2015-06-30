@@ -22,4 +22,33 @@
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
     </properties>
+    <reporting>
+        <plugins>
+            <plugin>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>javadoc</report>
+                        </reports>
+                        <configuration>
+                            <quiet>true</quiet>
+                            <failOnError>false</failOnError>
+                            <detectOfflineLinks>false</detectOfflineLinks>
+                        </configuration>
+                    </reportSet>
+                </reportSets>
+                <configuration>
+                    <quiet>true</quiet>
+                    <aggregate>true</aggregate>
+                    <failOnError>false</failOnError>
+                    <detectOfflineLinks>false</detectOfflineLinks>
+                    <show>package</show>
+                    <level>package</level>
+                    <maxmemory>1g</maxmemory>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>
